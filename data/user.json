@@ -1,0 +1,44 @@
+[
+  {
+    "ten_thanh": "Maria",
+    "ho_va_ten": "Đào Ngọc Nhã Trân",
+    "scores": [
+       { "round": "Đợt 1", "value": 0 }
+    ]
+  },
+  {
+    "ten_thanh": "Phêrô",
+    "ho_va_ten": "Nguyễn Minh Khang",
+    "scores": []
+  },
+  {
+    "ten_thanh": "Phaolô",
+    "ho_va_ten": "Trần Hoàng Phúc",
+    "scores": []
+  },
+  {
+    "ten_thanh": "Isave",
+    "ho_va_ten": "Nguyễn Hoàng Mai Vy",
+    "scores": []
+  },
+  {
+    "ten_thanh": "Maria",
+    "ho_va_ten": "Nguyễn Ngọc Băng Tâm",
+    "scores": []
+  },
+  {
+    "ten_thanh": "Gioan Baotixita",
+    "ho_va_ten": "Nguyễn Hữu Tâm",
+    "scores": []
+  },
+  {
+    "ten_thanh": "Giuse",
+    "ho_va_ten": "Lê Hoàng Thiên Lộc",
+    "scores": []
+  },
+  {
+    "ten_thanh": "Anrê",
+    "ho_va_ten": "Lê Đỗ Hoàng Quân",
+    "scores": []
+  }
+]

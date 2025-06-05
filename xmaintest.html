@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bài đánh giá</title>
+  <style>
+    body {
+      background: url('https://www.transparenttextures.com/patterns/old-wall.png');
+      background-color: #f4e4bc;
+      font-family: 'Cinzel', serif;
+      color: #2c1b07;
+      margin: 0;
+      padding: 1.5rem;
+      min-height: 100vh;
+      box-sizing: border-box;
+      position: relative;
+    }
+    .container {
+      background: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      background-color: #fdf5e6;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), inset 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 900px;
+      margin: 0 auto;
+      border: 3px solid #8b5a2b;
+      width: 100%;
+      box-sizing: border-box;
+      position: relative;
+      z-index: 1;
+    }
+    h1 {
+      font-size: 2rem;
+      color: #8b5a2b;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-weight: normal;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    .form-container input,
+    .form-container textarea {
+      width: 100%;
+      padding: 0.6rem;
+      margin: 0.5rem 0;
+      border: 1px solid #8b5a2b;
+      border-radius: 5px;
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      background-color: #fffaf0;
+      box-sizing: border-box;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    .form-container textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    .form-container button {
+      background-color: #8b5a2b;
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      display: block;
+      margin: 1.5rem auto;
+      transition: background-color 0.3s;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    .form-container button:hover {
+      background-color: #6b4226;
+    }
+    .question {
+      margin: 1.5rem 0;
+    }
+    .question p {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: #2c1b07;
+    }
+    #timer {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: url('https://www.transparenttextures.com/patterns/parchment.png');
+      background-color: #f4e4bc;
+      padding: 0.5rem 1rem;
+      border: 2px solid #8b5a2b;
+      border-radius: 5px;
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+      color: #2c1b07;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+    }
+    #warning {
+      display: none;
+      position: fixed;
+      top: 4rem;
+      right: 1rem;
+      background-color: #8b0000;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+    }
+    /* Modal styles */
+    .modal {
+      display: flex;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+    .modal-content {
+      background: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      background-color: #fdf5e6;
+      padding: 2rem;
+      border-radius: 10px;
+      border: 3px solid #8b5a2b;
+      max-width: 600px;
+      width: 90%;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      font-family: 'Cinzel', serif;
+      color: #2c1b07;
+    }
+    .modal-content h2 {
+      font-size: 1.5rem;
+      color: #8b5a2b;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .modal-content ol {
+      margin: 1rem 0;
+      padding-left: 1.5rem;
+    }
+    .modal-content button {
+      background-color: #8b5a2b;
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      display: block;
+      margin: 1rem auto;
+    }
+    .modal-content button:hover {
+      background-color: #6b4226;
+    }
+    /* Responsive cho điện thoại */
+    @media (max-width: 600px) {
+      body {
+        padding: 1rem;
+      }
+      .container {
+        padding: 1rem;
+      }
+      h1 {
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+      }
+      .question p {
+        font-size: 0.95rem;
+      }
+      .form-container input,
+      .form-container textarea,
+      .form-container button {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+      }
+      #timer {
+        font-size: 1rem;
+        padding: 0.4rem 0.8rem;
+        top: 0.5rem;
+        right: 0.5rem;
+      }
+      #warning {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.8rem;
+        top: 3rem;
+        right: 0.5rem;
+      }
+      .modal-content {
+        padding: 1rem;
+        width: 95%;
+      }
+      .modal-content h2 {
+        font-size: 1.2rem;
+      }
+      .modal-content ol {
+        font-size: 0.9rem;
+      }
+      .modal-content button {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+      }
+    }
+    /* Responsive cho tablet (bao gồm iPad) */
+    @media (min-width: 601px) and (max-width: 1024px) {
+      body {
+        padding: 1.5rem;
+      }
+      .container {
+        padding: 1.5rem;
+        max-width: 700px;
+      }
+      h1 {
+        font-size: 1.8rem;
+        letter-spacing: 2.5px;
+      }
+      .question p {
+        font-size: 1rem;
+      }
+      .form-container input,
+      .form-container textarea {
+        font-size: 0.95rem;
+        padding: 0.55rem;
+      }
+      .form-container button {
+        font-size: 0.95rem;
+        padding: 0.55rem 1.1rem;
+      }
+      #timer {
+        font-size: 1.1rem;
+        padding: 0.5rem 0.9rem;
+      }
+      #warning {
+        font-size: 0.95rem;
+        padding: 0.5rem 0.9rem;
+      }
+      .modal-content {
+        padding: 1.5rem;
+        width: 80%;
+      }
+      .modal-content h2 {
+        font-size: 1.4rem;
+      }
+      .modal-content ol {
+        font-size: 1rem;
+      }
+    }
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+  </style>
+</head>
+<body>
+  <div id="timer" style="display: none;">Thời gian còn lại: 45:00</div>
+  <div id="warning" style="display: none;">Cảnh báo: Còn 15 phút nữa sẽ hết giờ!</div>
+  <div id="rulesModal" class="modal">
+    <div class="modal-content">
+      <h2>Nội quy làm bài</h2>
+      <ol>
+        <li>Bài sẽ có thời gian 45 phút để thực hiện, sau thời gian quy định sẽ tự động nộp.</li>
+        <li>Vui lòng điền đủ thông tin các trường.</li>
+        <li>Cấm hành vi gian lận (copy/paste, chuyển màn hình). Nếu vi phạm, bài làm sẽ tự nộp và chấm theo đáp án đã hoàn tất trước đó.</li>
+        <li>Sau khi nhấn nộp bài, vui lòng kiểm tra và hoàn tất yêu cầu kiểm tra trí tuệ nhân tạo cho đến khi hiển thị "Thanks", tức bài nộp đã được gửi.</li>
+      </ol>
+      <button id="startExam">Bắt đầu làm bài</button>
+    </div>
+  </div>
+  <div class="container" style="display: none;">
+    <h1>BÀI ĐÁNH GIÁ</h1>
+    <form id="feedbackForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST" enctype="multipart/form-data" class="form-container">
+      <input type="text" id="fullName" name="fullName" placeholder="Họ và tên" required>
+      <input type="date" id="dob" name="dob" placeholder="Ngày tháng năm sinh" required>
+      <input type="email" id="gmail" name="gmail" placeholder="Gmail" required>
+      <input type="tel" id="phone" name="phone" placeholder="Số điện thoại" required>
+      <input type="hidden" id="submissionTime" name="submissionTime">
+      <input type="hidden" id="userAgent" name="userAgent">
+      <div id="questions">
+        <!-- Câu hỏi và textarea sẽ được thêm bằng JavaScript -->
+      </div>
+      <button type="submit">Nộp bài</button>
+    </form>
+  </div>
+
+  <script>
+    // Danh sách câu hỏi từ test.csv
+    const allQuestions = [
+      { id: 1, text: "Phong trào Nghĩa Binh Thánh Thể đến Việt Nam vào năm nào?" },
+      { id: 2, text: "Phong trào Nghĩa Binh Thánh Thể được thành lập vào năm nào?" },
+      { id: 3, text: "Nghĩa Binh Thánh Thể tại Sài Gòn được thành lập vào năm nào?" },
+      { id: 4, text: "Vị Tổng Tuyên úy đầu tiên của Phong trào Nghĩa Binh Thánh Thể Việt Nam là ai?" },
+      { id: 5, text: "Nghĩa Binh Thánh Thể được đổi tên thành Phong trào Thiếu Nhi Thánh Thể vào năm nào?" },
+      { id: 6, text: "Cha Tuyên úy hiện tại của Liên đoàn Các Thánh Tử Đạo Việt Nam (Giáo phận Mỹ Tho) là ai?" },
+      { id: 7, text: "Cha Phó Tuyên úy của Liên đoàn Các Thánh Tử Đạo Việt Nam (Giáo phận Mỹ Tho) là ai?" },
+      { id: 8, text: "Cha Tổng Tuyên úy hiện tại của Thiếu Nhi Thánh Thể Việt Nam là ai?" },
+      { id: 9, text: "Hãy viết bốn khẩu hiệu của Phong trào Thiếu Nhi Thánh Thể." },
+      { id: 10, text: "Hãy viết điều luật 1 và 2 trong 10 điều luật của Thiếu Nhi Thánh Thể." },
+      { id: 11, text: "Hãy viết điều luật 3 và 4 trong 10 điều luật của Thiếu Nhi Thánh Thể." },
+      { id: 12, text: "Hãy viết điều luật 5 và 6 trong 10 điều luật của Thiếu Nhi Thánh Thể." },
+      { id: 13, text: "Hãy viết điều luật 7 và 8 trong 10 điều luật của Thiếu Nhi Thánh Thể." },
+      { id: 14, text: "Hãy viết điều luật 9 và 10 trong 10 điều luật của Thiếu Nhi Thánh Thể." },
+      { id: 15, text: "Hãy viết nội quy 1 và 2 trong nội quy sa mạc của Thiếu Nhi Thánh Thể." },
+      { id: 16, text: "Hãy viết nội quy 3 và 4 trong nội quy sa mạc của Thiếu Nhi Thánh Thể." },
+      { id: 17, text: "Hãy viết nội quy 5 và 6 trong nội quy sa mạc của Thiếu Nhi Thánh Thể." },
+      { id: 18, text: "Hãy viết nội quy 7 và 8 trong nội quy sa mạc của Thiếu Nhi Thánh Thể." },
+      { id: 19, text: "Tên Liên đoàn Thiếu Nhi Thánh Thể tại Giáo phận Mỹ Tho là gì?" },
+      { id: 20, text: "Hãy viết toàn bộ 10 điều luật của Thiếu Nhi Thánh Thể." }
+    ];
+
+    // Chọn ngẫu nhiên 10 câu hỏi
+    const questions = allQuestions.sort(() => 0.5 - Math.random()).slice(0, 10);
+
+    // Hiển thị câu hỏi và tạo input cho đáp án
+    const questionContainer = document.getElementById('questions');
+    questions.forEach((q, index) => {
+      const div = document.createElement('div');
+      div.className = 'question';
+      div.innerHTML = `
+        <p>${q.text}</p>
+        <textarea id="answer${q.id}" name="answer${index + 1}" rows="4" placeholder="Nhập đáp án"></textarea>
+        <input type="hidden" name="question${index + 1}" value="${q.text}">
+      `;
+      questionContainer.appendChild(div);
+    });
+
+    // Cập nhật thời gian nộp và user agent trước khi gửi
+    const feedbackForm = document.getElementById('feedbackForm');
+    feedbackForm.addEventListener('submit', function() {
+      document.getElementById('submissionTime').value = new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
+      document.getElementById('userAgent').value = navigator.userAgent;
+    });
+
+    // Hiển thị modal nội quy và bắt đầu bài kiểm tra
+    const rulesModal = document.getElementById('rulesModal');
+    const startExamButton = document.getElementById('startExam');
+    const timerDisplay = document.getElementById('timer');
+    const warningDisplay = document.getElementById('warning');
+    const container = document.querySelector('.container');
+    let timeLeft = 45 * 60; // 45 phút tính bằng giây
+    let timerInterval;
+
+    function startTimer() {
+      timerDisplay.style.display = 'block';
+      container.style.display = 'block';
+      rulesModal.style.display = 'none';
+      timerInterval = setInterval(updateTimer, 1000);
+    }
+
+    function updateTimer() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerDisplay.textContent = `Thời gian còn lại: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+      if (timeLeft <= 15 * 60 && timeLeft > 0) { // Cảnh báo khi còn 15 phút
+        warningDisplay.style.display = 'block';
+      } else if (timeLeft <= 0) { // Tự động nộp bài khi hết giờ
+        clearInterval(timerInterval);
+        timerDisplay.textContent = 'Hết giờ!';
+        warningDisplay.style.display = 'none';
+        feedbackForm.submit();
+      }
+      timeLeft--;
+    }
+
+    startExamButton.addEventListener('click', startTimer);
+
+    // Bảo mật: Cấm copy/paste
+    document.addEventListener('copy', (e) => {
+      e.preventDefault();
+      alert('Hành vi sao chép bị cấm! Bài làm sẽ được nộp ngay lập tức.');
+      feedbackForm.submit();
+    });
+    document.addEventListener('paste', (e) => {
+      e.preventDefault();
+      alert('Hành vi dán bị cấm! Bài làm sẽ được nộp ngay lập tức.');
+      feedbackForm.submit();
+    });
+    document.addEventListener('cut', (e) => {
+      e.preventDefault();
+      alert('Hành vi cắt bị cấm! Bài làm sẽ được nộp ngay lập tức.');
+      feedbackForm.submit();
+    });
+
+    // Bảo mật: Cấm chuyển tab
+    let violationCount = 0;
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        violationCount++;
+        if (violationCount >= 1) {
+          alert('Cảnh báo: Chuyển tab/màn hình bị cấm! Bài làm sẽ được nộp ngay lập tức.');
+          feedbackForm.submit();
+        }
+      }
+    });
+
+    // Bảo mật: Chỉ cho phép nhập chữ, số, dấu câu, và dấu cách
+    const allowedKeys = /^[a-zA-Z0-9\s.,!?;:'"()-]$/;
+    document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea').forEach(input => {
+      input.addEventListener('keydown', (e) => {
+        if (!allowedKeys.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'ArrowUp' && e.key !== 'ArrowDown' && e.key !== 'Tab' && !e.ctrlKey && !e.metaKey) {
+          e.preventDefault();
+          alert('Chỉ được sử dụng chữ cái, số, dấu câu và dấu cách!');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

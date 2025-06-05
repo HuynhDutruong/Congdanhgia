@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="description" content="Hệ Thống Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho, đăng nhập để làm bài kiểm tra.">
+    <meta name="keywords" content="Xứ Đoàn, Giáo Xứ Chánh Tòa Mỹ Tho, Đăng Nhập, Các Thánh Tử Đạo Việt Nam">
+    <title>Đăng Nhập Kiểm Tra</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        .header {
+            background: linear-gradient(90deg, #A6192E 0%, #8B1625 100%);
+            color: #FFFFFF;
+            padding: 0.5rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header .logo {
+            width: 100px;
+            height: 100px;
+            transition: transform 0.3s ease;
+        }
+        .header .logo:hover {
+            transform: scale(1.1);
+        }
+        .header h2 {
+            font-family: 'Merriweather', serif;
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        .header p {
+            font-size: 0.9rem;
+        }
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            z-index: 1000;
+            display: none;
+            font-family: 'Roboto', sans-serif;
+        }
+        .notification.error {
+            background: #EF4444;
+            color: white;
+        }
+        @media (max-width: 600px) {
+            .header h2 {
+                font-size: 1.25rem;
+            }
+            .header p {
+                font-size: 0.8rem;
+            }
+            .header .logo {
+                width: 80px;
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="header w-full absolute top-0">
+        <div class="text-center">
+            <img src="assets/logo.png" alt="Logo Xứ Đoàn" class="logo mx-auto">
+            <h2>XỨ ĐOÀN CÁC THÁNH TỬ ĐẠO VIỆT NAM</h2>
+            <p>Giáo Xứ Chánh Tòa Mỹ Tho</p>
+        </div>
+    </div>
+
+    <div class="max-w-md w-full bg-white p-8 rounded-2xl shadow-lg mt-24">
+        <h1 class="text-2xl font-bold text-center mb-6 font-['Merriweather'] text-[#A6192E]">Đăng Nhập Kiểm Tra</h1>
+        <div id="notification" class="notification"></div>
+        <form id="login-form" class="space-y-4 font-['Roboto']">
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-700">Tên đăng nhập</label>
+                <input type="text" id="username" class="w-full p-3 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-[#A6192E] focus:border-transparent" aria-required="true">
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Mật khẩu</label>
+                <input type="password" id="password" class="w-full p-3 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-[#A6192E] focus:border-transparent" aria-required="true">
+            </div>
+            <button type="submit" class="w-full bg-[#A6192E] text-white p-3 rounded-lg hover:bg-[#8B1625] transition font-['Roboto']">Đăng Nhập</button>
+        </form>
+    </div>
+
+    <script>
+        const showNotification = (message, type) => {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        };
+
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === 'horeb8' && password === '2025') {
+                window.location.href = 'test.html';
+            } else {
+                showNotification('Tên đăng nhập hoặc mật khẩu không đúng!', 'error');
+            }
+        });
+    </script>
+</body>
+</html>

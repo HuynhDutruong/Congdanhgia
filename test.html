@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hệ Thống Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho, thông báo và bảng điểm.">
+    <meta name="keywords" content="Xứ Đoàn, Giáo Xứ Chánh Tòa Mỹ Tho, Thông Báo, Bảng Điểm, Các Thánh Tử Đạo Việt Nam">
+    <title>Thông Báo & Bảng Điểm</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #A6192E;
+            --primary-dark: #821523;
+            --text-color: #374151;
+            --success-color: #10B981;
+            --warning-color: #FBBF24;
+            --error-color: #EF4444;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #F3F4F6;
+            margin: 0;
+            padding: 0.5rem;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 0.75rem 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .header-logo {
+            width: 100px;
+            height: 100px;
+            transition: transform 0.3s ease;
+        }
+
+        .header-logo-btn:hover .header-logo {
+            transform: scale(1.1);
+        }
+
+        .header-title {
+            font-family: 'Merriweather', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .header-title-container {
+            flex: 1;
+            text-align: center;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .navbar-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border: 2px solid white;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-btn:hover {
+            background-color: var(--primary-dark);
+            color: white;
+        }
+
+        .main-content {
+            max-width: 1280px;
+            margin: 1.5rem auto;
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-family: 'Merriweather', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .notification {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .notification.error {
+            background: var(--error-color);
+            color: white;
+        }
+
+        .score-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+
+        .score-table th,
+        .score-table td {
+            border: 1px solid var(--primary-color);
+            padding: 0.75rem;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+
+        .score-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .score-table tr:hover {
+            background-color: #F9FAFB;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .pagination-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            background-color: var(--primary-dark);
+        }
+
+        .pagination-btn:disabled {
+            background-color: #D1D5DB;
+            cursor: not-allowed;
+        }
+
+        .news-image {
+            max-width: 50%;
+            height: auto;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .avg-green { color: var(--success-color); font-weight: 500; }
+        .avg-yellow { color: var(--warning-color); font-weight: 500; }
+        .avg-red { color: var(--error-color); font-weight: 500; }
+
+        .error-message {
+            color: var(--error-color);
+            text-align: center;
+            font-size: 1rem;
+            margin: 1rem 0;
+        }
+
+        .test-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 640px) {
+            .header {
+                padding: 0.5rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .header-logo {
+                width: 60px;
+                height: 60px;
+            }
+
+            .header-title {
+                font-size: 1rem;
+                text-align: center;
+            }
+
+            .navbar-btn {
+                padding: 0.375rem 0.75rem;
+                font-size: 0.75rem;
+            }
+
+            .main-content {
+                padding: 1rem;
+                margin: 0.5rem;
+            }
+
+            .score-table th,
+            .score-table td {
+                padding: 0.5rem;
+                font-size: 0.75rem;
+            }
+
+            .pagination-btn {
+                padding: 0.375rem 0.75rem;
+                font-size: 0.75rem;
+            }
+
+            .news-image {
+                max-width: 100%;
+            }
+        }
+
+        @media (min-width: 641px) and (max-width: 1024px) {
+            .header {
+                padding: 0.75rem 1rem;
+            }
+
+            .header-content {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+
+            .header-logo {
+                width: 80px;
+                height: 80px;
+            }
+
+            .header-title {
+                font-size: 1.25rem;
+            }
+
+            .navbar-btn {
+                padding: 0.5rem 0.875rem;
+                font-size: 0.875rem;
+            }
+
+            .main-content {
+                padding: 1.25rem;
+                margin: 1rem;
+            }
+
+            .score-table th,
+            .score-table td {
+                padding: 0.625rem;
+                font-size: 0.875rem;
+            }
+
+            .pagination-btn {
+                padding: 0.5rem 0.875rem;
+                font-size: 0.875rem;
+            }
+
+            .news-image {
+                max-width: 75%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="header-logo-btn" aria-label="Trang chủ">
+                <img src="assets/logo.png" alt="Logo Xứ Đoàn" class="header-logo">
+            </a>
+            <div class="header-title-container">
+                <h1 class="header-title">XỨ ĐOÀN CÁC THÁNH TỬ ĐẠO VIỆT NAM</h1>
+                <p class="header-title">Giáo Xứ Chánh Tòa Mỹ Tho</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <h1 class="text-3xl font-bold text-center mb-8 font-['Merriweather']">CỔNG THÔNG TIN VÀ ĐÁNH GIÁ</h1>
+        <div id="notification" class="notification"></div>
+
+        <section id="news-section" class="mb-8">
+            <h2 class="section-title">Thông Báo</h2>
+            <div id="news-content" class="text-gray-700"></div>
+        </section>
+
+        <section id="test-section" class="mb-8">
+            <h2 class="section-title">Bài Kiểm Tra</h2>
+            <div class="test-section">
+                <button class="navbar-btn" id="test-btn" aria-label="Làm bài kiểm tra">LÀM BÀI</button>
+                <p id="test-availability" class="text-gray-700 text-sm"></p>
+            </div>
+        </section>
+
+        <section id="score-section">
+            <h2 class="section-title">Bảng Điểm</h2>
+            <div id="score-error" class="error-message" style="display: none;"></div>
+            <table id="score-table" class="score-table">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable('ten_thanh')" aria-sort="none">
+                            Tên Thánh <span id="sort-username">↕</span>
+                        </th>
+                        <th>Họ và Tên</th>
+                        <th>Đợt 1</th>
+                        <th>Đợt 2</th>
+                        <th>Đợt 3</th>
+                        <th>Đợt 4</th>
+                        <th>Trung Bình</th>
+                    </tr>
+                </thead>
+                <tbody id="score-body"></tbody>
+            </table>
+            <div class="pagination">
+                <button id="prev-btn" class="pagination-btn" disabled>Trước</button>
+                <span id="page-info" class="text-gray-700"></span>
+                <button id="next-btn" class="pagination-btn">Sau</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const showNotification = (message, type) => {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.style.display = 'block';
+            setTimeout(() => notification.style.display = 'none', 3000);
+        };
+
+        const newsData = [
+            { type: 'image', content: 'Bảng thời gian biểu', file_path: 'assets/event.jpg' }
+        ];
+
+        const loadNews = () => {
+            const newsContent = document.getElementById('news-content');
+            newsContent.innerHTML = '';
+            newsData.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'mb-4';
+                switch (item.type) {
+                    case 'text':
+                        div.innerHTML = `<p>${item.content}</p>`;
+                        break;
+                    case 'image':
+                        div.innerHTML = `<p>${item.content}</p><img src="${item.file_path}" alt="${item.content}" class="news-image">`;
+                        break;
+                }
+                newsContent.appendChild(div);
+            });
+        };
+
+        let users = [];
+        let currentSort = 1;
+        let currentPage = 1;
+        const usersPerPage = 5;
+
+        const displayUsers = (usersData) => {
+            users = usersData || [];
+            const tbody = document.getElementById('score-body');
+            const scoreError = document.getElementById('score-error');
+            const scoreTable = document.getElementById('score-table');
+            const pagination = document.querySelector('.pagination');
+
+            tbody.innerHTML = '';
+            if (!users.length) {
+                scoreError.textContent = 'Không có dữ liệu điểm số. Vui lòng liên hệ Admin!';
+                scoreError.style.display = 'block';
+                scoreTable.style.display = 'none';
+                pagination.style.display = 'none';
+                return;
+            }
+
+            scoreError.style.display = 'none';
+            scoreTable.style.display = 'table';
+            pagination.style.display = 'flex';
+
+            const startIndex = (currentPage - 1) * usersPerPage;
+            const endIndex = startIndex + usersPerPage;
+            const paginatedUsers = users.slice(startIndex, endIndex);
+
+            paginatedUsers.forEach(user => {
+                const row = document.createElement('tr');
+                const scoreDot1 = user.scores.find(s => s.round === 'Đợt 1')?.value || '-';
+                const scoreDot2 = user.scores.find(s => s.round === 'Đợt 2')?.value || '-';
+                const scoreDot3 = user.scores.find(s => s.round === 'Đợt 3')?.value || '-';
+                const scoreDot4 = user.scores.find(s => s.round === 'Đợt 4')?.value || '-';
+                const numericScores = user.scores
+                    .filter(s => s.value && !isNaN(s.value))
+                    .map(s => parseFloat(s.value));
+                const avg = numericScores.length > 0
+                    ? (numericScores.reduce((sum, score) => sum + score, 0) / numericScores.length).toFixed(1)
+                    : '-';
+                const avgClass = avg !== '-' ? (avg > 8 ? 'avg-green' : avg >= 6 ? 'avg-yellow' : 'avg-red') : '';
+                row.innerHTML = `
+                    <td>${user.ten_thanh}</td>
+                    <td>${user.ho_va_ten}</td>
+                    <td>${scoreDot1}</td>
+                    <td>${scoreDot2}</td>
+                    <td>${scoreDot3}</td>
+                    <td>${scoreDot4}</td>
+                    <td class="${avgClass}">${avg}</td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            document.getElementById('page-info').textContent = `Trang ${currentPage} / ${Math.ceil(users.length / usersPerPage)}`;
+            document.getElementById('prev-btn').disabled = currentPage === 1;
+            document.getElementById('next-btn').disabled = currentPage === Math.ceil(users.length / usersPerPage);
+        };
+
+        const sortTable = (column) => {
+            if (!users.length) return;
+            currentSort *= -1;
+            users.sort((a, b) => currentSort * a.ten_thanh.localeCompare(b.ten_thanh));
+            document.getElementById('sort-username').textContent = currentSort === 1 ? '↑' : '↓';
+            displayUsers(users);
+        };
+
+        const checkTestAvailability = async () => {
+            try {
+                const response = await fetch('maintest.html', { method: 'HEAD' });
+                document.getElementById('test-availability').textContent = response.ok
+                    ? 'Nhấn nút để tham gia bài kiểm tra!'
+                    : 'Chưa có bài kiểm tra. Liên hệ Admin!';
+            } catch {
+                document.getElementById('test-availability').textContent = 'Chưa có bài kiểm tra. Liên hệ Admin!';
+            }
+        };
+
+        const loadData = async () => {
+            try {
+                const response = await fetch('data/user.json');
+                if (!response.ok) throw new Error('Không thể tải dữ liệu người dùng');
+                const usersData = await response.json();
+                displayUsers(usersData);
+                loadNews();
+                await checkTestAvailability();
+            } catch (error) {
+                console.error('Lỗi khi tải dữ liệu:', error);
+                document.getElementById('score-error').textContent = 'Lỗi khi tải dữ liệu điểm số. Vui lòng liên hệ Admin!';
+                document.getElementById('score-error').style.display = 'block';
+                document.getElementById('score-table').style.display = 'none';
+                document.querySelector('.pagination').style.display = 'none';
+                showNotification('Lỗi khi tải dữ liệu, vui lòng thử lại!', 'error');
+            }
+        };
+
+        document.getElementById('test-btn').addEventListener('click', async () => {
+            try {
+                const response = await fetch('maintest.html', { method: 'HEAD' });
+                if (response.ok) {
+                    window.location.href = 'maintest.html';
+                } else {
+                    showNotification('Chưa có bài kiểm tra!', 'error');
+                }
+            } catch {
+                showNotification('Chưa có bài kiểm tra!', 'error');
+            }
+        });
+
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                displayUsers(users);
+            }
+        });
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            if (currentPage < Math.ceil(users.length / usersPerPage)) {
+                currentPage++;
+                displayUsers(users);
+            }
+        });
+
+        loadData();
+    </script>
+</body>
+</html>
