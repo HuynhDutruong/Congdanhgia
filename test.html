@@ -27,48 +27,44 @@
         }
 
         .header {
-            background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 0.75rem 1rem;
+            background: linear-gradient(90deg, #A6192E 0%, #8B1625 100%);
+            color: #FFFFFF;
+            padding: 0.5rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .header-content {
-            max-width: 1280px;
-            margin: 0 auto;
             display: flex;
-            flex-direction: row;
             align-items: center;
             justify-content: space-between;
-            gap: 0.5rem;
-            flex-wrap: wrap;
         }
-
-        .header-logo {
-            width: 100px;
-            height: 100px;
+        .header .logo-btn {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+        }
+        .header .logo {
+            width: 120px;
+            height: 120px;
             transition: transform 0.3s ease;
         }
-
-        .header-logo-btn:hover .header-logo {
+        .header .logo-btn:hover .logo {
             transform: scale(1.1);
         }
-
-        .header-title {
-            font-family: 'Merriweather', serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 0;
-            line-height: 1.2;
-        }
-
-        .header-title-container {
+        .header .text-center {
             flex: 1;
             text-align: center;
         }
+        .header h2 {
+            font-family: 'Merriweather', serif;
+            font-size: 1.75rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        .header p {
+            font-size: 1rem;
+        }   
 
         .navbar {
             display: flex;
@@ -218,6 +214,7 @@
             .header-logo {
                 width: 60px;
                 height: 60px;
+                display:hide;
             }
 
             .header-title {
@@ -266,6 +263,8 @@
             .header-logo {
                 width: 80px;
                 height: 80px;
+                display:hide;
+
             }
 
             .header-title {
@@ -300,17 +299,15 @@
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="header-content">
-            <a href="/" class="header-logo-btn" aria-label="Trang chủ">
-                <img src="assets/logo.png" alt="Logo Xứ Đoàn" class="header-logo">
-            </a>
-            <div class="header-title-container">
-                <h1 class="header-title">XỨ ĐOÀN CÁC THÁNH TỬ ĐẠO VIỆT NAM</h1>
-                <p class="header-title">Giáo Xứ Chánh Tòa Mỹ Tho</p>
-            </div>
+    <div class="header">
+        <button class="logo-btn">
+            <img src="assets/logo.png" alt="Logo" class="logo">
+        </button>
+        <div class="text-center">
+            <h2>XỨ ĐOÀN CÁC THÁNH TỬ ĐẠO VIỆT NAM</h2>
+            <p>Giáo Xứ Chánh Tòa Mỹ Tho</p>
         </div>
-    </header>
+    </div>
 
     <main class="main-content">
         <h1 class="text-3xl font-bold text-center mb-8 font-['Merriweather']">CỔNG THÔNG TIN VÀ ĐÁNH GIÁ</h1>
