@@ -104,11 +104,18 @@
 
         document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            const username = document.getElementById('username').value;
+            const username = document.getElementById('username').value.toLowerCase();
             const password = document.getElementById('password').value;
+            const currentYear = new Date().getFullYear().toString();
 
-            if (username === 'horeb8' && password === '2025') {
-                window.location.href = 'test.html';
+            const users = {
+                'horeb': 'horeb.html',
+                'tabor': 'tabor.html',
+                'admin': 'admin.html'
+            };
+
+            if (users[username] && password === currentYear) {
+                window.location.href = users[username];
             } else {
                 showNotification('Tên đăng nhập hoặc mật khẩu không đúng!', 'error');
             }
