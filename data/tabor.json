@@ -1,0 +1,44 @@
+[
+  {
+    "ten_thanh": "Mattheu",
+    "ho_va_ten": "Trần Gia Bảo",
+    "scores": [
+      { "round": "Đợt 1", "value": 0 }
+    ]
+  },
+  {
+    "ten_thanh": "Phanxico Xavie",
+    "ho_va_ten": "Nguyễn Ngọc Tuấn",
+    "scores": [
+      { "round": "Đợt 1", "value": 0 }
+    ]
+  },
+  {
+    "ten_thanh": "Giuse",
+    "ho_va_ten": "Mai Hồng Phúc",
+    "scores": [
+      { "round": "Đợt 1", "value": 0 }
+    ]
+  },
+  {
+    "ten_thanh": "Maria",
+    "ho_va_ten": "Nguyễn Hoàng Anh",
+    "scores": [
+      { "round": "Đợt 1", "value": 0 }
+    ]
+  },
+  {
+    "ten_thanh": "Giuse",
+    "ho_va_ten": "Đào Minh Tú",
+    "scores": [
+      { "round": "Đợt 1", "value": 0 }
+    ]
+  },
+  {
+    "ten_thanh": "Phêrô",
+    "ho_va_ten": "Nguyễn Huỳnh Hiền Minh ",
+    "scores": [
+      { "round": "Đợt 1", "value": 0 }
+    ]
+  }
+]
