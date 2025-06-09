@@ -111,7 +111,6 @@
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
       z-index: 1000;
     }
-    /* Modal styles */
     .modal {
       display: flex;
       position: fixed;
@@ -130,7 +129,7 @@
       padding: 2rem;
       border-radius: 10px;
       border: 3px solid #8b5a2b;
-      max-width: 600px;
+      max-width: 600phinepx;
       width: 90%;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
       font-family: 'Cinzel', serif;
@@ -161,7 +160,13 @@
     .modal-content button:hover {
       background-color: #6b4226;
     }
-    /* Responsive cho điện thoại */
+    #accessMessage {
+      display: none;
+      text-align: center;
+      font-size: 1.2rem;
+      color: #8b0000;
+      margin-top: 1rem;
+    }
     @media (max-width: 600px) {
       body {
         padding: 1rem;
@@ -208,8 +213,10 @@
         font-size: 0.9rem;
         padding: 0.5rem 1rem;
       }
+      #accessMessage {
+        font-size: 1rem;
+      }
     }
-    /* Responsive cho tablet (bao gồm iPad) */
     @media (min-width: 601px) and (max-width: 1024px) {
       body {
         padding: 1.5rem;
@@ -252,23 +259,27 @@
       .modal-content ol {
         font-size: 1rem;
       }
+      #accessMessage {
+        font-size: 1.1rem;
+      }
     }
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
   </style>
 </head>
 <body>
-  <div id="timer" style="display: none;">Thời gian còn lại: 45:00</div>
-  <div id="warning" style="display: none;">Cảnh báo: Còn 15 phút nữa sẽ hết giờ!</div>
-  <div id="rulesModal" class="modal">
+  <div id="timer" style="display: none;">Thời gian còn lại: 15:00</div>
+  <div id="warning" style="display: none;">Cảnh báo: Còn 5 phút nữa sẽ hết giờ!</div>
+  <div id="rulesModal" class="modal" style="display: none;">
     <div class="modal-content">
       <h2>Nội quy làm bài</h2>
       <ol>
-        <li>Bài sẽ có thời gian 45 phút để thực hiện, sau thời gian quy định sẽ tự động nộp.</li>
+        <li>Bài sẽ có thời gian 15 phút để thực hiện, sau thời gian quy định sẽ tự động nộp.</li>
         <li>Vui lòng điền đủ thông tin các trường.</li>
         <li>Cấm hành vi gian lận (copy/paste, chuyển màn hình). Nếu vi phạm, bài làm sẽ tự nộp và chấm theo đáp án đã hoàn tất trước đó.</li>
         <li>Sau khi nhấn nộp bài, vui lòng kiểm tra và hoàn tất yêu cầu kiểm tra trí tuệ nhân tạo cho đến khi hiển thị "Thanks", tức bài nộp đã được gửi.</li>
       </ol>
-      <button id="startExam">Bắt đầu làm bài</button>
+      <button id="startExam" style="display: none;">Bắt đầu làm bài</button>
+      <div id="accessMessage"></div>
     </div>
   </div>
   <div class="container" style="display: none;">
@@ -288,7 +299,7 @@
   </div>
 
   <script>
-    // Danh sách câu hỏi từ test.csv
+    // Danh sách câu hỏi từ test.csv và các bài hát (điền vào chỗ trống)
     const allQuestions = [
       { id: 1, text: "Phong trào Nghĩa Binh Thánh Thể đến Việt Nam vào năm nào?" },
       { id: 2, text: "Phong trào Nghĩa Binh Thánh Thể được thành lập vào năm nào?" },
@@ -309,11 +320,26 @@
       { id: 17, text: "Hãy viết nội quy 5 và 6 trong nội quy sa mạc của Thiếu Nhi Thánh Thể." },
       { id: 18, text: "Hãy viết nội quy 7 và 8 trong nội quy sa mạc của Thiếu Nhi Thánh Thể." },
       { id: 19, text: "Tên Liên đoàn Thiếu Nhi Thánh Thể tại Giáo phận Mỹ Tho là gì?" },
-      { id: 20, text: "Hãy viết toàn bộ 10 điều luật của Thiếu Nhi Thánh Thể." }
+      { id: 20, text: "Hãy viết toàn bộ 10 điều luật của Thiếu Nhi Thánh Thể." },
+      { id: 21, text: "Điền vào chỗ trống: Thiếu nhi Việt Nam đứng lên trong giai đoạn mới, theo tiếng Giáo Hội và tiếng quê hương kêu mời, _________ tuổi trẻ Việt Nam hăng hái xây thế hệ ngày mai." },
+      { id: 22, text: "Điền vào chỗ trống: Cùng đi hỡi các Thiếu Nhi! Cùng đi với Chúa Kitô! Nguồn Sống Thánh Thể chan hòa, là _________ của người Thiếu Nhi hôm nay." },
+      { id: 23, text: "Điền vào chỗ trống: Ngày nay con dâng cho Chúa, xin Chúa thương nhận lòng trí chúng con. Mọi cơn gian nan nguy khó, chúng con xin cầu theo ý _________ sớm hôm." },
+      { id: 24, text: "Điền vào chỗ trống: Trời đã xế chiều, Giêsu ơi con nhờ tay Mẹ Maria, mà dâng lên Chúa, dâng chúc lời cám ơn, dâng trót cả _________." },
+      { id: 25, text: "Điền vào chỗ trống: Nguyện xin, nguyện xin Chúa Cả mở tay chúc phúc, cho chúng con dùng, cho chúng con dùng nên _________ này." },
+      { id: 26, text: "Điền vào chỗ trống: Đội ơn Chúa đời đời mạch sống, đã nuôi chúng con hồn xác hôm nay. Nguyện danh Chúa đời đời cả sáng, xuống cho mọi loài _________ no đầy." },
+      { id: 27, text: "Điền vào chỗ trống: Như ánh hồng vươn lên khi hừng đông chiếu sáng. Như nguồn sống trào dâng khi mùa xuân về. Ta còn tiến bước vượt qua mọi gian khó. Ta cùng vươn lên tới _________ mong chờ." },
+      { id: 28, text: "Điền vào chỗ trống: Nào bạn ơi mau lên gieo bước hành trình. Dòng thời gian đi nhanh chẳng biết dừng chân, đừng phân vân bi quan sẽ làm tất cả muộn màng cuộc sống quanh ta luôn _________." },
+      { id: 29, text: "Điền vào chỗ trống: NÀO MAU LÊN ĐƯỜNG KHI TRỜI CÒN SÁNG BẠN ƠI. CÙNG NHAU BẮT ĐẦU ĐỂ CÙNG GẶT HÁI _________." },
+      { id: 30, text: "Điền vào chỗ trống: Lửa Thiêng ơi hãy đến, bừng sáng lên trong đêm âm u soi đời tăm tối bao nhiêu _________." },
+      { id: 31, text: "Điền vào chỗ trống: Ố ô ô ồ, ố ô ô ồ Cầm tay nhau quay vòng quanh lửa mới. Lửa bốc cháy tâm hồn ta hăng hái. Đón ánh lửa thiêng, đây đoàn ta, chung lời ca bên lửa _________." },
+      { id: 32, text: "Điền vào chỗ trống: Màn đêm buông lơi theo ánh lửa dần tàn, tình anh em ta theo ánh lửa tràn lan, tim ta đây còn khắc ghi bao nhiêu mối tình _________." },
+      { id: 33, text: "Điền vào chỗ trống: Lãnh nhận Lời Chúa em ơi xiết bao mừng vui. Lãnh nhận Lời Chúa em ơi gắng ghi trong lòng. Em nhớ rằng Thiên Chúa yêu em, Ngài yêu em không bờ bến, Ngài yêu em đến _________." },
+      { id: 34, text: "Điền vào chỗ trống: Hiệp, Chiên, Ấu, Thiếu, Nghĩa, tuy năm ngành nhưng một. Với Anh Cả Giêsu em phụng thờ Thiên Chúa, là công dân em phụng sự quốc gia. Với ý hướng ngay lành, em là _________." },
+      { id: 35, text: "Điền vào chỗ trống: Anh em ta về cùng nhau ta quây quần (nè). Một, hai, ba, bốn, năm. Anh em ta về cùng nhau ta xum họp (nè). Năm, bốn, ba, hai, một. Một - đều chân bước nhé! Hai - quay nhìn nhau đi! Ba - cầm tay chắc nhé. Không muốn ai chia lìa! Bốn - nhớ rằng: chúng ta bốn bể anh em một nhà! Năm - nhớ mãi tình này trong _________." }
     ];
 
     // Chọn ngẫu nhiên 10 câu hỏi
-    const questions = allQuestions.sort(() => 0.5 - Math.random()).slice(0, 10);
+    const questions = allQuestions.sort(() => 0.5 - Math.random()).slice(0, 15);
 
     // Hiển thị câu hỏi và tạo input cho đáp án
     const questionContainer = document.getElementById('questions');
@@ -335,14 +361,37 @@
       document.getElementById('userAgent').value = navigator.userAgent;
     });
 
-    // Hiển thị modal nội quy và bắt đầu bài kiểm tra
+    // Hiển thị modal nội quy và kiểm tra thời gian truy cập
     const rulesModal = document.getElementById('rulesModal');
     const startExamButton = document.getElementById('startExam');
+    const accessMessage = document.getElementById('accessMessage');
     const timerDisplay = document.getElementById('timer');
     const warningDisplay = document.getElementById('warning');
     const container = document.querySelector('.container');
-    let timeLeft = 45 * 60; // 45 phút tính bằng giây
+    let timeLeft = 15 * 60; // 15 phút tính bằng giây
     let timerInterval;
+    const examStartTime = new Date('2025-06-10T15:00:00+07:00').getTime();
+    const examEndTime = new Date('2025-06-10T15:15:00+07:00').getTime();
+
+    function checkAccess() {
+      const currentTime = new Date().getTime();
+      if (currentTime < examStartTime) {
+        rulesModal.style.display = 'flex';
+        startExamButton.style.display = 'none';
+        accessMessage.style.display = 'block';
+        accessMessage.textContent = 'Bài kiểm tra sẽ bắt đầu vào 15:00 ngày 10/06/2025. Vui lòng quay lại sau!';
+      } else if (currentTime >= examEndTime) {
+        rulesModal.style.display = 'flex';
+        startExamButton.style.display = 'none';
+        accessMessage.style.display = 'block';
+        accessMessage.textContent = 'Thời gian làm bài đã kết thúc!';
+        container.style.display = 'none';
+      } else {
+        rulesModal.style.display = 'flex';
+        startExamButton.style.display = 'block';
+        accessMessage.style.display = 'none';
+      }
+    }
 
     function startTimer() {
       timerDisplay.style.display = 'block';
@@ -352,22 +401,44 @@
     }
 
     function updateTimer() {
+      const currentTime = new Date().getTime();
+      if (currentTime >= examEndTime) {
+        clearInterval(timerInterval);
+        timerDisplay.textContent = 'Hết giờ!';
+        warningDisplay.style.display = 'none';
+        container.style.display = 'none';
+        rulesModal.style.display = 'flex';
+        startExamButton.style.display = 'none';
+        accessMessage.style.display = 'block';
+        accessMessage.textContent = 'Thời gian làm bài đã kết thúc!';
+        feedbackForm.submit();
+        return;
+      }
+
       const minutes = Math.floor(timeLeft / 60);
       const seconds = timeLeft % 60;
       timerDisplay.textContent = `Thời gian còn lại: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
-      if (timeLeft <= 15 * 60 && timeLeft > 0) { // Cảnh báo khi còn 15 phút
+      if (timeLeft <= 5 * 60 && timeLeft > 0) {
         warningDisplay.style.display = 'block';
-      } else if (timeLeft <= 0) { // Tự động nộp bài khi hết giờ
+      } else if (timeLeft <= 0) {
         clearInterval(timerInterval);
         timerDisplay.textContent = 'Hết giờ!';
         warningDisplay.style.display = 'none';
+        container.style.display = 'none';
+        rulesModal.style.display = 'flex';
+        startExamButton.style.display = 'none';
+        accessMessage.style.display = 'block';
+        accessMessage.textContent = 'Thời gian làm bài đã kết thúc!';
         feedbackForm.submit();
       }
       timeLeft--;
     }
 
     startExamButton.addEventListener('click', startTimer);
+
+    // Kiểm tra truy cập ngay khi tải trang
+    checkAccess();
 
     // Bảo mật: Cấm copy/paste
     document.addEventListener('copy', (e) => {
