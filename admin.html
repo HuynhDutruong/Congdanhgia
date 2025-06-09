@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Trang quản trị Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho, quản lý nhạc và ghi chú.">
-    <meta name="keywords" content="Xứ Đoàn, Giáo Xứ Chánh Tòa Mỹ Tho, Quản Trị, Nhạc, Ghi Chú">
-    <title>Trang Quản Trị</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="Trang quản trị Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho, quản lý nhạc và ghi chú.">
+        <meta name="keywords" content="Xứ Đoàn, Giáo Xứ Chánh Tòa Mỹ Tho, Quản Trị, Nhạc, Ghi Chú">
+        <title>Trang Quản Trị</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;700" rel="stylesheet">
     <style>
         :root {
             --primary-color: #A6192E;
             --primary-dark: #821523;
-            --text-color: #374151;
+            color: #374151;
             --success-color: #10B981;
             --warning-color: #FBBF24;
             --error-color: #EF4444;
-            --button-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-            --button-hover-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            --button-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+            --button-hover-shadow: 0 7px 14px rgba(0,0,0,0.1), 0 3px 6px rgba(0,0,0,0.08);
         }
 
         body {
@@ -35,7 +34,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .header-content {
@@ -75,7 +74,7 @@
             background: white;
             border-radius: 1rem;
             padding: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .section-title {
@@ -94,7 +93,7 @@
             border-radius: 0.5rem;
             z-index: 1000;
             display: none;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             font-size: 0.875rem;
             font-weight: 500;
         }
@@ -202,6 +201,13 @@
             width: 16px;
             height: 16px;
             fill: currentColor;
+        }
+
+        #youtube-player {
+            width: 0;
+            height: 0;
+            position: absolute;
+            visibility: hidden;
         }
 
         .note-section {
@@ -388,11 +394,12 @@
                     <span id="duration">00:00</span>
                 </div>
             </div>
+            <div id="youtube-player"></div>
         </section>
 
         <section class="note-section">
             <h2 class="section-title">Ghi Chú</h2>
-            <form id="note-form" action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSfzQz6a4X3n8p7yL3z7z3z7z3z7z3z7z3z7z3z7z3z7z3z7z3/formResponse" method="POST" target="hidden_iframe">
+            <form id="note-form" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST" target="hidden_iframe">
                 <textarea class="note-textarea" id="note-text" name="entry.1234567890" maxlength="500" placeholder="Nhập ghi chú (tối đa 500 ký tự)"></textarea>
                 <p class="char-count" id="char-count">0/500 ký tự</p>
                 <button type="submit" class="note-submit">Gửi Ghi Chú</button>
@@ -403,6 +410,7 @@
         </section>
     </main>
 
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
         const showNotification = (message, type) => {
             const notification = document.getElementById('notification');
@@ -417,7 +425,12 @@
         let currentSongIndex = 0;
         let isLooping = false;
         let isPlayingPlaylist = false;
-        const audio = new Audio();
+        let player;
+
+        // Initialize YouTube Iframe API
+        function onYouTubeIframeAPIReady() {
+            loadSongs();
+        }
 
         // Load songs from songs.json
         const loadSongs = async () => {
@@ -426,15 +439,17 @@
                 if (!response.ok) throw new Error('Không thể tải danh sách bài hát');
                 songs = await response.json();
                 loadSongList();
+                loadPlayer(currentSongIndex);
             } catch (error) {
                 console.error('Lỗi khi tải danh sách bài hát:', error);
-                showNotification('Không thể tải danh sách bài hát!', 'error');
+                showNotification('Không thể tải danh sách bài hát! Sử dụng danh sách mặc định.', 'error');
                 songs = [
-                    { title: 'Bài Hát 1', file: 'assets/video1.mp4' },
-                    { title: 'Bài Hát 2', file: 'assets/video2.mp4' },
-                    { title: 'Bài Hát 3', file: 'assets/video3.mp4' }
+                    { title: "Nhạc Sinh Hoạt", embedUrl: "https://www.youtube.com/embed/ZYfWCEvQi-o" },
+                    { title: "Thiếu Nhi Tân Hành Ca", embedUrl: "https://www.youtube.com/embed/IxcpWFpeia8" },
+                    { title: "Bài Ca Chính Thức TNTT", embedUrl: "https://www.youtube.com/embed/9FCyHNrjJ6k" }
                 ];
                 loadSongList();
+                loadPlayer(currentSongIndex);
             }
         };
 
@@ -450,16 +465,63 @@
             });
         };
 
-        const playSong = (index) => {
-            currentSongIndex = index;
-            audio.src = songs[currentSongIndex].file;
-            audio.play().then(() => {
-                updateSongList();
+        const loadPlayer = (index) => {
+            if (player) {
+                player.destroy();
+            }
+            const embedUrl = songs[index].embedUrl;
+            const videoId = embedUrl.split('/embed/')[1].split('?')[0];
+            player = new YT.Player('youtube-player', {
+                height: '0',
+                width: '0',
+                videoId: videoId,
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'modestbranding': 1
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange,
+                    'onError': onPlayerError
+                }
+            });
+        };
+
+        function onPlayerReady(event) {
+            document.getElementById('play-btn').disabled = false;
+            document.getElementById('pause-btn').disabled = true;
+        }
+
+        function onPlayerError(event) {
+            showNotification('Không thể phát bài hát! Kiểm tra link YouTube hoặc quyền truy cập.', 'error');
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.ENDED) {
+                if (isLooping) {
+                    playSong(currentSongIndex);
+                } else if (isPlayingPlaylist) {
+                    playRandomPlaylist();
+                } else {
+                    document.getElementById('play-btn').disabled = false;
+                    document.getElementById('pause-btn').disabled = true;
+                }
+            } else if (event.data === YT.PlayerState.PLAYING) {
+                updateProgress();
                 document.getElementById('play-btn').disabled = true;
                 document.getElementById('pause-btn').disabled = false;
-            }).catch(() => {
-                showNotification('Không thể phát bài hát!', 'error');
-            });
+            } else if (event.data === YT.PlayerState.PAUSED) {
+                document.getElementById('play-btn').disabled = false;
+                document.getElementById('pause-btn').disabled = true;
+            }
+        }
+
+        const playSong = (index) => {
+            currentSongIndex = index;
+            loadPlayer(currentSongIndex);
+            updateSongList();
+            player.playVideo();
         };
 
         const updateSongList = () => {
@@ -491,43 +553,35 @@
             return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         };
 
-        audio.addEventListener('timeupdate', () => {
+        const updateProgress = () => {
             const progressBar = document.getElementById('progress-bar');
             const currentTime = document.getElementById('current-time');
             const duration = document.getElementById('duration');
-            if (audio.duration) {
-                progressBar.max = audio.duration;
-                progressBar.value = audio.currentTime;
-                currentTime.textContent = formatTime(audio.currentTime);
-                duration.textContent = formatTime(audio.duration);
+            if (player && player.getDuration) {
+                const durationSec = player.getDuration();
+                const currentSec = player.getCurrentTime();
+                progressBar.max = durationSec;
+                progressBar.value = currentSec;
+                currentTime.textContent = formatTime(currentSec);
+                duration.textContent = formatTime(durationSec);
             }
-        });
-
-        audio.addEventListener('ended', () => {
-            if (isLooping) {
-                playSong(currentSongIndex);
-            } else if (isPlayingPlaylist) {
-                playRandomPlaylist();
-            } else {
-                document.getElementById('play-btn').disabled = false;
-                document.getElementById('pause-btn').disabled = true;
+            if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+                requestAnimationFrame(updateProgress);
             }
-        });
+        };
 
         document.getElementById('play-btn').addEventListener('click', () => {
-            if (audio.src) {
-                audio.play();
-                document.getElementById('play-btn').disabled = true;
-                document.getElementById('pause-btn').disabled = false;
+            if (player) {
+                player.playVideo();
             } else {
                 playSong(currentSongIndex);
             }
         });
 
         document.getElementById('pause-btn').addEventListener('click', () => {
-            audio.pause();
-            document.getElementById('play-btn').disabled = false;
-            document.getElementById('pause-btn').disabled = true;
+            if (player) {
+                player.pauseVideo();
+            }
         });
 
         document.getElementById('next-btn').addEventListener('click', playNext);
@@ -535,7 +589,6 @@
 
         document.getElementById('loop-btn').addEventListener('click', () => {
             isLooping = !isLooping;
-            audio.loop = isLooping;
             document.getElementById('loop-btn').classList.toggle('active', isLooping);
             showNotification(isLooping ? 'Đã bật lặp lại' : 'Đã tắt lặp lại', 'success');
         });
@@ -547,7 +600,9 @@
         });
 
         document.getElementById('progress-bar').addEventListener('input', (e) => {
-            audio.currentTime = e.target.value;
+            if (player) {
+                player.seekTo(e.target.value, true);
+            }
         });
 
         // Note form and history handling
@@ -613,7 +668,6 @@
         });
 
         // Initialize
-        loadSongs();
         loadNoteHistory();
     </script>
 </body>
