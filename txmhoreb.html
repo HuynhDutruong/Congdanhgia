@@ -41,6 +41,7 @@
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
     }
     .form-container input,
+    .form-container select,
     .form-container textarea {
       width: 100%;
       padding: 0.6rem;
@@ -52,6 +53,13 @@
       background-color: #fffaf0;
       box-sizing: border-box;
       box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    .form-container .date-select {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .form-container .date-select select {
+      flex: 1;
     }
     .form-container textarea {
       min-height: 100px;
@@ -129,7 +137,7 @@
       padding: 2rem;
       border-radius: 10px;
       border: 3px solid #8b5a2b;
-      max-width: 600phinepx;
+      max-width: 600px;
       width: 90%;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
       font-family: 'Cinzel', serif;
@@ -182,10 +190,14 @@
         font-size: 0.95rem;
       }
       .form-container input,
+      .form-container select,
       .form-container textarea,
       .form-container button {
         font-size: 0.9rem;
         padding: 0.5rem;
+      }
+      .form-container .date-select select {
+        font-size: 0.9rem;
       }
       #timer {
         font-size: 1rem;
@@ -233,6 +245,7 @@
         font-size: 1rem;
       }
       .form-container input,
+      .form-container select,
       .form-container textarea {
         font-size: 0.95rem;
         padding: 0.55rem;
@@ -286,7 +299,17 @@
     <h1>BÀI ĐÁNH GIÁ</h1>
     <form id="feedbackForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST" enctype="multipart/form-data" class="form-container">
       <input type="text" id="fullName" name="fullName" placeholder="Họ và tên" required>
-      <input type="date" id="dob" name="dob" placeholder="Ngày tháng năm sinh" required>
+      <div class="date-select">
+        <select id="dobDay" name="dobDay" required>
+          <option value="" disabled selected>Ngày</option>
+        </select>
+        <select id="dobMonth" name="dobMonth" required>
+          <option value="" disabled selected>Tháng</option>
+        </select>
+        <select id="dobYear" name="dobYear" required>
+          <option value="" disabled selected>Năm</option>
+        </select>
+      </div>
       <input type="email" id="gmail" name="gmail" placeholder="Gmail" required>
       <input type="tel" id="phone" name="phone" placeholder="Số điện thoại" required>
       <input type="hidden" id="submissionTime" name="submissionTime">
@@ -300,7 +323,7 @@
   </div>
 
   <script>
-    // Danh sách câu hỏi từ test.csv và các bài hát (điền vào chỗ trống)
+    // Danh sách câu hỏi từ test.csv và các bài hát
     const allQuestions = [
       { id: 1, text: "Phong trào Nghĩa Binh Thánh Thể đến Việt Nam vào năm nào?" },
       { id: 2, text: "Phong trào Nghĩa Binh Thánh Thể được thành lập vào năm nào?" },
@@ -339,7 +362,7 @@
       { id: 35, text: "Điền vào chỗ trống: Anh em ta về cùng nhau ta quây quần (nè). Một, hai, ba, bốn, năm. Anh em ta về cùng nhau ta xum họp (nè). Năm, bốn, ba, hai, một. Một - đều chân bước nhé! Hai - quay nhìn nhau đi! Ba - cầm tay chắc nhé. Không muốn ai chia lìa! Bốn - nhớ rằng: chúng ta bốn bể anh em một nhà! Năm - nhớ mãi tình này trong _________." }
     ];
 
-    // Chọn ngẫu nhiên 10 câu hỏi
+    // Chọn ngẫu nhiên 15 câu hỏi
     const questions = allQuestions.sort(() => 0.5 - Math.random()).slice(0, 15);
 
     // Hiển thị câu hỏi và tạo input cho đáp án
@@ -354,6 +377,35 @@
       `;
       questionContainer.appendChild(div);
     });
+
+    // Tạo options cho ngày/tháng/năm
+    const dobDay = document.getElementById('dobDay');
+    const dobMonth = document.getElementById('dobMonth');
+    const dobYear = document.getElementById('dobYear');
+
+    // Ngày: 1-31
+    for (let i = 1; i <= 31; i++) {
+      const option = document.createElement('option');
+      option.value = i < 10 ? `0${i}` : i;
+      option.textContent = i;
+      dobDay.appendChild(option);
+    }
+
+    // Tháng: 1-12
+    for (let i = 1; i <= 12; i++) {
+      const option = document.createElement('option');
+      option.value = i < 10 ? `0${i}` : i;
+      option.textContent = i;
+      dobMonth.appendChild(option);
+    }
+
+    // Năm: 2000-2025
+    for (let i = 2025; i >= 2000; i--) {
+      const option = document.createElement('option');
+      option.value = i;
+      option.textContent = i;
+      dobYear.appendChild(option);
+    }
 
     // Cập nhật thời gian nộp và user agent trước khi gửi
     const feedbackForm = document.getElementById('feedbackForm');
@@ -371,8 +423,8 @@
     const container = document.querySelector('.container');
     let timeLeft = 15 * 60; // 15 phút tính bằng giây
     let timerInterval;
-    const examStartTime = new Date('2025-06-10T15:00:00+07:00').getTime();
-    const examEndTime = new Date('2025-06-10T15:15:00+07:00').getTime();
+    const examStartTime = new Date('2025-06-10T19:00:00+07:00').getTime();
+    const examAccessEndTime = new Date('2025-06-10T20:00:00+07:00').getTime();
 
     function checkAccess() {
       const currentTime = new Date().getTime();
@@ -380,12 +432,12 @@
         rulesModal.style.display = 'flex';
         startExamButton.style.display = 'none';
         accessMessage.style.display = 'block';
-        accessMessage.textContent = 'Bài kiểm tra sẽ bắt đầu vào 15:00 ngày 10/06/2025. Vui lòng quay lại sau!';
-      } else if (currentTime >= examEndTime) {
+        accessMessage.textContent = 'Bài kiểm tra sẽ bắt đầu vào 19:00 ngày 10/06/2025. Vui lòng quay lại sau!';
+      } else if (currentTime >= examAccessEndTime) {
         rulesModal.style.display = 'flex';
         startExamButton.style.display = 'none';
         accessMessage.style.display = 'block';
-        accessMessage.textContent = 'Thời gian làm bài đã kết thúc!';
+        accessMessage.textContent = 'Thời gian truy cập bài kiểm tra đã kết thúc!';
         container.style.display = 'none';
       } else {
         rulesModal.style.display = 'flex';
@@ -398,12 +450,16 @@
       timerDisplay.style.display = 'block';
       container.style.display = 'block';
       rulesModal.style.display = 'none';
-      timerInterval = setInterval(updateTimer, 1000);
+      const startTime = new Date().getTime();
+      const examEndTime = startTime + 15 * 60 * 1000; // 15 phút từ khi nhấn bắt đầu
+      timeLeft = Math.floor((examEndTime - startTime) / 1000); // Tính lại timeLeft
+      timerInterval = setInterval(() => updateTimer(examEndTime), 1000);
     }
 
-    function updateTimer() {
+    function updateTimer(examEndTime) {
       const currentTime = new Date().getTime();
-      if (currentTime >= examEndTime) {
+      timeLeft = Math.floor((examEndTime - currentTime) / 1000);
+      if (timeLeft <= 0 || currentTime >= examAccessEndTime) {
         clearInterval(timerInterval);
         timerDisplay.textContent = 'Hết giờ!';
         warningDisplay.style.display = 'none';
@@ -420,20 +476,9 @@
       const seconds = timeLeft % 60;
       timerDisplay.textContent = `Thời gian còn lại: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
-      if (timeLeft <= 5 * 60 && timeLeft > 0) {
+      if (timeLeft <= 5 * 60) {
         warningDisplay.style.display = 'block';
-      } else if (timeLeft <= 0) {
-        clearInterval(timerInterval);
-        timerDisplay.textContent = 'Hết giờ!';
-        warningDisplay.style.display = 'none';
-        container.style.display = 'none';
-        rulesModal.style.display = 'flex';
-        startExamButton.style.display = 'none';
-        accessMessage.style.display = 'block';
-        accessMessage.textContent = 'Thời gian làm bài đã kết thúc!';
-        feedbackForm.submit();
       }
-      timeLeft--;
     }
 
     startExamButton.addEventListener('click', startTimer);
@@ -468,17 +513,6 @@
           feedbackForm.submit();
         }
       }
-    });
-
-    // Bảo mật: Chỉ cho phép nhập chữ, số, dấu câu, và dấu cách
-    const allowedKeys = /^[a-zA-Z0-9\s.,!?;:'"()-]$/;
-    document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea').forEach(input => {
-      input.addEventListener('keydown', (e) => {
-        if (!allowedKeys.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'ArrowUp' && e.key !== 'ArrowDown' && e.key !== 'Tab' && !e.ctrlKey && !e.metaKey) {
-          e.preventDefault();
-          alert('Chỉ được sử dụng chữ cái, số, dấu câu và dấu cách!');
-        }
-      });
     });
   </script>
 </body>
