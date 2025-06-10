@@ -223,7 +223,7 @@
       }
       .modal-content button {
         font-size: 0.9rem;
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 1;
       }
       #accessMessage {
         font-size: 1rem;
@@ -399,8 +399,8 @@
       dobMonth.appendChild(option);
     }
 
-    // Năm: 2000-2025
-    for (let i = 2025; i >= 2000; i--) {
+    // Năm: 1950-2025
+    for (let i = 2025; i >= 1950; i--) {
       const option = document.createElement('option');
       option.value = i;
       option.textContent = i;
@@ -424,7 +424,7 @@
     let timeLeft = 15 * 60; // 15 phút tính bằng giây
     let timerInterval;
     const examStartTime = new Date('2025-06-10T15:00:00+07:00').getTime();
-    const examAccessEndTime = new Date('2025-06-10T20:00:00+07:00').getTime();
+    const examAccessEndTime = new Date('2025-06-10T16:00:00+07:00').getTime();
 
     function checkAccess() {
       const currentTime = new Date().getTime();
@@ -432,7 +432,7 @@
         rulesModal.style.display = 'flex';
         startExamButton.style.display = 'none';
         accessMessage.style.display = 'block';
-        accessMessage.textContent = 'Bài kiểm tra sẽ bắt đầu vào 19:00 ngày 10/06/2025. Vui lòng quay lại sau!';
+        accessMessage.textContent = 'Bài kiểm tra sẽ bắt đầu vào 15:00 ngày 10/06/2025. Vui lòng quay lại sau!';
       } else if (currentTime >= examAccessEndTime) {
         rulesModal.style.display = 'flex';
         startExamButton.style.display = 'none';
