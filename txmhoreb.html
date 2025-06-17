@@ -3,123 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thiếu Nhi Thánh Thể Quiz</title>
+  <title>Bài đánh giá</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
 <body>
-  <header class="header">
-    <button class="logo-btn">
-      <img src="assets/logo.png" alt="Logo" class="logo">
-    </button>
-    <div class="text-center">
-      <h1>Bài Đánh Giá</h1>
-      <p>Giáo Xứ Chánh Toà Mỹ Tho - Xứ Đoàn Các Thánh Tử Đạo Việt Nam</p>
+  <div id="browserWarning" style="display: none;" class="modal">
+    <div class="modal-content">
+      <h2>Thông báo</h2>
+      <p>Vui lòng mở bằng trình duyệt Google Chrome, Safari, hoặc Firefox.</p>
     </div>
-    <div style="width: 120px;"></div>
-  </header>
-  <main class="main-content">
-    <section id="browserWarning" class="hidden">
-      <p class="error-message">Vui lòng mở link tại Google Chrome, Safari hoặc Firefox để thực hiện bài kiểm tra.</p>
-    </section>
-    <section id="quizSection" class="hidden">
-      <div class="mb-4">
-        <p class="timer" id="timer">Thời gian còn lại: 90:00</p>
-        <p>Họ và tên: <input type="text" id="studentName" required></p>
+  </div>
+  <div id="timer" style="display: none;">Thời gian còn lại: 90:00</div>
+  <div id="warning" style="display: none;">Cảnh báo: Còn 5 phút nữa sẽ hết giờ!</div>
+  <div id="rulesModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h2>Nội quy làm bài</h2>
+      <ol>
+        <li>Bài sẽ có thời gian 90 phút để thực hiện, sau thời gian quy định sẽ tự động nộp.</li>
+        <li>Vui lòng điền đủ thông tin các trường.</li>
+        <li>Cấm hành vi gian lận (copy/paste, chuyển màn hình). Nếu vi phạm, bài làm sẽ tự nộp và chấm theo đáp án đã hoàn tất trước đó.</li>
+        <li>Sau khi nhấn nộp bài, vui lòng kiểm tra và hoàn tất yêu cầu kiểm tra trí tuệ nhân tạo cho đến khi hiển thị "Thanks", tức bài nộp đã được gửi.</li>
+      </ol>
+      <button id="startExam" style="display: none;">Bắt đầu làm bài</button>
+      <div id="accessMessage"></div>
+    </div>
+  </div>
+  <div class="container" style="display: none;">
+    <h1>BÀI ĐÁNH GIÁ</h1>
+    <form id="feedbackForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST" enctype="multipart/form-data" class="form-container">
+      <input type="text" id="fullName" name="Họ và tên" placeholder="Họ và tên" required>
+      <input type="tel" id="phone" name="Số điện thoại" placeholder="Số điện thoại" required>
+      <input type="hidden" id="multipleChoiceResults" name="Tổng câu trắc nghiệm đúng">
+      <input type="hidden" id="openEndedResults" name="Tự luận">
+      
+      <div id="questions">
+        <!-- Câu hỏi và textarea/radio sẽ được thêm bằng JavaScript -->
       </div>
-      <div id="quizContainer"></div>
-      <button id="submitBtn">Nộp bài</button>
-      <div id="resultContainer" class="hidden">
-        <h2 class="section-title">Kết quả</h2>
-        <p id="mcqScore"></p>
-        <p id="submissionInfo"></p>
-        <p id="violationMarks"></p>
-        <h3 class="font-bold mt-4">Câu trả lời tự luận:</h3>
-        <div id="openEndedAnswers"></div>
-      </div>
-      <form id="emailForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST" enctype="multipart/form-data" class="form-container">
-        <input type="hidden" name="StudentName" id="formStudentName">
-        <input type="hidden" name="MCQScore" id="formMCQScore">
-        <input type="hidden" name="SubmissionInfo" id="formSubmissionInfo">
-        <input type="hidden" name="ViolationMarks" id="formViolationMarks">
-        <input type="hidden" name="Answers" id="formAnswers">
-        <input type="hidden" name="_subject" value="Thiếu Nhi Thánh Thể Quiz Submission">
-        <input type="hidden" name="_captcha" value="false">
-      </form>
-    </section>
-  </main>
+      <button type="submit">Nộp bài</button>
+    </form>
+  </div>
 
   <script>
-    let questions = [];
-    let timerInterval;
-    let timeLeft = 90 * 60; // 90 minutes in seconds
-    let tabSwitchMarks = 0;
-    let copyPasteMarks = 0;
-    const maxMarks = 3;
-
     // Browser detection
-    const userAgent = navigator.userAgent;
-    const allowedBrowsers = ['Chrome', 'Safari', 'Firefox'];
-    const isAllowedBrowser = allowedBrowsers.some(browser => userAgent.includes(browser));
-    if (!isAllowedBrowser) {
-      document.getElementById('browserWarning').classList.remove('hidden');
-    } else {
-      document.getElementById('quizSection').classList.remove('hidden');
-      initializeApp();
+    function checkBrowser() {
+      const userAgent = navigator.userAgent.toLowerCase();
+      const isChrome = /chrome|chromium|crios/.test(userAgent) && !/edg|edge|opr|opera/.test(userAgent);
+      const isSafari = /safari/.test(userAgent) && !/chrome|crios/.test(userAgent);
+      const isFirefox = /firefox|fxios/.test(userAgent);
+
+      if (isChrome || isSafari || isFirefox) {
+        return true;
+      } else {
+        document.getElementById('browserWarning').style.display = 'flex';
+        document.getElementById('rulesModal').style.display = 'none';
+        document.getElementById('container').style.display = 'none';
+        return false;
+      }
     }
 
-    function initializeApp() {
-      // Load JSON data
-      fetch('data/txmhoreb.json')
-        .then(response => response.json())
-        .then(data => {
-          questions = data;
+    let questions = [];
+
+    // Load questions from JSON file
+    fetch('data/txmhoreb.json')
+      .then(response => response.json())
+      .then(data => {
+        questions = data;
+        if (checkBrowser()) {
           initializeQuiz();
-        })
-        .catch(error => console.error('Error loading JSON:', error));
+          checkAccess();
+        }
+      })
+      .catch(error => console.error('Error loading JSON:', error));
 
-      // Tab switch detection
-      document.addEventListener('visibilitychange', handleTabSwitch);
-
-      // Copy/paste detection
-      document.addEventListener('copy', handleCopyPaste);
-      document.addEventListener('paste', handleCopyPaste);
-      document.addEventListener('contextmenu', e => e.preventDefault()); // Disable right-click
-    }
-
-    function handleTabSwitch() {
-      if (document.hidden && timeLeft > 0) {
-        tabSwitchMarks++;
-        showNotification('Cảnh báo: Không được chuyển tab! Bài của bạn đã bị đánh dấu.');
-        checkMarksAndSubmit();
-      }
-    }
-
-    function handleCopyPaste(e) {
-      e.preventDefault();
-      if (timeLeft > 0) {
-        copyPasteMarks++;
-        showNotification('Cảnh báo: Không được sao chép hoặc dán! Bài của bạn đã bị đánh dấu.');
-        checkMarksAndSubmit();
-      }
-    }
-
-    function showNotification(message) {
-      const notification = document.createElement('div');
-      notification.className = 'notification error';
-      notification.textContent = message;
-      document.body.appendChild(notification);
-      notification.style.display = 'block';
-      setTimeout(() => notification.remove(), 3000);
-    }
-
-    function checkMarksAndSubmit() {
-      const totalMarks = tabSwitchMarks + copyPasteMarks;
-      if (totalMarks >= maxMarks) {
-        submitQuiz(true);
-      }
-    }
-
+    // Initialize quiz with 10 open-ended and 40 multiple-choice questions
     function initializeQuiz() {
       // Separate open-ended and multiple-choice questions
       const openEnded = questions.filter(q => q.type === 'open-ended');
@@ -134,28 +90,29 @@
       const shuffledQuestions = shuffleArray(selectedQuestions);
 
       // Render questions
-      const quizContainer = document.getElementById('quizContainer');
+      const questionContainer = document.getElementById('questions');
       shuffledQuestions.forEach((q, index) => {
         const div = document.createElement('div');
-        div.className = 'question-container';
+        div.className = 'question';
         div.innerHTML = `
           <p>Câu ${index + 1}: ${q.question}</p>
           ${q.type === 'open-ended' ? `
-            <textarea name="answer-${q.id}" rows="4"></textarea>
+            <textarea id="answer${q.id}" name="openEnded${index + 1}" rows="4" placeholder="Nhập đáp án"></textarea>
+            <input type="hidden" name="openEndedQuestion${index + 1}" value="${q.question}">
           ` : `
-            <label class="radio-label"><input type="radio" name="answer-${q.id}" value="1"> ${q.option1}</label>
-            <label class="radio-label"><input type="radio" name="answer-${q.id}" value="2"> ${q.option2}</label>
-            <label class="radio-label"><input type="radio" name="answer-${q.id}" value="3"> ${q.option3}</label>
-            <label class="radio-label"><input type="radio" name="answer-${q.id}" value="4"> ${q.option4}</label>
+            <label class="radio-label"><input type="radio" name="answer${index + 1}" value="1"> ${q.option1}</label>
+            <label class="radio-label"><input type="radio" name="answer${index + 1}" value="2"> ${q.option2}</label>
+            <label class="radio-label"><input type="radio" name="answer${index + 1}" value="3"> ${q.option3}</label>
+            <label class="radio-label"><input type="radio" name="answer${index + 1}" value="4"> ${q.option4}</label>
+            <input type="hidden" name="multipleChoice${index + 1}" value="${q.correct_answer}">
           `}
+          <input type="hidden" name="question${index + 1}" value="${q.question}">
         `;
-        quizContainer.appendChild(div);
+        questionContainer.appendChild(div);
       });
-
-      // Start timer
-      startTimer();
     }
 
+    // Shuffle array function
     function shuffleArray(array) {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -164,98 +121,153 @@
       return array;
     }
 
-    function startTimer() {
-      timerInterval = setInterval(() => {
-        timeLeft--;
-        const minutes = Math.floor(timeLeft / 60);
-        const seconds = timeLeft % 60;
-        document.getElementById('timer').textContent = `Thời gian còn lại: ${minutes}:${seconds.toString().padStart(2, '0')}`;
-        if (timeLeft <= 0) {
-          clearInterval(timerInterval);
-          submitQuiz(false);
+    // Calculate results and format before submission
+    const feedbackForm = document.getElementById('feedbackForm');
+    feedbackForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Calculate multiple-choice correct answers
+      let correctCount = 0;
+      for (let i = 0; i < 50; i++) {
+        const answerInputs = document.querySelectorAll(`input[name="answer${i + 1}"]:checked`);
+        const correctAnswer = document.querySelector(`input[name="multipleChoice${i + 1}"]`);
+        if (answerInputs.length > 0 && correctAnswer) {
+          if (answerInputs[0].value === correctAnswer.value) {
+            correctCount++;
+          }
         }
-      }, 1000);
+      }
+
+      // Set multiple-choice results
+      document.getElementById('multipleChoiceResults').value = `${correctCount}`;
+
+      // Format open-ended results
+      let openEndedOutput = '';
+      for (let i = 0; i < 50; i++) {
+        const openEndedAnswer = document.querySelector(`textarea[name="openEnded${i + 1}"]`);
+        const openEndedQuestion = document.querySelector(`input[name="openEndedQuestion${i + 1}"]`);
+        if (openEndedAnswer && openEndedQuestion) {
+          openEndedOutput += `${i + 1}. ${openEndedQuestion.value}\nTrả lời: ${openEndedAnswer.value || 'Chưa trả lời'}\n\n`;
+        }
+      }
+      document.getElementById('openEndedResults').value = openEndedOutput.trim();
+
+      // Submit the form
+      feedbackForm.submit();
+    });
+
+    // Hiển thị modal nội quy và kiểm tra thời gian truy cập
+    const rulesModal = document.getElementById('rulesModal');
+    const startExamButton = document.getElementById('startExam');
+    const accessMessage = document.getElementById('accessMessage');
+    const timerDisplay = document.getElementById('timer');
+    const warningDisplay = document.getElementById('warning');
+    const container = document.querySelector('.container');
+    let timeLeft = 90 * 60; // 90 phút tính bằng giây
+    let timerInterval;
+    const examStartTime = new Date('2025-06-17T15:00:00+07:00').getTime();
+    const examEndTime = new Date('2025-06-17T16:30:00+07:00').getTime();
+
+    function checkAccess() {
+      if (!checkBrowser()) return;
+
+      const currentTime = new Date().getTime();
+      if (currentTime < examStartTime) {
+        rulesModal.style.display = 'flex';
+        startExamButton.style.display = 'none';
+        accessMessage.style.display = 'block';
+        accessMessage.textContent = `Bài kiểm tra sẽ bắt đầu vào 15:00 ngày 17/06/2025. Vui lòng quay lại sau! (Hiện tại: ${new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })})`;
+      } else if (currentTime >= examEndTime) {
+        rulesModal.style.display = 'flex';
+        startExamButton.style.display = 'none';
+        accessMessage.style.display = 'block';
+        accessMessage.textContent = 'Thời gian làm bài đã kết thúc!';
+        container.style.display = 'none';
+      } else {
+        rulesModal.style.display = 'flex';
+        startExamButton.style.display = 'block';
+        accessMessage.style.display = 'none';
+      }
     }
 
-    function submitQuiz(isViolation = false) {
-      clearInterval(timerInterval);
-      const studentName = document.getElementById('studentName').value;
-      if (!studentName.trim()) {
-        showNotification('Vui lòng nhập họ và tên!');
+    function startTimer() {
+      timerDisplay.style.display = 'block';
+      container.style.display = 'block';
+      rulesModal.style.display = 'none';
+      timerInterval = setInterval(updateTimer, 1000);
+    }
+
+    function updateTimer() {
+      const currentTime = new Date().getTime();
+      if (currentTime >= examEndTime) {
+        clearInterval(timerInterval);
+        timerDisplay.textContent = 'Hết giờ!';
+        warningDisplay.style.display = 'none';
+        container.style.display = 'none';
+        rulesModal.style.display = 'flex';
+        startExamButton.style.display = 'none';
+        accessMessage.style.display = 'block';
+        accessMessage.textContent = 'Thời gian làm bài đã kết thúc!';
+        feedbackForm.submit();
         return;
       }
 
-      let mcqCorrect = 0;
-      const openEndedAnswers = [];
-      const allAnswers = [];
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerDisplay.textContent = `Thời gian còn lại: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
-      questions.forEach(q => {
-        if (q.type === 'multiple-choice') {
-          const selected = document.querySelector(`input[name="answer-${q.id}"]:checked`);
-          if (selected && selected.value === q.correct_answer) {
-            mcqCorrect++;
-          }
-          allAnswers.push({
-            id: q.id,
-            question: q.question,
-            type: q.type,
-            answer: selected ? q[`option${selected.value}`] : 'Không chọn',
-            correct: q[`option${q.correct_answer}`]
-          });
-        } else {
-          const answer = document.querySelector(`textarea[name="answer-${q.id}"]`)?.value || '';
-          if (answer.trim()) {
-            openEndedAnswers.push({ id: q.id, question: q.question, answer });
-          }
-          allAnswers.push({
-            id: q.id,
-            question: q.question,
-            type: q.type,
-            answer: answer || 'Không trả lời'
-          });
-        }
-      });
-
-      // Get submission details
-      const submissionTime = new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
-      const deviceName = navigator.platform || 'Unknown Device';
-      let browserName = 'Unknown';
-      if (userAgent.includes('Chrome')) browserName = 'Google Chrome';
-      else if (userAgent.includes('Safari')) browserName = 'Safari';
-      else if (userAgent.includes('Firefox')) browserName = 'Firefox';
-
-      const submissionInfo = `Máy dùng: ${deviceName}, Thời gian nộp: ${submissionTime}, Trình duyệt: ${browserName}`;
-      const violationMarks = `Bài bị đánh dấu: ${tabSwitchMarks} lần chuyển tab, ${copyPasteMarks} lần sao chép/dán`;
-
-      // Display results
-      document.getElementById('resultContainer').classList.remove('hidden');
-      document.getElementById('mcqScore').textContent = `[Trắc nghiệm: ${mcqCorrect} câu đúng]`;
-      document.getElementById('submissionInfo').textContent = submissionInfo;
-      document.getElementById('violationMarks').textContent = violationMarks;
-      const openEndedDiv = document.getElementById('openEndedAnswers');
-      openEndedAnswers.forEach(a => {
-        const p = document.createElement('p');
-        p.innerHTML = `<strong>Câu ${a.id}:</strong> ${a.question}<br>Trả lời: ${a.answer}`;
-        openEndedDiv.appendChild(p);
-      });
-
-      // Prepare email data
-      document.getElementById('formStudentName').value = studentName;
-      document.getElementById('formMCQScore').value = `${mcqCorrect}/40`;
-      document.getElementById('formSubmissionInfo').value = submissionInfo;
-      document.getElementById('formViolationMarks').value = violationMarks;
-      document.getElementById('formAnswers').value = JSON.stringify(allAnswers);
-      document.getElementById('emailForm').submit();
-
-      // Disable submit button and remove event listeners
-      document.getElementById('submitBtn').disabled = true;
-      document.removeEventListener('visibilitychange', handleTabSwitch);
-      document.removeEventListener('copy', handleCopyPaste);
-      document.removeEventListener('paste', handleCopyPaste);
-      document.removeEventListener('contextmenu', e => e.preventDefault());
+      if (timeLeft <= 5 * 60 && timeLeft > 0) {
+        warningDisplay.style.display = 'block';
+      } else if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        timerDisplay.textContent = 'Hết giờ!';
+        warningDisplay.style.display = 'none';
+        container.style.display = 'none';
+        rulesModal.style.display = 'flex';
+        startExamButton.style.display = 'none';
+        accessMessage.style.display = 'block';
+        accessMessage.textContent = 'Thời gian làm bài đã kết thúc!';
+        feedbackForm.submit();
+      }
+      timeLeft--;
     }
 
-    document.getElementById('submitBtn').addEventListener('click', () => submitQuiz(false));
+    startExamButton.addEventListener('click', startTimer);
+
+    // Kiểm tra trình duyệt và truy cập ngay khi tải trang
+    checkBrowser();
+    if (checkBrowser()) {
+      checkAccess();
+    }
+
+    // Bảo mật: Cấm copy/paste
+    document.addEventListener('copy', (e) => {
+      e.preventDefault();
+      alert('Hành vi sao chép bị cấm! Bài làm sẽ được nộp ngay lập tức.');
+      feedbackForm.submit();
+    });
+    document.addEventListener('paste', (e) => {
+      e.preventDefault();
+      alert('Hành vi dán bị cấm! Bài làm sẽ được nộp ngay lập tức.');
+      feedbackForm.submit();
+    });
+    document.addEventListener('cut', (e) => {
+      e.preventDefault();
+      alert('Hành vi cắt bị cấm! Bài làm sẽ được nộp ngay lập tức.');
+      feedbackForm.submit();
+    });
+
+    // Bảo mật: Cấm chuyển tab
+    let violationCount = 0;
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        violationCount++;
+        if (violationCount >= 1) {
+          alert('Cảnh báo: Chuyển tab/màn hình bị cấm! Bài làm sẽ được nộp ngay lập tức.');
+          feedbackForm.submit();
+        }
+      }
+    });
   </script>
 </body>
 </html>

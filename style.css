@@ -1,274 +1,202 @@
-:root {
-    --primary-color: #A6192E;
-    --primary-dark: #821523;
-    --text-color: #374151;
-    --success-color: #10B981;
-    --warning-color: #FBBF24;
-    --error-color: #EF4444;
-}
-
-* {
-    box-sizing: border-box;
-}
-
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #F3F4F6;
-    margin: 0;
-    padding: 0.5rem;
-    min-height: 100vh;
-    color: var(--text-color);
-    font-size: clamp(14px, 2.5vw, 16px); /* Responsive base font size */
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9;
+  color: #333;
+  line-height: 1.6;
 }
 
-.header {
-    background: linear-gradient(90deg, #A6192E 0%, #8B1625 100%);
-    color: #FFFFFF;
-    padding: clamp(0.5rem, 2vw, 0.75rem);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.header .logo-btn {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
+h1 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 20px;
 }
 
-.header .logo {
-    width: clamp(60px, 15vw, 100px);
-    height: clamp(60px, 15vw, 100px);
-    transition: transform 0.3s ease;
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.header .logo-btn:hover .logo {
-    transform: scale(1.1);
-}
-
-.header .text-center {
-    flex: 1;
-    text-align: center;
-    padding: 0.5rem;
-}
-
-.header h1, .header h2 {
-    font-family: 'Merriweather', serif;
-    font-size: clamp(1.25rem, 4vw, 1.75rem);
-    font-weight: 500;
-    margin: 0 0 0.25rem 0;
-}
-
-.header p {
-    font-size: clamp(0.875rem, 2.5vw, 1rem);
-    margin: 0;
-}
-
-.main-content {
-    max-width: 1280px;
-    margin: clamp(1rem, 3vw, 1.5rem) auto;
-    background: white;
-    border-radius: 1rem;
-    padding: clamp(1rem, 2.5vw, 1.5rem);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.section-title {
-    font-family: 'Merriweather', serif;
-    font-size: clamp(1.25rem, 3.5vw, 1.5rem);
-    font-weight: 700;
-    color: var(--text-color);
-    margin-bottom: 1rem;
-}
-
-.timer {
-    font-weight: bold;
-    color: var(--error-color);
-    font-size: clamp(0.875rem, 2.5vw, 1rem);
-    margin-bottom: 1rem;
-}
-
-.question-container {
-    margin-bottom: clamp(1rem, 3vw, 1.5rem);
-}
-
-.question-container p {
-    font-weight: bold;
-    font-size: clamp(0.875rem, 2.5vw, 1rem);
-    margin-bottom: 0.5rem;
-}
-
-.radio-label {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.5rem;
-    font-size: clamp(0.75rem, 2.5vw, 0.875rem);
-}
-
-input[type="text"], textarea {
-    border: 1px solid #D1D5DB;
-    padding: clamp(0.375rem, 1.5vw, 0.5rem);
-    border-radius: 0.375rem;
-    width: 100%;
-    margin-top: 0.25rem;
-    font-size: clamp(0.75rem, 2.5vw, 0.875rem);
-    line-height: 1.5;
+input[type="text"],
+input[type="tel"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
 }
 
 textarea {
-    resize: vertical;
-    min-height: 80px;
+  resize: vertical;
+  min-height: 100px;
 }
 
-input[type="radio"] {
-    margin-right: 0.5rem;
-    width: 1rem;
-    height: 1rem;
-    cursor: pointer;
+button[type="submit"] {
+  background-color: #3498db;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-button {
-    background-color: var(--primary-color);
-    color: white;
-    padding: clamp(0.5rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.25rem);
-    border: none;
-    border-radius: 0.375rem;
-    cursor: pointer;
-    font-size: clamp(0.75rem, 2.5vw, 0.875rem);
-    transition: background-color 0.3s ease;
-    touch-action: manipulation; /* Improve touch responsiveness */
+button[type="submit"]:hover {
+  background-color: #2980b9;
 }
 
-button:hover:not(:disabled) {
-    background-color: var(--primary-dark);
+.question {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 6px;
 }
 
-button:disabled {
-    background-color: #D1D5DB;
-    cursor: not-allowed;
+.question p {
+  margin: 0 0 10px;
+  font-weight: bold;
 }
 
-.hidden {
-    display: none;
+.radio-label {
+  display: block;
+  margin: 8px 0;
+  cursor: pointer;
 }
 
-.notification {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    padding: clamp(0.75rem, 2vw, 1rem) clamp(1rem, 3vw, 1.5rem);
-    border-radius: 0.5rem;
-    z-index: 1000;
-    display: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    font-size: clamp(0.75rem, 2.5vw, 0.875rem);
+.radio-label input {
+  margin-right: 10px;
 }
 
-.notification.error {
-    background: var(--error-color);
-    color: white;
+#timer,
+#warning {
+  text-align: center;
+  font-size: 18px;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 4px;
 }
 
-.error-message {
-    color: var(--error-color);
-    text-align: center;
-    font-size: clamp(0.875rem, 2.5vw, 1rem);
-    margin: 1rem 0;
+#timer {
+  background-color: #ecf0f1;
 }
 
-/* Mobile (≤640px) */
-@media (max-width: 640px) {
-    body {
-        padding: 0.25rem;
-    }
-
-    .header {
-        padding: 0.5rem;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    .header .logo {
-        width: 60px;
-        height: 60px;
-    }
-
-    .header .text-center {
-        padding: 0;
-    }
-
-    .main-content {
-        margin: 0.5rem;
-        padding: 1rem;
-        border-radius: 0.5rem;
-    }
-
-    input[type="text"], textarea {
-        padding: 0.375rem;
-    }
-
-    button {
-        width: 100%; /* Full-width buttons for touch */
-        padding: 0.75rem;
-    }
-
-    .radio-label {
-        padding: 0.25rem 0; /* Larger tap area */
-    }
-
-    input[type="radio"] {
-        width: 1.25rem;
-        height: 1.25rem;
-    }
+#warning {
+  background-color: #e74c3c;
+  color: #fff;
 }
 
-/* Tablet (641px - 1024px) */
-@media (min-width: 641px) and (max-width: 1024px) {
-    .header {
-        padding: 0.75rem;
-    }
-
-    .header .logo {
-        width: 80px;
-        height: 80px;
-    }
-
-    .main-content {
-        margin: 1rem;
-        padding: 1.25rem;
-    }
-
-    input[type="text"], textarea {
-        padding: 0.5rem;
-    }
-
-    button {
-        padding: 0.5rem 1rem;
-    }
-
-    .radio-label {
-        padding: 0.25rem 0;
-    }
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* Laptop/Desktop (≥1025px) */
-@media (min-width: 1025px) {
-    .header {
-        padding: 1rem;
-    }
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+}
 
-    .main-content {
-        margin: 1.5rem auto;
-        padding: 1.5rem;
-    }
+.modal-content h2 {
+  margin-top: 0;
+  color: #2c3e50;
+}
 
-    button {
-        padding: 0.5rem 1.25rem;
-    }
+.modal-content ol {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+#startExam {
+  background-color: #2ecc71;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#startExam:hover {
+  background-color: #27ae60;
+}
+
+#accessMessage {
+  color: #e74c3c;
+  margin-top: 10px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    margin: 10px;
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  input[type="text"],
+  input[type="tel"],
+  textarea {
+    font-size: 14px;
+  }
+
+  button[type="submit"],
+  #startExam {
+    font-size: 14px;
+  }
+
+  .modal-content {
+    width: 95%;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    margin: 5px;
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  .question {
+    padding: 10px;
+  }
+
+  .radio-label {
+    font-size: 14px;
+  }
+
+  #timer,
+  #warning {
+    font-size: 16px;
+  }
 }
