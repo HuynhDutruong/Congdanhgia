@@ -465,7 +465,8 @@
         // Check test availability
         const checkTestAvailability = async () => {
             try {
-                const response = await fetch('txmhoreb.html', { method: 'HEAD' });
+                // const response = await fetch('txmhoreb.html', { method: 'HEAD' });
+                const response = await fetch(url = 'https://docs.google.com/forms/d/e/1FAIpQLSfoXX9urYXkD4wqaYz0RbND0_9niAa0ZIlrDUaTFCUemHu9jA/viewform?usp=sharing&ouid=113642281153260119923', { method: 'HEAD' });
                 document.getElementById('test-availability').textContent = response.ok
                     ? 'Nhấn nút để tham gia bài kiểm tra!'
                     : 'Chưa có bài kiểm tra. Liên hệ Admin!';
