@@ -75,7 +75,9 @@
     "ten_thanh": "Cecilia",
     "ho_va_ten": "Đặng Lê Anh",
     "scores": [
-      { "round": "Đợt 1", "value": null }
+      { "round": "Đợt 1", "value": null },
+      { "round": "Đợt 2", "value": 9.8 }
+      
     ]
   },
   {
