@@ -4,156 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bài đánh giá</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-    body {
-      background-color: #f4f7fa;
-      color: #333;
-      line-height: 1.6;
-    }
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-    .modal-content {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      width: 90%;
-      max-width: 500px;
-      text-align: center;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    .modal-content h2 {
-      margin-bottom: 15px;
-      color: #2c3e50;
-    }
-    .modal-content ol {
-      text-align: left;
-      margin-bottom: 20px;
-    }
-    .modal-content button {
-      padding: 10px 20px;
-      background-color: #3498db;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    .modal-content button:hover {
-      background-color: #2980b9;
-    }
-    .container {
-      padding: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .container h1 {
-      text-align: center;
-      color: #2c3e50;
-      margin-bottom: 20px;
-    }
-    .form-container {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    .form-container input[type="text"],
-    .form-container input[type="tel"] {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 16px;
-    }
-    .question {
-      margin-bottom: 20px;
-      padding: 15px;
-      background-color: #f9f9f9;
-      border-radius: 5px;
-    }
-    .question p {
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      resize: vertical;
-      min-height: 100px;
-      font-size: 16px;
-    }
-    .radio-label {
-      display: block;
-      margin: 5px 0;
-    }
-    .radio-label input[type="radio"] {
-      margin-right: 10px;
-    }
-    .form-container button[type="submit"] {
-      display: block;
-      width: 100%;
-      padding: 12px;
-      background-color: #2ecc71;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    .form-container button[type="submit"]:hover {
-      background-color: #27ae60;
-    }
-    #timer, #warning {
-      text-align: center;
-      margin: 10px 0;
-      font-size: 18px;
-    }
-    #warning {
-      color: #e74c3c;
-    }
-    .progress {
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 16px;
-      color: #2c3e50;
-    }
-    @media (max-width: 768px) {
-      .modal-content {
-        width: 95%;
-      }
-      .container {
-        padding: 10px;
-      }
-      .form-container {
-        padding: 15px;
-      }
-      .question {
-        padding: 10px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="browserWarning" class="modal">
+  <div id="browserWarning" style="display: none;" class="modal">
     <div class="modal-content">
       <h2>Thông báo</h2>
       <p>Vui lòng mở bằng trình duyệt Google Chrome, Safari, hoặc Firefox.</p>
@@ -168,27 +22,29 @@
         <li>Bài sẽ có thời gian 90 phút để thực hiện, sau thời gian quy định sẽ tự động nộp.</li>
         <li>Vui lòng điền đủ thông tin các trường.</li>
         <li>Cấm hành vi gian lận (copy/paste, chuyển màn hình). Nếu vi phạm, bài làm sẽ tự nộp và chấm theo đáp án đã hoàn tất trước đó.</li>
-        <li>Sau khi nhấn nộp bài, bài sẽ được gửi tự động. Vui lòng đợi thông báo xác nhận.</li>
+        <li>Sau khi nhấn nộp bài, vui lòng kiểm tra và hoàn tất yêu cầu kiểm tra trí tuệ nhân tạo cho đến khi hiển thị "Thanks", tức bài nộp đã được gửi.</li>
       </ol>
-      <button id="startExam">Bắt đầu làm bài</button>
+      <button id="startExam" style="display: none;">Bắt đầu làm bài</button>
       <div id="accessMessage"></div>
     </div>
   </div>
   <div class="container" style="display: none;">
     <h1>BÀI ĐÁNH GIÁ</h1>
-    <div class="progress" id="progress">Đã trả lời: 0/50 câu</div>
-    <form id="feedbackForm" method="POST" class="form-container">
+    <form id="feedbackForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST" enctype="multipart/form-data" class="form-container">
       <input type="text" id="fullName" name="Họ và tên" placeholder="Họ và tên" required>
       <input type="tel" id="phone" name="Số điện thoại" placeholder="Số điện thoại" required>
       <input type="hidden" id="multipleChoiceResults" name="Tổng câu trắc nghiệm đúng">
       <input type="hidden" id="openEndedResults" name="Tự luận">
-      <div id="questions"></div>
+      
+      <div id="questions">
+        <!-- Câu hỏi và textarea/radio sẽ được thêm bằng JavaScript -->
+      </div>
       <button type="submit">Nộp bài</button>
     </form>
   </div>
 
   <script>
-    // Kiểm tra trình duyệt
+    // Browser detection
     function checkBrowser() {
       const userAgent = navigator.userAgent.toLowerCase();
       const isChrome = /chrome|chromium|crios/.test(userAgent) && !/edg|edge|opr|opera/.test(userAgent);
@@ -200,25 +56,16 @@
       } else {
         document.getElementById('browserWarning').style.display = 'flex';
         document.getElementById('rulesModal').style.display = 'none';
-        document.querySelector('.container').style.display = 'none';
+        document.getElementById('container').style.display = 'none';
         return false;
       }
     }
 
     let questions = [];
 
-    // Tải câu hỏi từ JSON
-    fetch('./data/txmhoreb.json')
-      .then(response => {
-        if (!response.ok) {
-          if (response.status === 404) {
-            throw new Error('Không tìm thấy file txmhoreb.json. Vui lòng kiểm tra đường dẫn.');
-          } else {
-            throw new Error(`Lỗi HTTP: ${response.status} ${response.statusText}`);
-          }
-        }
-        return response.json();
-      })
+    // Load questions from JSON file
+    fetch('data/txmhoreb.json')
+      .then(response => response.json())
       .then(data => {
         questions = data;
         if (checkBrowser()) {
@@ -226,27 +73,23 @@
           checkAccess();
         }
       })
-      .catch(error => {
-        console.error('Lỗi tải câu hỏi:', error.message);
-        alert(`Lỗi tải câu hỏi: ${error.message}. Vui lòng kiểm tra kết nối, đường dẫn file, hoặc liên hệ quản trị viên.`);
-      });
+      .catch(error => console.error('Error loading JSON:', error));
 
-    // Khởi tạo bài kiểm tra với 10 câu tự luận và 40 câu trắc nghiệm
+    // Initialize quiz with 10 open-ended and 40 multiple-choice questions
     function initializeQuiz() {
+      // Separate open-ended and multiple-choice questions
       const openEnded = questions.filter(q => q.type === 'open-ended');
       const multipleChoice = questions.filter(q => q.type === 'multiple-choice');
 
-      // Kiểm tra đủ câu hỏi
-      if (openEnded.length < 10 || multipleChoice.length < 40) {
-        alert(`Không đủ câu hỏi trong file JSON. Cần ít nhất 10 câu tự luận (hiện có: ${openEnded.length}) và 40 câu trắc nghiệm (hiện có: ${multipleChoice.length}).`);
-        return;
-      }
-
-      const selectedOpenEnded = shuffleArray([...openEnded]).slice(0, 10);
-      const selectedMultipleChoice = shuffleArray([...multipleChoice]).slice(0, 40);
+      // Randomly select 10 open-ended and 40 multiple-choice questions
+      const selectedOpenEnded = shuffleArray(openEnded).slice(0, 10);
+      const selectedMultipleChoice = shuffleArray(multipleChoice).slice(0, 40);
       const selectedQuestions = [...selectedOpenEnded, ...selectedMultipleChoice];
+
+      // Shuffle all selected questions
       const shuffledQuestions = shuffleArray(selectedQuestions);
 
+      // Render questions
       const questionContainer = document.getElementById('questions');
       shuffledQuestions.forEach((q, index) => {
         const div = document.createElement('div');
@@ -254,25 +97,22 @@
         div.innerHTML = `
           <p>Câu ${index + 1}: ${q.question}</p>
           ${q.type === 'open-ended' ? `
-            <textarea id="openEnded${q.id}" name="openEnded${q.id}" rows="4" placeholder="Nhập đáp án"></textarea>
-            <input type="hidden" name="openEndedQuestion${q.id}" value="${q.question}">
+            <textarea id="answer${q.id}" name="openEnded${index + 1}" rows="4" placeholder="Nhập đáp án"></textarea>
+            <input type="hidden" name="openEndedQuestion${index + 1}" value="${q.question}">
           ` : `
-            <label class="radio-label"><input type="radio" name="answer${q.id}" value="1"> ${q.option1}</label>
-            <label class="radio-label"><input type="radio" name="answer${q.id}" value="2"> ${q.option2}</label>
-            <label class="radio-label"><input type="radio" name="answer${q.id}" value="3"> ${q.option3}</label>
-            <label class="radio-label"><input type="radio" name="answer${q.id}" value="4"> ${q.option4}</label>
-            <input type="hidden" name="multipleChoice${q.id}" value="${q.correct_answer}">
+            <label class="radio-label"><input type="radio" name="answer${index + 1}" value="1"> ${q.option1}</label>
+            <label class="radio-label"><input type="radio" name="answer${index + 1}" value="2"> ${q.option2}</label>
+            <label class="radio-label"><input type="radio" name="answer${index + 1}" value="3"> ${q.option3}</label>
+            <label class="radio-label"><input type="radio" name="answer${index + 1}" value="4"> ${q.option4}</label>
+            <input type="hidden" name="multipleChoice${index + 1}" value="${q.correct_answer}">
           `}
-          <input type="hidden" name="question${q.id}" value="${q.question}">
+          <input type="hidden" name="question${index + 1}" value="${q.question}">
         `;
         questionContainer.appendChild(div);
       });
-
-      // Cập nhật tiến độ
-      updateProgress();
     }
 
-    // Hàm xáo trộn mảng
+    // Shuffle array function
     function shuffleArray(array) {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -281,118 +121,52 @@
       return array;
     }
 
-    // Cập nhật tiến độ trả lời
-    function updateProgress() {
-      const totalQuestions = 50;
-      const answeredQuestions = document.querySelectorAll('input[type="radio"]:checked, textarea:not(:empty)').length;
-      document.getElementById('progress').textContent = `Đã trả lời: ${answeredQuestions}/${totalQuestions} câu`;
-    }
-
-    // Xử lý submit form
-    const feedbackForm = document.querySelector('#feedbackForm');
-    const submitButton = feedbackForm.querySelector('button[type="submit"]');
-
-    feedbackForm.addEventListener('submit', async (e) => {
+    // Calculate results and format before submission
+    const feedbackForm = document.getElementById('feedbackForm');
+    feedbackForm.addEventListener('submit', function(e) {
       e.preventDefault();
 
-      // Xác thực dữ liệu
-      const fullName = document.querySelector('#fullName').value.trim();
-      const phone = document.querySelector('#phone').value.trim();
-      if (!fullName || fullName.length < 2) {
-        alert('Vui lòng nhập họ và tên hợp lệ (tối thiểu 2 ký tự).');
-        return;
-      }
-      if (!phone.match(/^\d{10}$/)) {
-        alert('Vui lòng nhập số điện thoại hợp lệ (10 chữ số).');
-        return;
-      }
-
-      // Tính điểm trắc nghiệm và thu thập câu trả lời tự luận
+      // Calculate multiple-choice correct answers
       let correctCount = 0;
-      let openEndedOutput = '';
-      const selectedQuestions = questions.filter(q => document.querySelector(`[name="answer${q.id}"], [name="openEnded${q.id}"]`));
-      const multipleChoiceQuestions = selectedQuestions.filter(q => q.type === 'multiple-choice');
-      const openEndedQuestions = selectedQuestions.filter(q => q.type === 'open-ended');
-
-      // Xử lý câu trắc nghiệm
-      multipleChoiceQuestions.forEach((q, index) => {
-        const answerInputs = document.querySelectorAll(`input[name="answer${q.id}"]:checked`);
-        const correctAnswer = document.querySelector(`input[name="multipleChoice${q.id}"]`);
+      for (let i = 0; i < 50; i++) {
+        const answerInputs = document.querySelectorAll(`input[name="answer${i + 1}"]:checked`);
+        const correctAnswer = document.querySelector(`input[name="multipleChoice${i + 1}"]`);
         if (answerInputs.length > 0 && correctAnswer) {
           if (answerInputs[0].value === correctAnswer.value) {
             correctCount++;
           }
         }
-      });
-
-      // Xử lý câu tự luận
-      openEndedQuestions.forEach((q, index) => {
-        const openEndedAnswer = document.querySelector(`textarea[name="openEnded${q.id}"]`);
-        const openEndedQuestion = document.querySelector(`input[name="openEndedQuestion${q.id}"]`);
-        if (openEndedAnswer && openEndedQuestion) {
-          openEndedOutput += `${index + 1}. ${openEndedQuestion.value}\nTrả lời: ${openEndedAnswer.value || 'Chưa trả lời'}\n\n`;
-        }
-      });
-
-      const data = {
-        fullName,
-        phone,
-        multipleChoiceResults: `${correctCount}/40`,
-        openEndedResults: openEndedOutput.trim(),
-        timestamp: new Date().toISOString()
-      };
-
-      try {
-        submitButton.disabled = true;
-        submitButton.textContent = 'Đang gửi...';
-
-        const response = await fetch('https://script.google.com/macros/s/1mHGeBO0Pep576iUfGdxQBrVF6JhnsHGmyWaDVyU9EJU/exec', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-
-        if (!response.ok) {
-          throw new Error(`Lỗi HTTP! Status: ${response.status}`);
-        }
-
-        const result = await response.json();
-        if (!result || typeof result !== 'object') {
-          throw new Error('Phản hồi server không hợp lệ.');
-        }
-
-        if (result.status === 'success') {
-          alert(`Bài nộp đã được gửi thành công! ${result.submissionId ? 'ID: ' + result.submissionId : ''}`);
-          localStorage.removeItem('examTimeLeft');
-          feedbackForm.reset();
-          window.location.reload();
-        } else {
-          alert('Lỗi khi gửi bài: ' + (result.message || 'Không rõ nguyên nhân'));
-        }
-      } catch (error) {
-        console.error('Lỗi:', error);
-        alert('Lỗi kết nối khi gửi bài: ' + error.message);
-      } finally {
-        submitButton.disabled = false;
-        submitButton.textContent = 'Nộp bài';
       }
+
+      // Set multiple-choice results
+      document.getElementById('multipleChoiceResults').value = `${correctCount}`;
+
+      // Format open-ended results
+      let openEndedOutput = '';
+      for (let i = 0; i < 50; i++) {
+        const openEndedAnswer = document.querySelector(`textarea[name="openEnded${i + 1}"]`);
+        const openEndedQuestion = document.querySelector(`input[name="openEndedQuestion${i + 1}"]`);
+        if (openEndedAnswer && openEndedQuestion) {
+          openEndedOutput += `${i + 1}. ${openEndedQuestion.value}\nTrả lời: ${openEndedAnswer.value || 'Chưa trả lời'}\n\n`;
+        }
+      }
+      document.getElementById('openEndedResults').value = openEndedOutput.trim();
+
+      // Submit the form
+      feedbackForm.submit();
     });
 
-    // Theo dõi tiến độ trả lời
-    document.getElementById('questions').addEventListener('change', updateProgress);
-    document.getElementById('questions').addEventListener('input', updateProgress);
-
-    // Bộ đếm thời gian và kiểm tra quyền truy cập
+    // Hiển thị modal nội quy và kiểm tra thời gian truy cập
     const rulesModal = document.getElementById('rulesModal');
     const startExamButton = document.getElementById('startExam');
     const accessMessage = document.getElementById('accessMessage');
     const timerDisplay = document.getElementById('timer');
     const warningDisplay = document.getElementById('warning');
     const container = document.querySelector('.container');
-    const examStartTime = new Date('2025-06-17T15:00:00+07:00').getTime();
-    const examEndTime = new Date('2025-06-21T00:00:00+07:00').getTime();
-    let timeLeft = localStorage.getItem('examTimeLeft') ? parseInt(localStorage.getItem('examTimeLeft')) : 60 * 60;
+    let timeLeft = 60 * 60; // 60 phút tính bằng giây
     let timerInterval;
+    const examStartTime = new Date('2025-06-18T15:00:00+07:00').getTime();
+    const examEndTime = new Date('2025-06-20T21:30:00+07:00').getTime();
 
     function checkAccess() {
       if (!checkBrowser()) return;
@@ -402,7 +176,7 @@
         rulesModal.style.display = 'flex';
         startExamButton.style.display = 'none';
         accessMessage.style.display = 'block';
-        accessMessage.textContent = `Bài kiểm tra sẽ bắt đầu vào 15:00 ngày 17/06/2025. Vui lòng quay lại sau! (Hiện tại: ${new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })})`;
+        accessMessage.textContent = `Bài kiểm tra sẽ bắt đầu vào 15:00 ngày 18/06/2025. Vui lòng quay lại sau! (Hiện tại: ${new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })})`;
       } else if (currentTime >= examEndTime) {
         rulesModal.style.display = 'flex';
         startExamButton.style.display = 'none';
@@ -427,7 +201,6 @@
       const currentTime = new Date().getTime();
       if (currentTime >= examEndTime) {
         clearInterval(timerInterval);
-        localStorage.removeItem('examTimeLeft');
         timerDisplay.textContent = 'Hết giờ!';
         warningDisplay.style.display = 'none';
         container.style.display = 'none';
@@ -435,20 +208,18 @@
         startExamButton.style.display = 'none';
         accessMessage.style.display = 'block';
         accessMessage.textContent = 'Thời gian làm bài đã kết thúc!';
-        feedbackForm.dispatchEvent(new Event('submit'));
+        feedbackForm.submit();
         return;
       }
 
       const minutes = Math.floor(timeLeft / 60);
       const seconds = timeLeft % 60;
       timerDisplay.textContent = `Thời gian còn lại: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-      localStorage.setItem('examTimeLeft', timeLeft);
 
       if (timeLeft <= 5 * 60 && timeLeft > 0) {
         warningDisplay.style.display = 'block';
       } else if (timeLeft <= 0) {
         clearInterval(timerInterval);
-        localStorage.removeItem('examTimeLeft');
         timerDisplay.textContent = 'Hết giờ!';
         warningDisplay.style.display = 'none';
         container.style.display = 'none';
@@ -456,48 +227,47 @@
         startExamButton.style.display = 'none';
         accessMessage.style.display = 'block';
         accessMessage.textContent = 'Thời gian làm bài đã kết thúc!';
-        feedbackForm.dispatchEvent(new Event('submit'));
+        feedbackForm.submit();
       }
       timeLeft--;
     }
 
     startExamButton.addEventListener('click', startTimer);
 
-    // Chống gian lận
-    let violationCount = 0;
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        violationCount++;
-        if (violationCount === 1) {
-          alert('Cảnh báo: Chuyển tab/màn hình bị cấm! Lần vi phạm tiếp theo sẽ nộp bài ngay lập tức.');
-        } else if (violationCount >= 2) {
-          alert('Vi phạm: Chuyển tab/màn hình quá số lần cho phép! Bài làm sẽ được nộp ngay lập tức.');
-          feedbackForm.dispatchEvent(new Event('submit'));
-        }
-      }
-    });
-
-    document.addEventListener('copy', (e) => {
-      e.preventDefault();
-      alert('Hành vi sao chép bị cấm! Bài làm sẽ được nộp ngay lập tức.');
-      feedbackForm.dispatchEvent(new Event('submit'));
-    });
-    document.addEventListener('paste', (e) => {
-      e.preventDefault();
-      alert('Hành vi dán bị cấm! Bài làm sẽ được nộp ngay lập tức.');
-      feedbackForm.dispatchEvent(new Event('submit'));
-    });
-    document.addEventListener('cut', (e) => {
-      e.preventDefault();
-      alert('Hành vi cắt bị cấm! Bài làm sẽ được nộp ngay lập tức.');
-      feedbackForm.dispatchEvent(new Event('submit'));
-    });
-
-    // Khởi tạo
+    // Kiểm tra trình duyệt và truy cập ngay khi tải trang
     checkBrowser();
     if (checkBrowser()) {
       checkAccess();
     }
+
+    // Bảo mật: Cấm copy/paste
+    document.addEventListener('copy', (e) => {
+      e.preventDefault();
+      alert('Hành vi sao chép bị cấm! Bài làm sẽ được nộp ngay lập tức.');
+      feedbackForm.submit();
+    });
+    document.addEventListener('paste', (e) => {
+      e.preventDefault();
+      alert('Hành vi dán bị cấm! Bài làm sẽ được nộp ngay lập tức.');
+      feedbackForm.submit();
+    });
+    document.addEventListener('cut', (e) => {
+      e.preventDefault();
+      alert('Hành vi cắt bị cấm! Bài làm sẽ được nộp ngay lập tức.');
+      feedbackForm.submit();
+    });
+
+    // Bảo mật: Cấm chuyển tab
+    let violationCount = 0;
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        violationCount++;
+        if (violationCount >= 1) {
+          alert('Cảnh báo: Chuyển tab/màn hình bị cấm! Bài làm sẽ được nộp ngay lập tức.');
+          feedbackForm.submit();
+        }
+      }
+    });
   </script>
 </body>
 </html>
