@@ -5,7 +5,7 @@
     "scores": [
       { "round": "Đợt 1", "value": 8.0 },
       { "round": "Đợt 2", "value": 10.0 },
-      { "round": "Đợt 3", "value": null },
+      { "round": "Đợt 3", "value": 10.0 },
       { "round": "Đợt 4", "value": null }
 
     ]
