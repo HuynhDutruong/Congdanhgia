@@ -4,7 +4,8 @@
     "ho_va_ten": "Đào Ngọc Nhã Trân",
     "scores": [
       { "round": "Đợt 1", "value": 8.0 },
-      { "round": "Đợt 2", "value": 10.0 }
+      { "round": "Đợt 2", "value": 10.0 },
+      { "round": "Đợt 3", "value": null }
     ]
   },
   {
@@ -21,7 +22,8 @@
     "ho_va_ten": "Nguyễn Hoàng Trọng Nhân",
     "scores": [
       { "round": "Đợt 1", "value": 3.3 },
-      { "round": "Đợt 2", "value": 8.2 }
+      { "round": "Đợt 2", "value": 8.2 },
+      { "round": "Đợt 3", "value": null }
     ]
   },
   {
@@ -29,7 +31,8 @@
     "ho_va_ten": "Lê Đỗ Hoàng Quân",
     "scores": [
       { "round": "Đợt 1", "value": 4.7 },
-      { "round": "Đợt 2", "value": 10.0 }
+      { "round": "Đợt 2", "value": 10.0 },
+      { "round": "Đợt 3", "value": null }
     ]
   },
   {
@@ -46,7 +49,8 @@
     "ho_va_ten": "Nguyễn Hoàng Mai Vy",
     "scores": [
       { "round": "Đợt 1", "value": 6.0 },
-      { "round": "Đợt 2", "value": 9.8 }
+      { "round": "Đợt 2", "value": 9.8 },
+      { "round": "Đợt 3", "value": null }
     ]
   },
   {
@@ -54,7 +58,8 @@
     "ho_va_ten": "Nguyễn Hữu Tâm",
     "scores": [
       { "round": "Đợt 1", "value": 0.0 },
-      { "round": "Đợt 2", "value": 9.4 }
+      { "round": "Đợt 2", "value": 9.4 },
+      { "round": "Đợt 3", "value": null }
     ]
   },
   {
@@ -62,7 +67,8 @@
     "ho_va_ten": "Lê Hoàng Thiên Lộc",
     "scores": [
       { "round": "Đợt 1", "value": 8.0 },
-      { "round": "Đợt 2", "value": 9.3 }
+      { "round": "Đợt 2", "value": 9.3 },
+      { "round": "Đợt 3", "value": null }
     ]
   },
   {
@@ -70,7 +76,8 @@
     "ho_va_ten": "Lưu Nguyễn Quỳnh Giao",
     "scores": [
       { "round": "Đợt 1", "value": 7.0 },
-      { "round": "Đợt 2", "value": 8.4 }
+      { "round": "Đợt 2", "value": 8.4 },
+      { "round": "Đợt 3", "value": null }
     ]
   },
   {
@@ -78,15 +85,17 @@
     "ho_va_ten": "Đặng Lê Anh",
     "scores": [
       { "round": "Đợt 1", "value": 0.0 },
-      { "round": "Đợt 2", "value": 9.8 }
-      
+      { "round": "Đợt 2", "value": 9.8 },
+      { "round": "Đợt 3", "value": null }
     ]
   },
   {
     "ten_thanh": "Maria",
     "ho_va_ten": "Nguyễn Ngọc Băng Tâm",
     "scores": [
-      { "round": "Đợt 1", "value": 0.0 }
+      { "round": "Đợt 1", "value": 0.0 },
+      { "round": "Đợt 2", "value": null },
+      { "round": "Đợt 3", "value": null }
     ]
   },
   {
@@ -94,7 +103,8 @@
     "ho_va_ten": "Bùi Ngọc Ánh Quyên",
     "scores": [
       { "round": "Đợt 1", "value": 5.0 },
-      { "round": "Đợt 2", "value": 9.3 }
+      { "round": "Đợt 2", "value": 9.3 },
+      { "round": "Đợt 3", "value": null }
     ]
   },
   {
@@ -102,7 +112,8 @@
     "ho_va_ten": "Trịnh Bảo Yến",
     "scores": [
       { "round": "Đợt 1", "value": 2.7 },
-      { "round": "Đợt 2", "value": 10.0 }
+      { "round": "Đợt 2", "value": 10.0 },
+      { "round": "Đợt 3", "value": null }
     ]
   }
 ]
