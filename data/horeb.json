@@ -36,7 +36,7 @@
     "scores": [
       { "round": "Đợt 1", "value": 4.7 },
       { "round": "Đợt 2", "value": 10.0 },
-      { "round": "Đợt 3", "value": null },
+      { "round": "Đợt 3", "value": 9.8 },
       { "round": "Đợt 4", "value": null }
     ]
   },
