@@ -5,7 +5,9 @@
     "scores": [
       { "round": "Đợt 1", "value": 8.0 },
       { "round": "Đợt 2", "value": 10.0 },
-      { "round": "Đợt 3", "value": null }
+      { "round": "Đợt 3", "value": null },
+      { "round": "Đợt 4", "value": null }
+
     ]
   },
   {
@@ -14,7 +16,8 @@
     "scores": [
       { "round": "Đợt 1", "value": 2.7 },
       { "round": "Đợt 2", "value": 9.7 },
-      { "round": "Đợt 3", "value": 10.0 }
+      { "round": "Đợt 3", "value": 10.0 },
+      { "round": "Đợt 4", "value": null }
     ]
   },
   {
@@ -23,7 +26,8 @@
     "scores": [
       { "round": "Đợt 1", "value": 3.3 },
       { "round": "Đợt 2", "value": 8.2 },
-      { "round": "Đợt 3", "value": null }
+      { "round": "Đợt 3", "value": null },
+      { "round": "Đợt 4", "value": null }
     ]
   },
   {
@@ -32,7 +36,8 @@
     "scores": [
       { "round": "Đợt 1", "value": 4.7 },
       { "round": "Đợt 2", "value": 10.0 },
-      { "round": "Đợt 3", "value": null }
+      { "round": "Đợt 3", "value": null },
+      { "round": "Đợt 4", "value": null }
     ]
   },
   {
@@ -41,7 +46,8 @@
     "scores": [
       { "round": "Đợt 1", "value": 8.0 },
       { "round": "Đợt 2", "value": 9.8 },
-      { "round": "Đợt 3", "value": 9.8 }
+      { "round": "Đợt 3", "value": 9.8 },
+      { "round": "Đợt 4", "value": null }
     ]
   },
   {
@@ -50,7 +56,8 @@
     "scores": [
       { "round": "Đợt 1", "value": 6.0 },
       { "round": "Đợt 2", "value": 9.8 },
-      { "round": "Đợt 3", "value": null }
+      { "round": "Đợt 3", "value": null },
+      { "round": "Đợt 4", "value": null }
     ]
   },
   {
@@ -59,7 +66,8 @@
     "scores": [
       { "round": "Đợt 1", "value": 0.0 },
       { "round": "Đợt 2", "value": 9.4 },
-      { "round": "Đợt 3", "value": null }
+      { "round": "Đợt 3", "value": null },
+      { "round": "Đợt 4", "value": null }
     ]
   },
   {
@@ -68,7 +76,8 @@
     "scores": [
       { "round": "Đợt 1", "value": 8.0 },
       { "round": "Đợt 2", "value": 9.3 },
-      { "round": "Đợt 3", "value": null }
+      { "round": "Đợt 3", "value": null },
+      { "round": "Đợt 4", "value": null }
     ]
   },
   {
@@ -77,7 +86,8 @@
     "scores": [
       { "round": "Đợt 1", "value": 7.0 },
       { "round": "Đợt 2", "value": 8.4 },
-      { "round": "Đợt 3", "value": null }
+      { "round": "Đợt 3", "value": null },
+      { "round": "Đợt 4", "value": null }
     ]
   },
   {
@@ -86,7 +96,8 @@
     "scores": [
       { "round": "Đợt 1", "value": 0.0 },
       { "round": "Đợt 2", "value": 9.8 },
-      { "round": "Đợt 3", "value": null }
+      { "round": "Đợt 3", "value": null },
+      { "round": "Đợt 4", "value": null }
     ]
   },
   {
@@ -95,7 +106,8 @@
     "scores": [
       { "round": "Đợt 1", "value": 0.0 },
       { "round": "Đợt 2", "value": null },
-      { "round": "Đợt 3", "value": null }
+      { "round": "Đợt 3", "value": null },
+      { "round": "Đợt 4", "value": null }
     ]
   },
   {
@@ -104,7 +116,8 @@
     "scores": [
       { "round": "Đợt 1", "value": 5.0 },
       { "round": "Đợt 2", "value": 9.3 },
-      { "round": "Đợt 3", "value": null }
+      { "round": "Đợt 3", "value": null },
+      { "round": "Đợt 4", "value": null }
     ]
   },
   {
@@ -113,7 +126,8 @@
     "scores": [
       { "round": "Đợt 1", "value": 2.7 },
       { "round": "Đợt 2", "value": 10.0 },
-      { "round": "Đợt 3", "value": null }
+      { "round": "Đợt 3", "value": null },
+      { "round": "Đợt 4", "value": null }
     ]
   }
 ]
