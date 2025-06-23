@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Kiểm Tra Nghe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .audio-container button:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            ring: 2px solid #2563eb;
+            border-color: #2563eb;
+        }
+        .form-container {
+            background: linear-gradient(to bottom, #ffffff, #f9fafb);
+        }
+        .input-field, .submit-btn {
+            transition: all 0.3s ease;
+        }
+        .input-field:hover, .submit-btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+        }
+        .audio-btn {
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+        .audio-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+        }
+        .error {
+            border-color: #ef4444 !important;
+        }
+        .error-message {
+            color: #ef4444;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans antialiased">
+    <div class="min-h-screen flex items-center justify-center p-4 md:p-6">
+        <div id="browserWarning" class="hidden bg-red-50 border border-red-300 text-red-600 px-6 py-4 rounded-xl shadow-md w-full max-w-lg mb-4">
+            <p class="text-center text-sm font-medium">Vui lòng sử dụng trình duyệt Safari, Google Chrome hoặc Microsoft Edge để thực hiện bài kiểm tra.</p>
+        </div>
+        <div id="testContainer" class="form-container bg-white rounded-3xl shadow-2xl w-full max-w-2xl p-6 md:p-10">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-center text-gray-900 mb-4">Bài Kiểm Tra MORSE</h1>
+            <div id="timer" class="text-center text-lg font-semibold text-gray-700 mb-6">
+                Thời gian còn lại: <span id="timeLeft">30:00</span>
+            </div>
+            <div id="timeWarning" class="hidden bg-yellow-50 border border-yellow-300 text-yellow-700 px-4 py-2 rounded-lg text-center text-sm font-medium mb-6">
+                Còn 15 phút! Vui lòng hoàn thành bài kiểm tra.
+            </div>
+            <form id="testForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST" class="space-y-8" onsubmit="return validateForm(event)">
+                <!-- Thông tin thí sinh -->
+                <div class="space-y-6">
+                    <div>
+                        <label for="fullName" class="block text-sm font-semibold text-gray-700 mb-2">Họ và tên:</label>
+                        <input type="text" id="fullName" name="Họ_và_tên" required
+                            class="input-field w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl shadow-sm focus:ring focus:ring-blue-600 focus:border-blue-600 text-gray-800">
+                        <p id="fullNameError" class="error-message hidden">Vui lòng nhập họ và tên.</p>
+                    </div>
+                    <div>
+                        <label for="dob" class="block text-sm font-semibold text-gray-700 mb-2">Ngày/tháng/năm sinh:</label>
+                        <input type="date" id="dob" name="Ngày_tháng_năm_sinh" required
+                            class="input-field w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl shadow-sm focus:ring focus:ring-blue-600 focus:border-blue-600 text-gray-800">
+                        <p id="dobError" class="error-message hidden">Vui lòng chọn ngày sinh.</p>
+                    </div>
+                </div>
+
+                <!-- Câu 1 -->
+                <div class="audio-container space-y-4 bg-gray-50 p-6 rounded-xl shadow-sm">
+                    <h3 class="text-xl font-semibold text-gray-800">Câu 1: ĐÂY LÀ HIỆU MORSE TẬP HỌP ĐỐI TƯỢNG NÀO?</h3>
+                    <div class="flex flex-col sm:flex-row items-center gap-4">
+                        <button type="button" id="play1-first" onclick="playAudioOnce('morse/TH.wav', this, 'play1-second')"
+                            class="audio-btn px-6 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 disabled:bg-gray-400 w-full sm:w-auto">
+                            Phát lần 1
+                        </button>
+                        <button type="button" id="play1-second" onclick="playAudioOnce('morse/TH.wav', this, null)"
+                            class="audio-btn px-6 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 disabled:bg-gray-400 w-full sm:w-auto" disabled>
+                            Phát lần 2
+                        </button>
+                    </div>
+                    <label for="answer1" class="block text-sm font-semibold text-gray-700 mt-4">Đáp án Câu 1:</label>
+                    <textarea id="answer1" name="Câu_1" required
+                        class="input-field w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl shadow-sm focus:ring focus:ring-blue-600 focus:border-blue-600 resize-y min-h-[100px] text-gray-800"></textarea>
+                    <p id="answer1Error" class="error-message hidden">Vui lòng nhập đáp án câu 1.</p>
+                </div>
+
+                <!-- Câu 2 -->
+                <div class="audio-container space-y-4 bg-gray-50 p-6 rounded-xl shadow-sm">
+                    <h3 class="text-xl font-semibold text-gray-800">Câu 2: ĐÂY LÀ HIỆU MORSE TẬP HỌP ĐỐI TƯỢNG NÀO?</h3>
+                    <div class="flex flex-col sm:flex-row items-center gap-4">
+                        <button type="button" id="play2-first" onclick="playAudioOnce('morse/DT.wav', this, 'play2-second')"
+                            class="audio-btn px-6 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 disabled:bg-gray-400 w-full sm:w-auto">
+                            Phát lần 1
+                        </button>
+                        <button type="button" id="play2-second" onclick="playAudioOnce('morse/DT.wav', this, null)"
+                            class="audio-btn px-6 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 disabled:bg-gray-400 w-full sm:w-auto" disabled>
+                            Phát lần 2
+                        </button>
+                    </div>
+                    <label for="answer2" class="block text-sm font-semibold text-gray-700 mt-4">Đáp án Câu 2:</label>
+                    <textarea id="answer2" name="Câu_2" required
+                        class="input-field w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl shadow-sm focus:ring focus:ring-blue-600 focus:border-blue-600 resize-y min-h-[100px] text-gray-800"></textarea>
+                    <p id="answer2Error" class="error-message hidden">Vui lòng nhập đáp án câu 2.</p>
+                </div>
+
+                <!-- Câu 3 -->
+                <div class="audio-container space-y-4 bg-gray-50 p-6 rounded-xl shadow-sm">
+                    <h3 class="text-xl font-semibold text-gray-800">Câu 3: VIẾT LẠI BẠCH VĂN SAU KHI DỊCH</h3>
+                    <div class="flex flex-col sm:flex-row items-center gap-4">
+                        <button type="button" id="play3-first" onclick="playAudioOnce('morse/MTHU.wav', this, 'play3-second')"
+                            class="audio-btn px-6 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 disabled:bg-gray-400 w-full sm:w-auto">
+                            Phát lần 1
+                        </button>
+                        <button type="button" id="play3-second" onclick="playAudioOnce('morse/MTHU.wav', this, null)"
+                            class="audio-btn px-6 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 disabled:bg-gray-400 w-full sm:w-auto" disabled>
+                            Phát lần 2
+                        </button>
+                    </div>
+                    <label for="answer3" class="block text-sm font-semibold text-gray-700 mt-4">Đáp án Câu 3:</label>
+                    <textarea id="answer3" name="Câu_3" required
+                        class="input-field w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl shadow-sm focus:ring focus:ring-blue-600 focus:border-blue-600 resize-y min-h-[100px] text-gray-800"></textarea>
+                    <p id="answer3Error" class="error-message hidden">Vui lòng nhập đáp án câu 3.</p>
+                </div>
+
+                <!-- Formsubmit hidden input -->
+                <input type="hidden" name="_subject" value="Kết quả bài kiểm tra nghe">
+                <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html">
+                <input type="hidden" name="_captcha" value="false">
+
+                <div class="text-center">
+                    <input type="submit" value="Nộp bài"
+                        class="submit-btn px-8 py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 cursor-pointer shadow-md">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Kiểm tra trình duyệt
+        function checkBrowser() {
+            const ua = navigator.userAgent.toLowerCase();
+            const isSafari = ua.includes('safari') && !ua.includes('chrome') && !ua.includes('edg');
+            const isChrome = ua.includes('chrome') && !ua.includes('edg');
+            const isEdge = ua.includes('edg');
+
+            if (!isSafari && !isChrome && !isEdge) {
+                document.getElementById('browserWarning').classList.remove('hidden');
+                document.getElementById('testContainer').classList.add('hidden');
+                return false;
+            }
+            return true;
+        }
+
+        // Hàm phát âm thanh một lần
+        function playAudioOnce(src, button, nextButtonId) {
+            if (!checkBrowser()) return;
+
+            // Vô hiệu hóa nút hiện tại
+            button.disabled = true;
+
+            // Tạo đối tượng audio mới
+            const audio = new Audio(src);
+            audio.volume = 1.0;
+
+            // Phát audio
+            audio.play().then(() => {
+                // Ngăn tua
+                audio.onseeking = () => {
+                    audio.currentTime = audio.currentTime;
+                };
+
+                // Khi audio kết thúc
+                audio.onended = () => {
+                    audio.onseeking = null;
+                    audio.onended = null;
+                    // Nếu có nút tiếp theo, bật sau 10 giây
+                    if (nextButtonId) {
+                        setTimeout(() => {
+                            document.getElementById(nextButtonId).disabled = false;
+                        }, 10000);
+                    }
+                };
+            }).catch(error => {
+                console.error(`Lỗi khi phát audio ${src}:`, error);
+                button.disabled = false; // Bật lại nút nếu có lỗi
+            });
+
+            // Xử lý lỗi tải file âm thanh
+            audio.onerror = () => {
+                console.error(`Lỗi tải file âm thanh ${src}`);
+                button.disabled = false; // Bật lại nút nếu có lỗi
+            };
+        }
+
+        // Hàm định dạng thời gian
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Hàm bắt đầu đếm ngược
+        function startTimer() {
+            let timeLeft = 30 * 60; // 30 phút
+            const timerElement = document.getElementById('timeLeft');
+            const warningElement = document.getElementById('timeWarning');
+            const form = document.getElementById('testForm');
+
+            const timerInterval = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = formatTime(timeLeft);
+
+                // Hiển thị cảnh báo khi còn 15 phút
+                if (timeLeft === 15 * 60) {
+                    warningElement.classList.remove('hidden');
+                }
+
+                // Tự động nộp bài khi hết giờ
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    form.submit();
+                }
+            }, 1000);
+        }
+
+        // Hàm xác thực biểu mẫu
+        function validateForm(event) {
+            event.preventDefault();
+            let isValid = true;
+
+            // Kiểm tra họ và tên
+            const fullName = document.getElementById('fullName');
+            const fullNameError = document.getElementById('fullNameError');
+            if (!fullName.value.trim()) {
+                fullName.classList.add('error');
+                fullNameError.classList.remove('hidden');
+                isValid = false;
+            } else {
+                fullName.classList.remove('error');
+                fullNameError.classList.add('hidden');
+            }
+
+            // Kiểm tra ngày sinh
+            const dob = document.getElementById('dob');
+            const dobError = document.getElementById('dobError');
+            if (!dob.value) {
+                dob.classList.add('error');
+                dobError.classList.remove('hidden');
+                isValid = false;
+            } else {
+                dob.classList.remove('error');
+                dobError.classList.add('hidden');
+            }
+
+            // Kiểm tra câu 1
+            const answer1 = document.getElementById('answer1');
+            const answer1Error = document.getElementById('answer1Error');
+            if (!answer1.value.trim()) {
+                answer1.classList.add('error');
+                answer1Error.classList.remove('hidden');
+                isValid = false;
+            } else {
+                answer1.classList.remove('error');
+                answer1Error.classList.add('hidden');
+            }
+
+            // Kiểm tra câu 2
+            const answer2 = document.getElementById('answer2');
+            const answer2Error = document.getElementById('answer2Error');
+            if (!answer2.value.trim()) {
+                answer2.classList.add('error');
+                answer2Error.classList.remove('hidden');
+                isValid = false;
+            } else {
+                answer2.classList.remove('error');
+                answer2Error.classList.add('hidden');
+            }
+
+            // Kiểm tra câu 3
+            const answer3 = document.getElementById('answer3');
+            const answer3Error = document.getElementById('answer3Error');
+            if (!answer3.value.trim()) {
+                answer3.classList.add('error');
+                answer3Error.classList.remove('hidden');
+                isValid = false;
+            } else {
+                answer3.classList.remove('error');
+                answer3Error.classList.add('hidden');
+            }
+
+            if (isValid) {
+                form.submit();
+            }
+            return isValid;
+        }
+
+        // Kiểm tra trình duyệt và bắt đầu đồng hồ khi tải trang
+        window.onload = () => {
+            if (checkBrowser()) {
+                startTimer();
+            }
+        };
+    </script>
+</body>
+</html>
