@@ -11,7 +11,7 @@
             opacity: 0.5;
         }
         input:focus, textarea:focus {
-            outline Scientist: none;
+            outline: none;
             ring: 2px solid #2563eb;
             border-color: #2563eb;
         }
@@ -47,6 +47,15 @@
             text-align: center;
             margin-bottom: 1rem;
         }
+        .submission-success {
+            background: #f0fdf4;
+            border: 1px solid #22c55e;
+            color: #22c55e;
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-sans antialiased">
@@ -65,7 +74,10 @@
             <div id="submissionError" class="submission-error hidden">
                 Lỗi: Vui lòng điền đầy đủ tất cả các trường bắt buộc.
             </div>
-            <form id="testForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST" class="space-y-8" onsubmit="return validateForm(event)">
+            <div id="submissionSuccess" class="submission-success hidden">
+                Bài kiểm tra đã được gửi thành công! Trang sẽ tự động chuyển về trang chủ sau 10 giây.
+            </div>
+            <form id="testForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST" class="space-y-8">
                 <!-- Thông tin thí sinh -->
                 <div class="space-y-6">
                     <div>
@@ -139,9 +151,9 @@
                     <p id="answer3Error" class="error-message hidden">Vui lòng nhập đáp án câu 3.</p>
                 </div>
 
-                <!-- Formsubmit hidden input -->
+                <!-- Formsubmit hidden inputs -->
                 <input type="hidden" name="_subject" value="Kết quả bài kiểm tra nghe">
-                <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html">
+                <input type="hidden" name="_next" value="https://tnttchanhtoamytho.ddns.net">
                 <input type="hidden" name="_captcha" value="false">
 
                 <div class="text-center">
@@ -173,27 +185,19 @@
         function playAudioOnce(src, button, nextButtonId) {
             if (!checkBrowser()) return;
 
-            // Vô hiệu hóa nút hiện tại
             button.disabled = true;
-
-            // Tạo đối tượng audio mới
             const audio = new Audio(src);
             audio.volume = 1.0;
 
-            // Phát audio
             audio.play().then(() => {
                 console.log(`Đang phát audio: ${src}`);
-                // Ngăn tua
                 audio.onseeking = () => {
                     audio.currentTime = audio.currentTime;
                 };
-
-                // Khi audio kết thúc
                 audio.onended = () => {
                     console.log(`Audio ${src} đã kết thúc`);
                     audio.onseeking = null;
                     audio.onended = null;
-                    // Nếu có nút tiếp theo, bật sau 10 giây
                     if (nextButtonId) {
                         setTimeout(() => {
                             document.getElementById(nextButtonId).disabled = false;
@@ -203,13 +207,12 @@
                 };
             }).catch(error => {
                 console.error(`Lỗi khi phát audio ${src}:`, error);
-                button.disabled = false; // Bật lại nút nếu có lỗi
+                button.disabled = false;
             });
 
-            // Xử lý lỗi tải file âm thanh
             audio.onerror = () => {
                 console.error(`Lỗi tải file âm thanh ${src}`);
-                button.disabled = false; // Bật lại nút nếu có lỗi
+                button.disabled = false;
             };
         }
 
@@ -222,7 +225,7 @@
 
         // Hàm bắt đầu đếm ngược
         function startTimer() {
-            let timeLeft = 30 * 60; // 30 phút
+            let timeLeft = 30 * 60;
             const timerElement = document.getElementById('timeLeft');
             const warningElement = document.getElementById('timeWarning');
             const form = document.getElementById('testForm');
@@ -231,28 +234,26 @@
                 timeLeft--;
                 timerElement.textContent = formatTime(timeLeft);
 
-                // Hiển thị cảnh báo khi còn 15 phút
                 if (timeLeft === 15 * 60) {
                     warningElement.classList.remove('hidden');
                     console.log('Hiển thị cảnh báo: Còn 15 phút');
                 }
 
-                // Tự động nộp bài khi hết giờ
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
                     console.log('Hết thời gian, tự động nộp bài');
-                    form.submit();
+                    if (validateForm()) {
+                        form.submit();
+                    }
                 }
             }, 1000);
         }
 
         // Hàm xác thực biểu mẫu
-        function validateForm(event) {
-            event.preventDefault();
+        function validateForm() {
             let isValid = true;
             const submissionError = document.getElementById('submissionError');
 
-            // Kiểm tra họ và tên
             const fullName = document.getElementById('fullName');
             const fullNameError = document.getElementById('fullNameError');
             if (!fullName.value.trim()) {
@@ -264,7 +265,6 @@
                 fullNameError.classList.add('hidden');
             }
 
-            // Kiểm tra ngày sinh
             const dob = document.getElementById('dob');
             const dobError = document.getElementById('dobError');
             if (!dob.value) {
@@ -276,7 +276,6 @@
                 dobError.classList.add('hidden');
             }
 
-            // Kiểm tra câu 1
             const answer1 = document.getElementById('answer1');
             const answer1Error = document.getElementById('answer1Error');
             if (!answer1.value.trim()) {
@@ -288,7 +287,6 @@
                 answer1Error.classList.add('hidden');
             }
 
-            // Kiểm tra câu 2
             const answer2 = document.getElementById('answer2');
             const answer2Error = document.getElementById('answer2Error');
             if (!answer2.value.trim()) {
@@ -300,7 +298,6 @@
                 answer2Error.classList.add('hidden');
             }
 
-            // Kiểm tra câu 3
             const answer3 = document.getElementById('answer3');
             const answer3Error = document.getElementById('answer3Error');
             if (!answer3.value.trim()) {
@@ -312,28 +309,57 @@
                 answer3Error.classList.add('hidden');
             }
 
-            // Hiển thị lỗi chung nếu không hợp lệ
             if (!isValid) {
                 submissionError.classList.remove('hidden');
                 console.log('Xác thực thất bại: Các trường bắt buộc chưa được điền');
-                return false;
             } else {
                 submissionError.classList.add('hidden');
-                console.log('Xác thực thành công, đang gửi biểu mẫu');
-                return true; // Cho phép gửi biểu mẫu
+                console.log('Xác thực thành công');
             }
+            return isValid;
         }
+
+        // Xử lý sự kiện gửi biểu mẫu
+        document.getElementById('testForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const submissionError = document.getElementById('submissionError');
+            const submissionSuccess = document.getElementById('submissionSuccess');
+            if (validateForm()) {
+                console.log('Biểu mẫu đang được gửi tới Formsubmit');
+                const form = this;
+                const formData = new FormData(form);
+
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Lỗi mạng: ${response.status}`);
+                    }
+                    console.log('Biểu mẫu gửi thành công!');
+                    submissionSuccess.classList.remove('hidden');
+                    submissionError.classList.add('hidden');
+                    setTimeout(() => {
+                        window.location.href = 'horeb.html';
+                    }, 10000);
+                })
+                .catch(error => {
+                    console.error('Lỗi khi gửi biểu mẫu:', error);
+                    submissionError.innerText = 'Lỗi gửi biểu mẫu. Vui lòng thử lại sau.';
+                    submissionError.classList.remove('hidden');
+                    submissionSuccess.classList.add('hidden');
+                });
+            }
+        });
 
         // Kiểm tra trình duyệt và bắt đầu đồng hồ khi tải trang
         window.onload = () => {
             if (checkBrowser()) {
                 startTimer();
-                // Thêm trình nghe sự kiện submit để ghi log
-                document.getElementById('testForm').addEventListener('submit', (event) => {
-                    if (validateForm(event)) {
-                        console.log('Biểu mẫu đang được gửi tới Formsubmit');
-                    }
-                });
             }
         };
     </script>
