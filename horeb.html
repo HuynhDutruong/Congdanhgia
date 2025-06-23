@@ -453,7 +453,7 @@
 
         const checkTestAvailability = async () => {
             try {
-                const response = await fetch('txmhoreb.html', { method: 'HEAD' });
+                const response = await fetch('morse.html', { method: 'HEAD' });
                 document.getElementById('test-availability').textContent = response.ok
                     ? 'Nhấn nút để tham gia bài kiểm tra!'
                     : 'Chưa có bài kiểm tra. Liên hệ Admin!';
@@ -482,9 +482,9 @@
 
         document.getElementById('test-btn').addEventListener('click', async () => {
             try {
-                const response = await fetch('txmhoreb.html', { method: 'HEAD' });
+                const response = await fetch('morse.html', { method: 'HEAD' });
                 if (response.ok) {
-                    window.location.href = 'txmhoreb.html';
+                    window.location.href = 'morse.html';
                 } else {
                     showNotification('Chưa có bài kiểm tra!', 'error');
                 }
