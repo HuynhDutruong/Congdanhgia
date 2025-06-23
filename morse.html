@@ -75,7 +75,7 @@
                 Lỗi: Vui lòng điền đầy đủ tất cả các trường bắt buộc.
             </div>
             <div id="submissionSuccess" class="submission-success hidden">
-                Bài kiểm tra đã được gửi thành công! Trang sẽ tự động chuyển về trang chủ sau 10 giây.
+                Bài kiểm tra đã được gửi thành công! Trang sẽ tự động chuyển về trang chủ sau 5 giây.
             </div>
             <form id="testForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST" class="space-y-8">
                 <!-- Thông tin thí sinh -->
@@ -345,7 +345,7 @@
                     submissionError.classList.add('hidden');
                     setTimeout(() => {
                         window.location.href = 'horeb.html';
-                    }, 10000);
+                    }, 5000);
                 })
                 .catch(error => {
                     console.error('Lỗi khi gửi biểu mẫu:', error);
