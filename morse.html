@@ -55,8 +55,15 @@
         <div id="testContainer" class="bg-white rounded-2xl shadow-xl w-full max-w-2xl p-6 md:p-8">
             <h1 class="text-3xl font-bold text-center text-gray-800 mb-4">BÀI KIỂM TRA MORSE</h1>
             
+            <!-- Nút bắt đầu ban đầu -->
+            <div id="startSection" class="text-center mb-6">
+                <button id="startTest" class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
+                    Bắt đầu làm bài
+                </button>
+            </div>
+
             <!-- Timer -->
-            <div class="text-center mb-6">
+            <div id="timerSection" class="text-center mb-6 hidden">
                 <div class="inline-block bg-blue-50 text-blue-700 px-4 py-2 rounded-full font-medium">
                     ⏱️ Thời gian: <span id="timeLeft">30:00</span>
                 </div>
@@ -68,15 +75,22 @@
             <!-- Thông báo -->
             <div id="submissionAlert" class="alert-box hidden"></div>
 
+            <!-- Nút bắt đầu làm bài sau voice2 -->
+            <div id="beginTestSection" class="text-center mb-6 hidden">
+                <button id="beginTest" class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
+                    Bắt đầu làm bài
+                </button>
+            </div>
+
             <!-- Form chính với FormSubmit -->
-            <form id="testForm" action="notification2411.huynhdutruong@gmail.com" method="POST" class="space-y-6">
+            <form id="testForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST" class="space-y-6 hidden">
                 <!-- Các trường ẩn cho FormSubmit -->
                 <input type="hidden" name="_subject" value="Kết quả bài kiểm tra Morse">
                 <input type="hidden" name="_next" value="horeb.html">
                 <input type="text" name="_honey" style="display:none">
 
                 <!-- Thông tin thí sinh -->
-                <div class="space-y-4 bg-blue-50 p-5 rounded-xl">
+                <div id="personalInfoSection" class="space-y-4 bg-blue-50 p-5 rounded-xl">
                     <h2 class="text-lg font-semibold text-blue-800 mb-3">THÔNG TIN THÍ SINH</h2>
                     <div>
                         <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">Họ và tên</label>
@@ -90,14 +104,20 @@
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         <p id="dobError" class="error-message hidden">Vui lòng chọn ngày sinh</p>
                     </div>
+                    <div class="pt-4">
+                        <button type="button" id="confirmPersonalInfo"
+                            class="w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
+                            Xác nhận
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Câu hỏi 1 -->
-                <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                <div id="question1" class="bg-gray-50 p-5 rounded-xl border border-gray-200 hidden">
                     <h3 class="text-lg font-semibold text-gray-800 mb-3">Câu 1: ĐÂY LÀ HIỆU MORSE TẬP HỢP ĐỐI TƯỢNG NÀO?</h3>
                     <div class="flex flex-wrap gap-3 mb-4">
                         <button type="button" id="play1-first" onclick="playAudio('morse/TH.wav', this, 'play1-second')"
-                            class="audio-btn px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            class="audio-btn px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700" disabled>
                             Phát lần 1
                         </button>
                         <button type="button" id="play1-second" onclick="playAudio('morse/TH.wav', this)"
@@ -107,18 +127,18 @@
                     </div>
                     <div>
                         <label for="answer1" class="block text-sm font-medium text-gray-700 mb-1">Câu trả lời</label>
-                        <textarea id="answer1" name="Câu 1" rows="3" required
+                        <textarea id="answer1" name="Câu 1" rows="3" required disabled
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
                         <p id="answer1Error" class="error-message hidden">Vui lòng nhập câu trả lời</p>
                     </div>
                 </div>
 
                 <!-- Câu hỏi 2 -->
-                <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                <div id="question2" class="bg-gray-50 p-5 rounded-xl border border-gray-200 hidden">
                     <h3 class="text-lg font-semibold text-gray-800 mb-3">Câu 2: ĐÂY LÀ HIỆU MORSE TẬP HỢP ĐỐI TƯỢNG NÀO?</h3>
                     <div class="flex flex-wrap gap-3 mb-4">
                         <button type="button" id="play2-first" onclick="playAudio('morse/DT.wav', this, 'play2-second')"
-                            class="audio-btn px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            class="audio-btn px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700" disabled>
                             Phát lần 1
                         </button>
                         <button type="button" id="play2-second" onclick="playAudio('morse/DT.wav', this)"
@@ -128,18 +148,18 @@
                     </div>
                     <div>
                         <label for="answer2" class="block text-sm font-medium text-gray-700 mb-1">Câu trả lời</label>
-                        <textarea id="answer2" name="Câu 2" rows="3" required
+                        <textarea id="answer2" name="Câu 2" rows="3" required disabled
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
                         <p id="answer2Error" class="error-message hidden">Vui lòng nhập câu trả lời</p>
                     </div>
                 </div>
 
                 <!-- Câu hỏi 3 -->
-                <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                <div id="question3" class="bg-gray-50 p-5 rounded-xl border border-gray-200 hidden">
                     <h3 class="text-lg font-semibold text-gray-800 mb-3">Câu 3: VIẾT LẠI BẠCH VĂN SAU KHI DỊCH</h3>
                     <div class="flex flex-wrap gap-3 mb-4">
                         <button type="button" id="play3-first" onclick="playAudio('morse/MTHU.wav', this, 'play3-second')"
-                            class="audio-btn px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            class="audio-btn px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700" disabled>
                             Phát lần 1
                         </button>
                         <button type="button" id="play3-second" onclick="playAudio('morse/MTHU.wav', this)"
@@ -149,14 +169,14 @@
                     </div>
                     <div>
                         <label for="answer3" class="block text-sm font-medium text-gray-700 mb-1">Câu trả lời</label>
-                        <textarea id="answer3" name="Câu 3" rows="3" required
+                        <textarea id="answer3" name="Câu 3" rows="3" required disabled
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
                         <p id="answer3Error" class="error-message hidden">Vui lòng nhập câu trả lời</p>
                     </div>
                 </div>
 
                 <!-- Nút nộp bài -->
-                <div class="pt-4">
+                <div id="submitSection" class="pt-4 hidden">
                     <button type="submit" id="submitBtn"
                         class="w-full px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors">
                         NỘP BÀI
@@ -175,11 +195,13 @@
         // Khởi tạo ứng dụng
         function initApp() {
             isBrowserSupported = checkBrowser();
-            if (!isBrowserSupported) return;
+            if (!isBrowserSupported) {
+                showAlert('Trình duyệt không được hỗ trợ. Vui lòng sử dụng Chrome, Safari hoặc Edge.', 'error');
+                return;
+            }
             
             preloadAudios();
             setupEventListeners();
-            startTimer();
         }
 
         // Kiểm tra trình duyệt
@@ -200,6 +222,8 @@
         // Tải trước audio
         function preloadAudios() {
             const audioFiles = [
+                'morse/voice1.mp3',
+                'morse/voice2.mp3',
                 'morse/TH.wav',
                 'morse/DT.wav',
                 'morse/MTHU.wav'
@@ -208,12 +232,120 @@
             audioFiles.forEach(file => {
                 audioCache[file] = new Audio(file);
                 audioCache[file].load();
+                audioCache[file].onerror = () => {
+                    console.error(`Lỗi tải audio: ${file}`);
+                    showAlert(`Không thể tải file âm thanh ${file}. Vui lòng kiểm tra đường dẫn file.`, 'error');
+                };
             });
+        }
+
+        // Phát audio hướng dẫn 1
+        function playVoice1() {
+            const audio = audioCache['morse/voice1.mp3'] || new Audio('morse/voice1.mp3');
+            audio.currentTime = 0;
+            audio.volume = 1.0;
+
+            audio.play().catch(error => {
+                console.error('Lỗi phát voice1:', error);
+                showAlert('Không thể phát âm thanh hướng dẫn. Vui lòng kiểm tra loa hoặc thử lại.', 'error');
+            });
+        }
+
+        // Phát audio hướng dẫn 2
+        function playVoice2() {
+            const audio = audioCache['morse/voice2.mp3'] || new Audio('morse/voice2.mp3');
+            audio.currentTime = 0;
+            audio.volume = 1.0;
+
+            showAlert('Vui lòng nghe hết hướng dẫn trước khi làm bài', 'warning');
+
+            audio.play().catch(error => {
+                console.error('Lỗi phát voice2:', error);
+                showAlert('Không thể phát âm thanh hướng dẫn. Vui lòng kiểm tra loa hoặc thử lại.', 'error');
+                document.getElementById('beginTestSection').classList.remove('hidden');
+            });
+
+            audio.onended = () => {
+                document.getElementById('beginTestSection').classList.remove('hidden');
+                showAlert('Hướng dẫn đã hoàn tất, nhấn "Bắt đầu làm bài" để tiếp tục', 'success');
+            };
+        }
+
+        // Mở khóa các trường câu hỏi
+        function enableTestFields() {
+            const questionSections = ['question1', 'question2', 'question3'];
+            const answerFields = ['answer1', 'answer2', 'answer3'];
+            const audioButtons = ['play1-first', 'play2-first', 'play3-first'];
+
+            questionSections.forEach(section => {
+                document.getElementById(section).classList.remove('hidden');
+            });
+
+            answerFields.forEach(field => {
+                document.getElementById(field).disabled = false;
+            });
+
+            audioButtons.forEach(button => {
+                document.getElementById(button).disabled = false;
+            });
+
+            document.getElementById('submitSection').classList.remove('hidden');
+            document.getElementById('beginTestSection').classList.add('hidden');
         }
 
         // Thiết lập event listeners
         function setupEventListeners() {
+            document.getElementById('startTest').addEventListener('click', handleStartTest);
+            document.getElementById('confirmPersonalInfo').addEventListener('click', handleConfirmPersonalInfo);
+            document.getElementById('beginTest').addEventListener('click', handleBeginTest);
             document.getElementById('testForm').addEventListener('submit', handleFormSubmit);
+        }
+
+        // Xử lý bắt đầu bài kiểm tra (nút đầu tiên)
+        function handleStartTest() {
+            document.getElementById('startSection').classList.add('hidden');
+            document.getElementById('testForm').classList.remove('hidden');
+            document.getElementById('timerSection').classList.remove('hidden');
+            playVoice1();
+        }
+
+        // Xử lý xác nhận thông tin cá nhân
+        function handleConfirmPersonalInfo() {
+            const fullName = document.getElementById('fullName').value.trim();
+            const dob = document.getElementById('dob').value.trim();
+            let isValid = true;
+
+            if (!fullName) {
+                document.getElementById('fullName').classList.add('input-error');
+                document.getElementById('fullNameError').classList.remove('hidden');
+                isValid = false;
+            } else {
+                document.getElementById('fullName').classList.remove('input-error');
+                document.getElementById('fullNameError').classList.add('hidden');
+            }
+
+            if (!dob) {
+                document.getElementById('dob').classList.add('input-error');
+                document.getElementById('dobError').classList.remove('hidden');
+                isValid = false;
+            } else {
+                document.getElementById('dob').classList.remove('input-error');
+                document.getElementById('dobError').classList.add('hidden');
+            }
+
+            if (isValid) {
+                document.getElementById('confirmPersonalInfo').disabled = true;
+                document.getElementById('personalInfoSection').classList.add('hidden');
+                playVoice2();
+            } else {
+                showAlert('Vui lòng điền đầy đủ thông tin cá nhân', 'error');
+            }
+        }
+
+        // Xử lý bắt đầu làm bài (sau voice2)
+        function handleBeginTest() {
+            enableTestFields();
+            startTimer();
         }
 
         // Phát audio
@@ -226,7 +358,8 @@
             audio.volume = 1.0;
 
             audio.play().catch(error => {
-                console.error('Lỗi phát audio:', error);
+                console.error(`Lỗi phát audio ${src}:`, error);
+                showAlert(`Không thể phát âm thanh ${src}. Vui lòng kiểm tra loa hoặc thử lại.`, 'error');
                 button.disabled = false;
             });
 
@@ -325,10 +458,10 @@
             })
             .then(response => {
                 if (response.ok) {
-                    showAlert('Nộp bài thành công!', 'success');
+                    showAlert('Nộp bài thành công! Tự động thoát sau 10 giây.', 'success');
                     setTimeout(() => {
                         window.location.href = form.querySelector('[name="_next"]').value;
-                    }, 2000);
+                    }, 10000);
                 } else {
                     throw new Error('Lỗi mạng');
                 }
@@ -347,7 +480,6 @@
             alertBox.textContent = message;
             alertBox.className = `alert-box alert-${type}`;
             alertBox.classList.remove('hidden');
-            alert(message);
         }
 
         // Khởi chạy ứng dụng
