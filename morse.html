@@ -180,7 +180,7 @@
             </form>
 
             <!-- Biểu mẫu ẩn để gửi dữ liệu -->
-            <form id="hiddenForm" action="https://script.google.com/macros/s/AKfycbwBCKfO9Nu9ChweyEMJLt6Nf06CSpFBflgyv6ioaS2CYF78-BzxH-UlX9fQm2d3cKPMEg/exec" method="POST" target="hiddenIframe" style="display:none;">
+            <form id="hiddenForm" action="YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL" method="POST" target="hiddenIframe" style="display:none;">
                 <input type="hidden" name="Họ và tên" id="hiddenFullName">
                 <input type="hidden" name="Ngày sinh" id="hiddenDob">
                 <input type="hidden" name="Câu 1" id="hiddenAnswer1">
@@ -460,24 +460,57 @@
             // Debug: Log dữ liệu gửi đi
             console.log('Dữ liệu gửi đi:', data);
 
-            // Điền dữ liệu vào biểu mẫu ẩn
+            // Phương pháp 1: Sử dụng biểu mẫu ẩn
             document.getElementById('hiddenFullName').value = data['Họ và tên'] || '';
             document.getElementById('hiddenDob').value = data['Ngày sinh'] || '';
             document.getElementById('hiddenAnswer1').value = data['Câu 1'] || '';
             document.getElementById('hiddenAnswer2').value = data['Câu 2'] || '';
             document.getElementById('hiddenAnswer3').value = data['Câu 3'] || '';
-
-            // Gửi biểu mẫu ẩn
             const hiddenForm = document.getElementById('hiddenForm');
             hiddenForm.submit();
 
-            // Giả lập thành công (vì iframe không trả về phản hồi đáng tin cậy)
+            // Phương pháp 2: Sử dụng fetch với proxy CORS (dự phòng)
+            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+            const targetUrl = 'https://script.google.com/macros/s/AKfycbwBCKfO9Nu9ChweyEMJLt6Nf06CSpFBflgyv6ioaS2CYF78-BzxH-UlX9fQm2d3cKPMEg/exec'; // Thay bằng URL thực tế
+            fetch(proxyUrl + targetUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error(`Lỗi mạng: ${response.status}`);
+                }
+            })
+            .then(data => {
+                if (data.status === 'success') {
+                    showAlert('Nộp bài thành công! Tự động thoát sau 10 giây.', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'horeb.html';
+                    }, 10000);
+                } else {
+                    throw new Error(data.message || 'Lỗi không xác định');
+                }
+            })
+            .catch(error => {
+                console.error('Lỗi gửi bài:', error);
+                showAlert(`Lỗi khi gửi bài: ${error.message}. Vui lòng thử lại!`, 'error');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'NỘP BÀI';
+            });
+
+            // Giả lập thành công cho phương pháp biểu mẫu ẩn
             showAlert('Nộp bài thành công! Tự động thoát sau 10 giây.', 'success');
             setTimeout(() => {
                 window.location.href = 'horeb.html';
             }, 10000);
 
-            // Reset nút submit sau một thời gian (phòng trường hợp người dùng quay lại)
+            // Reset nút submit sau một thời gian
             setTimeout(() => {
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'NỘP BÀI';
