@@ -83,7 +83,7 @@
             </div>
 
             <!-- Form chính -->
-            <form id="testForm" action="https://script.google.com/macros/s/AKfycbyTGcz6MLjYfN0UGorp61FRENAuY-rh2JRXFq-eGoKNa-iU7mZc_2YvylnvGBpHFK3UHQ/exec" method="POST" class="space-y-6 hidden">
+            <form id="testForm" class="space-y-6 hidden">
                 <!-- Thông tin thí sinh -->
                 <div id="personalInfoSection" class="space-y-4 bg-blue-50 p-5 rounded-xl">
                     <h2 class="text-lg font-semibold text-blue-800 mb-3">THÔNG TIN THÍ SINH</h2>
@@ -178,6 +178,16 @@
                     </button>
                 </div>
             </form>
+
+            <!-- Biểu mẫu ẩn để gửi dữ liệu -->
+            <form id="hiddenForm" action="https://script.google.com/macros/s/AKfycbwBCKfO9Nu9ChweyEMJLt6Nf06CSpFBflgyv6ioaS2CYF78-BzxH-UlX9fQm2d3cKPMEg/exec" method="POST" target="hiddenIframe" style="display:none;">
+                <input type="hidden" name="Họ và tên" id="hiddenFullName">
+                <input type="hidden" name="Ngày sinh" id="hiddenDob">
+                <input type="hidden" name="Câu 1" id="hiddenAnswer1">
+                <input type="hidden" name="Câu 2" id="hiddenAnswer2">
+                <input type="hidden" name="Câu 3" id="hiddenAnswer3">
+            </form>
+            <iframe name="hiddenIframe" style="display:none;"></iframe>
         </div>
     </div>
 
@@ -440,9 +450,8 @@
             submitBtn.disabled = true;
             submitBtn.textContent = 'Đang gửi...';
             
-            // Gửi form
-            const form = event.target;
-            const formData = new FormData(form);
+            // Lấy dữ liệu form
+            const formData = new FormData(event.target);
             const data = {};
             formData.forEach((value, key) => {
                 data[key] = value;
@@ -451,40 +460,28 @@
             // Debug: Log dữ liệu gửi đi
             console.log('Dữ liệu gửi đi:', data);
 
-            fetch(form.action, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => {
-                console.log('Trạng thái phản hồi:', response.status);
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    return response.text().then(text => {
-                        throw new Error(`Lỗi mạng: ${response.status} - ${text}`);
-                    });
-                }
-            })
-            .then(data => {
-                if (data.status === 'success') {
-                    showAlert('Nộp bài thành công! Tự động thoát sau 10 giây.', 'success');
-                    setTimeout(() => {
-                        window.location.href = 'horeb.html';
-                    }, 10000);
-                } else {
-                    throw new Error(data.message || 'Lỗi không xác định từ Google Apps Script');
-                }
-            })
-            .catch(error => {
-                console.error('Lỗi gửi bài:', error);
-                showAlert(`Lỗi khi gửi bài: ${error.message}. Vui lòng thử lại!`, 'error');
+            // Điền dữ liệu vào biểu mẫu ẩn
+            document.getElementById('hiddenFullName').value = data['Họ và tên'] || '';
+            document.getElementById('hiddenDob').value = data['Ngày sinh'] || '';
+            document.getElementById('hiddenAnswer1').value = data['Câu 1'] || '';
+            document.getElementById('hiddenAnswer2').value = data['Câu 2'] || '';
+            document.getElementById('hiddenAnswer3').value = data['Câu 3'] || '';
+
+            // Gửi biểu mẫu ẩn
+            const hiddenForm = document.getElementById('hiddenForm');
+            hiddenForm.submit();
+
+            // Giả lập thành công (vì iframe không trả về phản hồi đáng tin cậy)
+            showAlert('Nộp bài thành công! Tự động thoát sau 10 giây.', 'success');
+            setTimeout(() => {
+                window.location.href = 'horeb.html';
+            }, 10000);
+
+            // Reset nút submit sau một thời gian (phòng trường hợp người dùng quay lại)
+            setTimeout(() => {
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'NỘP BÀI';
-            });
+            }, 10000);
         }
 
         // Hiển thị thông báo
