@@ -82,13 +82,8 @@
                 </button>
             </div>
 
-            <!-- Form chính với FormSubmit -->
-            <form id="testForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST" class="space-y-6 hidden">
-                <!-- Các trường ẩn cho FormSubmit -->
-                <input type="hidden" name="_subject" value="Kết quả bài kiểm tra Morse">
-                <input type="hidden" name="_next" value="horeb.html">
-                <input type="text" name="_honey" style="display:none">
-
+            <!-- Form chính -->
+            <form id="testForm" action="https://script.google.com/macros/s/AKfycbyTGcz6MLjYfN0UGorp61FRENAuY-rh2JRXFq-eGoKNa-iU7mZc_2YvylnvGBpHFK3UHQ/exec" method="POST" class="space-y-6 hidden">
                 <!-- Thông tin thí sinh -->
                 <div id="personalInfoSection" class="space-y-4 bg-blue-50 p-5 rounded-xl">
                     <h2 class="text-lg font-semibold text-blue-800 mb-3">THÔNG TIN THÍ SINH</h2>
@@ -448,27 +443,45 @@
             // Gửi form
             const form = event.target;
             const formData = new FormData(form);
-            
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            // Debug: Log dữ liệu gửi đi
+            console.log('Dữ liệu gửi đi:', data);
+
             fetch(form.action, {
                 method: 'POST',
-                body: formData,
                 headers: {
+                    'Content-Type': 'application/json',
                     'Accept': 'application/json'
-                }
+                },
+                body: JSON.stringify(data)
             })
             .then(response => {
+                console.log('Trạng thái phản hồi:', response.status);
                 if (response.ok) {
+                    return response.json();
+                } else {
+                    return response.text().then(text => {
+                        throw new Error(`Lỗi mạng: ${response.status} - ${text}`);
+                    });
+                }
+            })
+            .then(data => {
+                if (data.status === 'success') {
                     showAlert('Nộp bài thành công! Tự động thoát sau 10 giây.', 'success');
                     setTimeout(() => {
-                        window.location.href = form.querySelector('[name="_next"]').value;
+                        window.location.href = 'horeb.html';
                     }, 10000);
                 } else {
-                    throw new Error('Lỗi mạng');
+                    throw new Error(data.message || 'Lỗi không xác định từ Google Apps Script');
                 }
             })
             .catch(error => {
                 console.error('Lỗi gửi bài:', error);
-                showAlert('Lỗi khi gửi bài. Vui lòng thử lại!', 'error');
+                showAlert(`Lỗi khi gửi bài: ${error.message}. Vui lòng thử lại!`, 'error');
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'NỘP BÀI';
             });
