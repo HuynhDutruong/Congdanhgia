@@ -6,148 +6,161 @@
     <meta name="description" content="Hệ Thống Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho, thông báo và bảng điểm.">
     <meta name="keywords" content="Xứ Đoàn, Giáo Xứ Chánh Tòa Mỹ Tho, Thông Báo, Bảng Điểm, Các Thánh Tử Đạo Việt Nam">
     <title>Thông Báo & Bảng Điểm</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         :root {
             --primary-color: #A6192E;
             --primary-dark: #821523;
+            --primary-light: #e8c8cf;
             --text-color: #374151;
+            --text-light: #6B7280;
+            --background-color: #f9fafb;
+            --card-bg: #FFFFFF;
+            --border-color: #e5e7eb;
             --success-color: #10B981;
             --warning-color: #FBBF24;
             --error-color: #EF4444;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --transition: all 0.15s ease-in-out;
         }
-
+        
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #F3F4F6;
-            margin: 0;
-            padding: 0.5rem;
-            min-height: 100vh;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
         }
-
+        
         .header {
-            background: linear-gradient(90deg, #A6192E 0%, #8B1625 100%);
-            color: #FFFFFF;
-            padding: 0.5rem;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            z-index: 50;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        .header-content {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-        }
-        .header .logo-btn {
-            background: none;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-        }
-        .header .logo {
-            width: 120px;
-            height: 120px;
-            transition: transform 0.3s ease;
-        }
-        .header .logo-btn:hover .logo {
-            transform: scale(1.1);
-        }
-        .header .text-center {
-            flex: 1;
             text-align: center;
+            padding: 0.5rem 0;
         }
-        .header h2 {
+        
+        .header-title {
             font-family: 'Merriweather', serif;
             font-size: 1.75rem;
-            font-weight: 500;
-            margin-bottom: 0.25rem;
+            font-weight: 700;
+            margin: 0;
+            color: white;
         }
-        .header p {
+        
+        .header-subtitle {
             font-size: 1rem;
-        }   
-
-        .navbar {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
+            margin-top: 0.25rem;
+            opacity: 0.9;
         }
-
-        .navbar-btn {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 0.5rem 1rem;
-            border: 2px solid white;
-            border-radius: 0.375rem;
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        
+        .main-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
         }
-
-        .navbar-btn:hover {
-            background-color: var(--primary-dark);
-            color: white;
-        }
-
-        .main-content {
-            max-width: 1280px;
-            margin: 1.5rem auto;
-            background: white;
-            border-radius: 1rem;
+        
+        .card {
+            background: var(--card-bg);
+            border-radius: 0.75rem;
             padding: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
         }
-
+        
         .section-title {
             font-family: 'Merriweather', serif;
             font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-color);
+            font-weight: 350;
+            color: var(--primary-dark);
             margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-light);
         }
-
-        .notification {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
-            padding: 1rem 1.5rem;
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.625rem 1.25rem;
             border-radius: 0.5rem;
-            z-index: 1000;
-            display: none;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .notification.error {
-            background: var(--error-color);
-            color: white;
-        }
-
-        .score-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 1.5rem;
-        }
-
-        .score-table th,
-        .score-table td {
-            border: 1px solid var(--primary-color);
-            padding: 0.75rem;
-            text-align: center;
-            font-size: 0.875rem;
-        }
-
-        .score-table th {
-            background-color: var(--primary-color);
-            color: white;
             font-weight: 500;
             cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 0.875rem;
         }
-
-        .score-table tr:hover {
-            background-color: #F9FAFB;
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: var(--shadow);
         }
-
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(166, 25, 46, 0.1);
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+        
+        .table th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-weight: 500;
+        }
+        
+        .table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .table tr:hover {
+            background-color: rgba(166, 25, 46, 0.03);
+        }
+        
         .pagination {
             display: flex;
             justify-content: center;
@@ -155,7 +168,7 @@
             gap: 0.5rem;
             margin-top: 1rem;
         }
-
+        
         .pagination-btn {
             background-color: var(--primary-color);
             color: white;
@@ -165,199 +178,159 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-
+        
         .pagination-btn:hover:not(:disabled) {
             background-color: var(--primary-dark);
         }
-
+        
         .pagination-btn:disabled {
             background-color: #D1D5DB;
             cursor: not-allowed;
         }
-
+        
         .news-image {
             max-width: 50%;
             height: auto;
             border-radius: 0.5rem;
             margin-top: 1rem;
+            box-shadow: var(--shadow);
         }
-
+        
         .avg-green { color: var(--success-color); font-weight: 500; }
         .avg-yellow { color: var(--warning-color); font-weight: 500; }
         .avg-red { color: var(--error-color); font-weight: 500; }
-
-        .error-message {
-            color: var(--error-color);
-            text-align: center;
-            font-size: 1rem;
-            margin: 1rem 0;
+        
+        .notification {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            z-index: 1000;
+            display: none;
+            box-shadow: var(--shadow-md);
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: white;
+            animation: fadeIn 0.3s ease-out;
         }
-
-        .test-section {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-top: 1.5rem;
+        
+        .notification.success {
+            background: var(--success-color);
         }
-
-        @media (max-width: 640px) {
-            .header {
-                padding: 0.5rem;
-            }
-
-            .header-content {
-                flex-direction: column;
-                align-items: center;
-                gap: 0.5rem;
-            }
-
-            .header-logo {
-                width: 60px;
-                height: 60px;
-                display:hide;
-            }
-
+        
+        .notification.error {
+            background: var(--error-color);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
             .header-title {
-                font-size: 1rem;
-                text-align: center;
+                font-size: 1.5rem;
             }
-
-            .navbar-btn {
-                padding: 0.375rem 0.75rem;
-                font-size: 0.75rem;
+            
+            .header-subtitle {
+                font-size: 0.875rem;
             }
-
-            .main-content {
+            
+            .main-container {
+                padding: 0 1rem;
+            }
+            
+            .card {
                 padding: 1rem;
-                margin: 0.5rem;
             }
-
-            .score-table th,
-            .score-table td {
-                padding: 0.5rem;
-                font-size: 0.75rem;
-            }
-
-            .pagination-btn {
-                padding: 0.375rem 0.75rem;
-                font-size: 0.75rem;
-            }
-
-            .news-image {
-                max-width: 100%;
-            }
-        }
-
-        @media (min-width: 641px) and (max-width: 1024px) {
-            .header {
-                padding: 0.75rem 1rem;
-            }
-
-            .header-content {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                flex-wrap: wrap;
-            }
-
-            .header-logo {
-                width: 80px;
-                height: 80px;
-                display:hide;
-
-            }
-
-            .header-title {
+            
+            .section-title {
                 font-size: 1.25rem;
-            }
-
-            .navbar-btn {
-                padding: 0.5rem 0.875rem;
-                font-size: 0.875rem;
-            }
-
-            .main-content {
-                padding: 1.25rem;
-                margin: 1rem;
-            }
-
-            .score-table th,
-            .score-table td {
-                padding: 0.625rem;
-                font-size: 0.875rem;
-            }
-
-            .pagination-btn {
-                padding: 0.5rem 0.875rem;
-                font-size: 0.875rem;
-            }
-
-            .news-image {
-                max-width: 75%;
             }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <a href="https://youtu.be/EmXsSSHCnsI?feature=shared">
-            <button class="logo-btn">
-                <img src="assets/logo.png" alt="Logo" class="logo">
-            </button>
-        </a>
-        <div class="text-center">
-            <a href="https://youtu.be/EmXsSSHCnsI?feature=shared">
-                <h2>XỨ ĐOÀN CÁC THÁNH TỬ ĐẠO VIỆT NAM</h2>
-                <p>Giáo Xứ Chánh Tòa Mỹ Tho</p>
-            </a>
+    <header class="header">
+        <div class="header-container">
+            <div class="header-content">
+                <h1 class="header-title">XỨ ĐOÀN CÁC THÁNH TỬ ĐẠO VIỆT NAM</h1>
+                <p class="header-subtitle">Giáo Xứ Chánh Tòa Mỹ Tho</p>
+            </div>
         </div>
-    </div>
+    </header>
 
-    <main class="main-content">
-        <h1 class="text-3xl font-bold text-center mb-8 font-['Merriweather']">CỔNG THÔNG TIN VÀ ĐÁNH GIÁ</h1>
-        <div id="notification" class="notification"></div>
+    <main class="main-container">
+        <div class="card">
+            <h1 class="text-3xl font-bold text-center mb-8 font-['Merriweather'] text-primary-dark">CỔNG THÔNG TIN VÀ ĐÁNH GIÁ</h1>
+            
+            <div id="notification" class="notification"></div>
 
-        <section id="news-section" class="mb-8">
-            <h2 class="section-title">Thông Báo</h2>
-            <div id="news-content" class="text-gray-700"></div>
-        </section>
+            <section id="news-section" class="mb-8">
+                <h2 class="section-title">Thông Báo</h2>
+                <div id="news-content" class="text-gray-700"></div>
+            </section>
 
-        <section id="test-section" class="mb-8">
-            <h2 class="section-title">Bài Kiểm Tra</h2>
-            <div class="test-section">
-                <button class="navbar-btn" id="test-btn" aria-label="Làm bài kiểm tra">LÀM BÀI</button>
-                <p id="test-availability" class="text-gray-700 text-sm"></p>
-            </div>
-        </section>
+            <section id="test-section" class="mb-8">
+                <h2 class="section-title">Bài Kiểm Tra</h2>
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                    <button class="btn btn-primary" id="test-btn">
+                        <i class="fas fa-edit mr-2"></i> Làm bài kiểm tra
+                    </button>
+                    <p id="test-availability" class="text-gray-700 text-sm"></p>
+                </div>
+            </section>
+        </div>
 
-        <section id="score-section">
-            <h2 class="section-title">Bảng Điểm</h2>
-            <div id="score-error" class="error-message" style="display: none;"></div>
-            <table id="score-table" class="score-table">
-                <thead>
-                    <tr>
-                        <th onclick="sortTable('ten_thanh')" aria-sort="none">
-                            Tên Thánh <span id="sort-username">↕</span>
-                        </th>
-                        <th>Họ và Tên</th>
-                        <th>Đợt 1</th>
-                        <th>Đợt 2</th>
-                        <th>Đợt 3</th>
-                        <th>Đợt 4</th>
-                        <th>Trung Bình</th>
-                    </tr>
-                </thead>
-                <tbody id="score-body"></tbody>
-            </table>
-            <div class="pagination">
-                <button id="prev-btn" class="pagination-btn" disabled>Trước</button>
-                <span id="page-info" class="text-gray-700"></span>
-                <button id="next-btn" class="pagination-btn">Sau</button>
-            </div>
-        </section>
+        <div class="card">
+            <section id="score-section">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+                    <h2 class="section-title">Bảng Điểm</h2>
+                    <button id="print-btn" class="btn btn-primary">
+                        <i class="fas fa-print mr-2"></i> In Bảng Điểm
+                    </button>
+                </div>
+                
+                <div id="score-error" class="bg-red-50 text-red-600 p-4 rounded-lg mb-4" style="display: none;"></div>
+                
+                <div class="table-responsive">
+                    <table id="score-table" class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" onclick="sortTable('ten_thanh')" class="cursor-pointer hover:bg-primary-dark transition-colors">
+                                    <div class="flex items-center">
+                                        Tên Thánh
+                                        <span id="sort-username" class="ml-1">↕</span>
+                                    </div>
+                                </th>
+                                <th scope="col">Họ và Tên</th>
+                                <th scope="col">Đợt 1</th>
+                                <th scope="col">Đợt 2</th>
+                                <th scope="col">Đợt 3</th>
+                                <th scope="col">Đợt 4</th>
+                                <th scope="col">Trung Bình</th>
+                            </tr>
+                        </thead>
+                        <tbody id="score-body"></tbody>
+                    </table>
+                </div>
+                
+                <div class="pagination">
+                    <button id="prev-btn" class="pagination-btn" disabled>
+                        <i class="fas fa-chevron-left mr-1"></i> Trước
+                    </button>
+                    <span id="page-info" class="px-4 text-gray-700"></span>
+                    <button id="next-btn" class="pagination-btn">
+                        Sau <i class="fas fa-chevron-right ml-1"></i>
+                    </button>
+                </div>
+            </section>
+        </div>
     </main>
 
     <script>
+        const { jsPDF } = window.jspdf;
         const showNotification = (message, type) => {
             const notification = document.getElementById('notification');
             notification.textContent = message;
@@ -373,15 +346,24 @@
         const loadNews = () => {
             const newsContent = document.getElementById('news-content');
             newsContent.innerHTML = '';
+            if (!newsData.length) {
+                newsContent.innerHTML = '<p class="text-gray-600">Chưa có thông báo mới.</p>';
+                return;
+            }
             newsData.forEach(item => {
                 const div = document.createElement('div');
-                div.className = 'mb-4';
+                div.className = 'mb-6';
                 switch (item.type) {
                     case 'text':
-                        div.innerHTML = `<p>${item.content}</p>`;
+                        div.innerHTML = `<p class="text-gray-700">${item.content}</p>`;
                         break;
                     case 'image':
-                        div.innerHTML = `<p>${item.content}</p><img src="${item.file_path}" alt="${item.content}" class="news-image">`;
+                        div.innerHTML = `
+                            <p class="text-gray-700 mb-2">${item.content}</p>
+                            <div class="overflow-hidden rounded-lg shadow-md">
+                                <img src="${item.file_path}" alt="${item.content}" class="news-image w-full" loading="lazy">
+                            </div>
+                        `;
                         break;
                 }
                 newsContent.appendChild(div);
@@ -391,7 +373,7 @@
         let users = [];
         let currentSort = 1;
         let currentPage = 1;
-        const usersPerPage = 5;
+        let usersPerPage = 10;
 
         const displayUsers = (usersData) => {
             users = usersData || [];
@@ -431,13 +413,13 @@
                     : '-';
                 const avgClass = avg !== '-' ? (avg > 8 ? 'avg-green' : avg >= 6 ? 'avg-yellow' : 'avg-red') : '';
                 row.innerHTML = `
-                    <td>${user.ten_thanh}</td>
+                    <td class="font-medium">${user.ten_thanh}</td>
                     <td>${user.ho_va_ten}</td>
-                    <td>${scoreDot1}</td>
-                    <td>${scoreDot2}</td>
-                    <td>${scoreDot3}</td>
-                    <td>${scoreDot4}</td>
-                    <td class="${avgClass}">${avg}</td>
+                    <td class="text-center">${scoreDot1}</td>
+                    <td class="text-center">${scoreDot2}</td>
+                    <td class="text-center">${scoreDot3}</td>
+                    <td class="text-center">${scoreDot4}</td>
+                    <td class="text-center ${avgClass} font-medium">${avg}</td>
                 `;
                 tbody.appendChild(row);
             });
@@ -455,22 +437,134 @@
             displayUsers(users);
         };
 
+        const exportToPDF = async () => {
+            try {
+                const table = document.getElementById('score-table');
+                if (!users.length) {
+                    showNotification('Không có dữ liệu để xuất PDF!', 'error');
+                    return;
+                }
+
+                // Tạo bảng tạm để hiển thị toàn bộ dữ liệu
+                const tempTable = document.createElement('table');
+                tempTable.className = 'table';
+                tempTable.innerHTML = `
+                    <thead>
+                        <tr>
+                            <th>Tên Thánh</th>
+                            <th>Họ và Tên</th>
+                            <th>Đợt 1</th>
+                            <th>Đợt 2</th>
+                            <th>Đợt 3</th>
+                            <th>Đợt 4</th>
+                            <th>Trung Bình</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                `;
+                const tempTbody = tempTable.querySelector('tbody');
+                users.forEach(user => {
+                    const scoreDot1 = user.scores.find(s => s.round === 'Đợt 1')?.value || '-';
+                    const scoreDot2 = user.scores.find(s => s.round === 'Đợt 2')?.value || '-';
+                    const scoreDot3 = user.scores.find(s => s.round === 'Đợt 3')?.value || '-';
+                    const scoreDot4 = user.scores.find(s => s.round === 'Đợt 4')?.value || '-';
+                    const numericScores = user.scores
+                        .filter(s => s.value && !isNaN(s.value))
+                        .map(s => parseFloat(s.value));
+                    const avg = numericScores.length > 0
+                        ? (numericScores.reduce((sum, score) => sum + score, 0) / numericScores.length).toFixed(1)
+                        : '-';
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${user.ten_thanh}</td>
+                        <td>${user.ho_va_ten}</td>
+                        <td>${scoreDot1}</td>
+                        <td>${scoreDot2}</td>
+                        <td>${scoreDot3}</td>
+                        <td>${scoreDot4}</td>
+                        <td>${avg}</td>
+                    `;
+                    tempTbody.appendChild(row);
+                });
+
+                // Thêm bảng tạm vào DOM (ẩn)
+                tempTable.style.position = 'absolute';
+                tempTable.style.left = '-9999px';
+                document.body.appendChild(tempTable);
+
+                // Chuyển bảng thành hình ảnh bằng html2canvas
+                const canvas = await html2canvas(tempTable, { 
+                    scale: 2,
+                    logging: false,
+                    useCORS: true
+                });
+                const imgData = canvas.toDataURL('image/png');
+
+                // Tạo PDF với jsPDF
+                const pdf = new jsPDF({
+                    orientation: 'landscape',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+
+                // Thêm tiêu đề
+                pdf.setFontSize(16);
+                pdf.setFont('helvetica', 'bold');
+                pdf.text('BẢNG ĐIỂM XỨ ĐOÀN CÁC THÁNH TỬ ĐẠO VIỆT NAM', 105, 15, { align: 'center' });
+                pdf.setFontSize(12);
+                pdf.text('Giáo Xứ Chánh Tòa Mỹ Tho', 105, 22, { align: 'center' });
+
+                // Tính toán kích thước hình ảnh
+                const pageWidth = pdf.internal.pageSize.getWidth() - 20;
+                const pageHeight = pdf.internal.pageSize.getHeight() - 40;
+                const ratio = canvas.height / canvas.width;
+                let imgWidth = pageWidth;
+                let imgHeight = pageWidth * ratio;
+                
+                if (imgHeight > pageHeight) {
+                    imgHeight = pageHeight;
+                    imgWidth = imgHeight / ratio;
+                }
+
+                // Thêm hình ảnh bảng vào PDF
+                pdf.addImage(imgData, 'PNG', 10, 30, imgWidth, imgHeight);
+
+                // Lưu PDF
+                pdf.save('Bang_Diem_Xu_Doan.pdf');
+
+                // Xóa bảng tạm
+                document.body.removeChild(tempTable);
+
+                showNotification('Xuất bảng điểm thành PDF thành công!', 'success');
+            } catch (error) {
+                console.error('Lỗi khi xuất PDF:', error);
+                showNotification('Lỗi khi xuất PDF, vui lòng thử lại!', 'error');
+            }
+        };
+
+        let testAvailable = false;
         const checkTestAvailability = async () => {
             try {
-                const response = await fetch('morse.html', { method: 'HEAD' });
-                document.getElementById('test-availability').textContent = response.ok
+                const response = await fetch('txmhoreb.html', { method: 'HEAD' });
+                testAvailable = response.ok;
+                document.getElementById('test-availability').textContent = testAvailable
                     ? 'Nhấn nút để tham gia bài kiểm tra!'
                     : 'Chưa có bài kiểm tra. Liên hệ Admin!';
             } catch {
+                testAvailable = false;
                 document.getElementById('test-availability').textContent = 'Chưa có bài kiểm tra. Liên hệ Admin!';
             }
         };
 
         const loadData = async () => {
             try {
-                const response = await fetch('data/horeb.json');
-                if (!response.ok) throw new Error('Không thể tải dữ liệu người dùng');
-                const usersData = await response.json();
+                let usersData = JSON.parse(localStorage.getItem('usersData'));
+                if (!usersData) {
+                    const response = await fetch('data/horeb.json');
+                    if (!response.ok) throw new Error('Không thể tải dữ liệu người dùng');
+                    usersData = await response.json();
+                    localStorage.setItem('usersData', JSON.stringify(usersData));
+                }
                 displayUsers(usersData);
                 loadNews();
                 await checkTestAvailability();
@@ -484,15 +578,10 @@
             }
         };
 
-        document.getElementById('test-btn').addEventListener('click', async () => {
-            try {
-                const response = await fetch('morse.html', { method: 'HEAD' });
-                if (response.ok) {
-                    window.location.href = 'morse.html';
-                } else {
-                    showNotification('Chưa có bài kiểm tra!', 'error');
-                }
-            } catch {
+        document.getElementById('test-btn').addEventListener('click', () => {
+            if (testAvailable) {
+                window.location.href = 'txmhoreb.html';
+            } else {
                 showNotification('Chưa có bài kiểm tra!', 'error');
             }
         });
@@ -511,7 +600,10 @@
             }
         });
 
-        loadData();
+        document.getElementById('print-btn').addEventListener('click', exportToPDF);
+
+        // Load data khi trang được tải
+        document.addEventListener('DOMContentLoaded', loadData);
     </script>
 </body>
 </html>
