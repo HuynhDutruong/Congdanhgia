@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cổng thông tin học viên lập trình - Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho">
+    <meta name="keywords" content="Xứ Đoàn, Giáo Xứ Chánh Tòa Mỹ Tho, Các Thánh Tử Đạo Việt Nam, học lập trình, cổng học viên">
+    <title>Cổng Học Viên Lập Trình - Xứ Đoàn Các Thánh Tử Đạo Việt Nam</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #cc3048;
+            --primary-dark: #b7142a;
+            --accent: #FFD700;
+            --dark-bg: #1A1A1A;
+            --text: #E0E0E0;
+            --error: #EF4444;
+        }
+        body {
+            background: linear-gradient(135deg, #2D2D2D 0%, #1A1A1A 100%);
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--text);
+            overflow-x: hidden;
+        }
+        #thongbao-quangcao {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            max-width: 320px;
+            background: #fff8e1;
+            border: 1px solid #ffd54f;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            z-index: 9999;
+        }
+        #thongbao-quangcao h4 {
+            margin-top: 0;
+            color: #d17b00;
+            font-size: 16px;
+        }
+        #thongbao-quangcao p {
+            margin: 10px 0;
+            color: #333;
+            line-height: 1.4;
+        }
+        #thongbao-quangcao img {
+            display: block;
+            max-width: 100%;
+            margin: 10px 0;
+        }
+        #thongbao-quangcao button {
+            background: #ff9800;
+            border: none;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+        #thongbao-quangcao button:hover {
+            background: #e68900;
+        }
+        .header {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--text);
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            text-align: center;
+        }
+        .header h2 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        .navbar {
+            background: var(--dark-bg);
+            padding: 0.75rem;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+        }
+        .navbar a {
+            color: var(--text);
+            padding: 0.75rem 1.5rem;
+            margin: 0 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .navbar a:hover {
+            background: var(--primary);
+            color: var(--accent);
+        }
+        .navbar a.active {
+            background: var(--primary);
+            color: var(--accent);
+        }
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            flex: 1;
+        }
+        .card {
+            background: #252526;
+            border: 1px solid #3C3C3C;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+        }
+        .card h3 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+        .table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 1rem;
+        }
+        .table th, .table td {
+            padding: 1rem;
+            border: 1px solid #3C3C3C;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+        .table th {
+            background: var(--primary);
+            color: var(--text);
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .table td {
+            background: #1E1E1E;
+        }
+        .table tr:hover td {
+            background: #2A2A2A;
+        }
+        .rank-icon {
+            font-size: 1.2rem;
+        }
+        .rank-thanhvien { color: #B0B0B0; }
+        .rank-vip { color: #FFD700; }
+        .rank-silver { color: #C0C0C0; }
+        .rank-gold { color: #FFD700; }
+        .rank-diamond { color: #B9F2FF; }
+        .rank-vvip { color: #FF69B4; }
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            background: #252526;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        .calendar div {
+            padding: 0.75rem;
+            text-align: center;
+            border: 1px solid #3C3C3C;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .calendar .header {
+            background: var(--primary);
+            color: var(--text);
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .calendar .has-event {
+            background: var(--accent);
+            color: #1A1A1A;
+            font-weight: bold;
+        }
+        .calendar div:hover {
+            background: #3C3C3C;
+        }
+        .btn {
+            background: var(--primary);
+            color: var(--text);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background: var(--primary-dark);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .input, .textarea, select.input {
+            background: #1E1E1E;
+            border: 1px solid #3C3C3C;
+            border-radius: 8px;
+            padding: 0.75rem;
+            color: var(--text);
+            width: 100%;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .textarea {
+            resize: vertical;
+            min-height: 150px;
+            font-size: 0.9rem;
+        }
+        .file-input {
+            background: #1E1E1E;
+            border: 1px solid #3C3C3C;
+            border-radius: 8px;
+            padding: 0.75rem;
+            color: var(--text);
+            width: 100%;
+            font-family: 'Roboto', sans-serif;
+        }
+        .footer {
+            background: var(--dark-bg);
+            color: var(--text);
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.3);
+            margin-top: auto;
+        }
+        .footer p {
+            margin: 0.5rem 0;
+        }
+        .highlight {
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .contact {
+            font-size: 0.9rem;
+            color: #D1D5DB;
+        }
+        /* Điện thoại */
+        @media (max-width: 640px) {
+            .header h2 {
+                font-size: 1.5rem;
+            }
+            .header p {
+                font-size: 0.9rem;
+            }
+            .navbar a {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+            .card h3 {
+                font-size: 1.3rem;
+            }
+            .table th, .table td {
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+            .calendar div {
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+            #submit {
+                display: none;
+            }
+            .navbar a[href="#submit"] {
+                display: none;
+            }
+            #thongbao-quangcao {
+                max-width: 90%;
+                bottom: 10px;
+                right: 10px;
+                font-size: 12px;
+            }
+            .btn:active {
+                background: var(--accent);
+                color: var(--dark-bg);
+                transform: scale(0.98);
+            }
+        }
+        /* Máy tính bảng */
+        @media (min-width: 641px) and (max-width: 1024px) {
+            .header h2 {
+                font-size: 1.75rem;
+            }
+            .navbar a {
+                padding: 0.6rem 1.2rem;
+                font-size: 1rem;
+            }
+            .card h3 {
+                font-size: 1.4rem;
+            }
+            .table th, .table td {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+            .calendar div {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+            #submit {
+                display: none;
+            }
+            .navbar a[href="#submit"] {
+                display: none;
+            }
+            .btn:active {
+                box-shadow: 0 0 8px var(--accent);
+                transform: scale(0.98);
+            }
+        }
+        /* Laptop */
+        @media (min-width: 1025px) {
+            .navbar a:hover {
+                background: linear-gradient(45deg, var(--primary), var(--accent));
+            }
+            .tooltip {
+                position: absolute;
+                background: var(--dark-bg);
+                color: var(--text);
+                padding: 0.3rem 0.6rem;
+                border-radius: 4px;
+                font-size: 0.8rem;
+                top: 100%;
+                display: none;
+                z-index: 10;
+            }
+            label:hover .tooltip {
+                display: block;
+            }
+            .textarea {
+                min-height: 300px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="thongbao-quangcao">
+        <h4>THƯ NGỎ</h4>
+        <p>
+            Chào quý thành viên,<br>
+            Chúng chúng tôi là Ban Truyền Thông & Ban Kỹ Thuật của trang web Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho.<br><br>
+            Đây là trang phi lợi nhuận nhằm kết nối truyền thông với thời đại mới. Các khóa học miễn phí được tổ chức nhằm giúp phát triển kỹ năng và kiến thức, tất cả do quý Trưởng phân công hướng dẫn.<br><br>
+            Mong nhận được sự đóng góp và ủng hộ để duy trì hệ thống hoạt động.<br><br>
+            <strong>Mã QR hỗ trợ ở bên dưới:</strong>
+        </p>
+        <img src="Qr_Code.jpg" alt="Mã QR hỗ trợ">
+        <button onclick="document.getElementById('thongbao-quangcao').style.display='none'">Đóng</button>
+    </div>
+
+    <div class="header">
+        <h2>XỨ ĐOÀN CÁC THÁNH TỬ ĐẠO VIỆT NAM</h2>
+        <p>Cổng Học Viên Lập Trình - Giáo Xứ Chánh Tòa Mỹ Tho</p>
+    </div>
+
+    <div class="navbar">
+        <a href="#home" class="active">Trang Chủ</a>
+        <a href="#calendar">Lịch Học</a>
+        <a href="#submit">Nộp Bài</a>
+        <a href="#feedback">Phản Hồi</a>
+    </div>
+
+    <div class="container">
+        <!-- Trang Chủ -->
+        <div id="home" class="card">
+            <h3>Kết Quả Học Tập Khoá</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Tên</th>
+                        <th>Hạng Thành Viên</th>
+                        <th>Môn</th>
+                        <th>Thời Lượng</th>
+                        <th>Đã Hoàn Tất (%)</th>
+                        <th>Điểm</th>
+                    </tr>
+                </thead>
+                <tbody id="subjectsTable"></tbody>
+            </table>
+        </div>
+
+        <!-- Lịch Học -->
+        <div id="calendar" class="card hidden">
+            <h3>Lịch Học</h3>
+            <div class="flex justify-between mb-4">
+                <button class="btn" onclick="prevMonth()">◄</button>
+                <h4 id="monthYear" class="font-bold text-accent"></h4>
+                <button class="btn" onclick="nextMonth()">►</button>
+            </div>
+            <div class="calendar" id="calendarGrid"></div>
+            <div id="eventDetails" class="mt-4 text-text"></div>
+        </div>
+
+        <!-- Nộp Bài -->
+        <div id="submit" class="card hidden">
+            <h3>Nộp Bài</h3>
+            <form id="codeForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST" enctype="multipart/form-data">
+                <div class="mb-4">
+                    <label class="block mb-1 text-text relative">Họ và Tên: <span class="tooltip">Nhập tên đầy đủ hoặc tên Thánh</span></label>
+                    <input type="text" name="fullName" id="codeFullName" class="input" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1 text-text relative">Ngôn Ngữ: <span class="tooltip">Chọn ngôn ngữ lập trình hoặc loại bài nộp</span></label>
+                    <select name="language" class="input" required>
+                        <option value="python">Python</option>
+                        <option value="javascript">JavaScript</option>
+                        <option value="html_css">HTML/CSS</option>
+                        <option value="other">Khác (báo cáo, file)</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1 text-text relative">Mã Nguồn: <span class="tooltip">Dán mã nguồn (nếu có)</span></label>
+                    <textarea name="codeContent" class="textarea" placeholder="Dán mã nguồn của bạn (nếu có)..."></textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1 text-text relative">Link Bài Nộp: <span class="tooltip">Dán URL (Google Drive, GitHub, v.v.) nếu không dán code</span></label>
+                    <input type="url" name="submissionLink" class="input" placeholder="https://...">
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1 text-text relative">File Báo Cáo: <span class="tooltip">Tải lên file (<100MB, PDF, ZIP, TXT, v.v.)</span></label>
+                    <input type="file" name="submissionFile" id="submissionFile" class="file-input" accept=".pdf,.zip,.txt,.doc,.docx">
+                </div>
+                <input type="hidden" name="submissionTime" id="submissionTime">
+                <button type="submit" class="btn">Gửi Bài</button>
+            </form>
+        </div>
+
+        <!-- Phản Hồi -->
+        <div id="feedback" class="card hidden">
+            <h3>Phản Hồi</h3>
+            <form id="feedbackForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST">
+                <div class="mb-4">
+                    <label class="block mb-1 text-text relative">Họ và Tên: <span class="tooltip">Nhập tên đầy đủ hoặc tên Thánh</span></label>
+                    <input type="text" name="fullName" id="feedbackFullName" class="input" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1 text-text relative">Gmail: <span class="tooltip">Nhập email để nhận phản hồi</span></label>
+                    <input type="email" name="gmail" class="input" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1 text-text relative">Nội Dung (Tối đa 250 chữ): <span class="tooltip">Mô tả ý kiến của bạn</span></label>
+                    <textarea name="content" class="textarea" maxlength="250" required></textarea>
+                </div>
+                <input type="hidden" name="submissionTime" id="feedbackSubmissionTime">
+                <button type="submit" class="btn">Gửi Phản Hồi</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p class="highlight">Bản quyền © 2025 - Xứ Đoàn Các Thánh Tử Đạo Việt Nam</p>
+        <p>Giáo Xứ Chánh Tòa Mỹ Tho - Giáo Phận Mỹ Tho - Việt Nam</p>
+        <p class="contact">Địa chỉ: 32 Hùng Vương, Phường 7, Thành phố Mỹ Tho, Tiền Giang</p>
+    </div>
+
+    <script>
+        // Fetch users data
+        async function loadUsersData() {
+            try {
+                const response = await fetch('data/users.json');
+                if (!response.ok) throw new Error('Failed to load users.json');
+                const users = await response.json();
+                populateSubjectsTable(users);
+            } catch (error) {
+                console.error('Error loading users data:', error);
+                document.getElementById('subjectsTable').innerHTML = '<tr><td colspan="6">Không thể tải dữ liệu thành viên.</td></tr>';
+            }
+        }
+
+        // Fetch calendar data
+        async function loadCalendarData() {
+            try {
+                const response = await fetch('data/calendar.json');
+                if (!response.ok) throw new Error('Failed to load calendar.json');
+                const calendarData = await response.json();
+                renderCalendar(calendarData);
+            } catch (error) {
+                console.error('Error loading calendar data:', error);
+                document.getElementById('calendarGrid').innerHTML = '<div class="col-span-7 text-center">Không thể tải lịch học.</div>';
+            }
+        }
+
+        // Calculate membership rank
+        function getMembershipRank(totalScore) {
+            if (totalScore < 50) return '<i class="fas fa-user rank-icon rank-thanhvien"></i>';
+            if (totalScore < 100) return '<i class="fas fa-star rank-icon rank-vip"></i>';
+            if (totalScore < 201) return '<i class="fas fa-medal rank-icon rank-silver"></i>';
+            if (totalScore < 301) return '<i class="fas fa-medal rank-icon rank-gold"></i>';
+            if (totalScore < 501) return '<i class="fas fa-gem rank-icon rank-diamond"></i>';
+            return '<i class="fas fa-crown rank-icon rank-vvip"></i>';
+        }
+
+        // Populate subjects table
+        function populateSubjectsTable(users) {
+            const subjectsTable = document.getElementById('subjectsTable');
+            subjectsTable.innerHTML = '';
+            users.members.forEach(member => {
+                const totalScore = member.subjects.reduce((sum, subject) => sum + subject.score, 0);
+                const rank = getMembershipRank(totalScore);
+                member.subjects.forEach(subject => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${member.fullName}</td>
+                        <td>${rank}</td>
+                        <td>${subject.name}</td>
+                        <td>${subject.duration}</td>
+                        <td>${subject.completion}%</td>
+                        <td>${subject.score}</td>
+                    `;
+                    subjectsTable.appendChild(row);
+                });
+            });
+        }
+
+        // Render calendar
+        let currentDate = new Date();
+        function renderCalendar(calendarData) {
+            const calendarGrid = document.getElementById('calendarGrid');
+            const monthYear = document.getElementById('monthYear');
+            calendarGrid.innerHTML = '';
+
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            monthYear.textContent = `${month + 1}-${year}`;
+
+            const days = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
+            days.forEach(day => {
+                const div = document.createElement('div');
+                div.textContent = day;
+                div.classList.add('header');
+                calendarGrid.appendChild(div);
+            });
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const lastDate = new Date(year, month + 1, 0).getDate();
+
+            for (let i = 0; i < firstDay; i++) {
+                calendarGrid.appendChild(document.createElement('div'));
+            }
+
+            for (let date = 1; date <= lastDate; date++) {
+                const div = document.createElement('div');
+                div.textContent = date;
+                const event = calendarData.find(e => {
+                    const eventDate = new Date(e.date);
+                    return eventDate.getDate() === date && eventDate.getMonth() === month && eventDate.getFullYear() === year;
+                });
+                if (event) {
+                    div.classList.add('has-event');
+                    div.addEventListener('click', () => {
+                        document.getElementById('eventDetails').innerHTML = `
+                            <p><strong>Môn:</strong> ${event.subject}</p>
+                            <p><strong>Thời gian:</strong> Từ ${event.startTime} đến ${event.endTime}</p>
+                            <p><strong>Buổi:</strong> ${event.session}</p>
+                        `;
+                    });
+                }
+                calendarGrid.appendChild(div);
+            }
+        }
+
+        function prevMonth() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            loadCalendarData();
+        }
+
+        function nextMonth() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            loadCalendarData();
+        }
+
+        // Form submission
+        document.getElementById('codeForm').addEventListener('submit', (e) => {
+            const fileInput = document.getElementById('submissionFile');
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                if (file.size > 100 * 1024 * 1024) { // 100MB
+                    e.preventDefault();
+                    alert('File quá lớn! Vui lòng chọn file dưới 100MB.');
+                    return;
+                }
+            }
+            document.getElementById('submissionTime').value = new Date().toLocaleString('vi-VN');
+        });
+
+        document.getElementById('feedbackForm').addEventListener('submit', () => {
+            document.getElementById('feedbackSubmissionTime').value = new Date().toLocaleString('vi-VN');
+        });
+
+        // Navigation
+        const sections = ['home', 'calendar', 'submit', 'feedback'];
+        function showSection(sectionId) {
+            sections.forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+            document.querySelectorAll('.navbar a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === sectionId) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        document.querySelectorAll('.navbar a').forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                const sectionId = link.getAttribute('href').substring(1);
+                showSection(sectionId);
+            });
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadUsersData();
+            loadCalendarData();
+            showSection('home');
+        });
+    </script>
+</body>
+</html>
