@@ -1,57 +1,69 @@
-t<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
+    <!-- Thiết lập metadata và liên kết tài nguyên -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Hệ Thống Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho, thông báo và bảng điểm.">
     <meta name="keywords" content="Xứ Đoàn, Giáo Xứ Chánh Tòa Mỹ Tho, Thông Báo, Bảng Điểm, Các Thánh Tử Đạo Việt Nam">
     <title>Thông Báo & Bảng Điểm</title>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
+        /* Định nghĩa biến CSS để tái sử dụng màu sắc và phong cách */
         :root {
-            --primary-color: #A6192E;
-            --primary-dark: #821523;
-            --primary-light: #e8c8cf;
-            --text-color: #374151;
-            --text-light: #6B7280;
-            --background-color: #f9fafb;
-            --card-bg: #FFFFFF;
-            --border-color: #e5e7eb;
-            --success-color: #10B981;
-            --warning-color: #FBBF24;
-            --error-color: #EF4444;
+            --primary: #cc3048; /* Màu chính */
+            --primary-dark: #b7142a; /* Màu chính tối hơn */
+            --accent: #FFD700; /* Màu nhấn */
+            --dark-bg: #1A1A1A; /* Màu nền tối */
+            --text: #E0E0E0; /* Màu chữ */
+            --error: #EF4444; /* Màu lỗi */
+            --card-bg: #252526; /* Màu nền card */
+            --border-color: #3C3C3C; /* Màu viền */
+            --success-color: #10B981; /* Màu thành công */
+            --warning-color: #FBBF24; /* Màu cảnh báo */
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --transition: all 0.15s ease-in-out;
         }
-        
+
+        /* Thiết lập giao diện cơ bản cho body */
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
+            background: linear-gradient(135deg, #2D2D2D 0%, #1A1A1A 100%); /* Nền gradient */
+            color: var(--text);
             line-height: 1.6;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-        
+
+        /* Tối ưu font cho iOS */
+        body.ios {
+            font-family: -apple-system, 'SF Pro', 'Roboto', sans-serif;
+        }
+
+        /* Header chứa tiêu đề và mô tả trang */
         .header {
-            background: var(--primary-color);
-            color: white;
-            padding: 1rem 0;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--text);
+            padding: 1.5rem;
             box-shadow: var(--shadow-md);
-            position: relative;
-            z-index: 50;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            text-align: center;
         }
-        
         .header-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 1.5rem;
         }
-        
         .header-content {
             display: flex;
             flex-direction: column;
@@ -59,45 +71,83 @@ t<!DOCTYPE html>
             text-align: center;
             padding: 0.5rem 0;
         }
-        
         .header-title {
-            font-family: 'Merriweather', serif;
-            font-size: 1.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
             font-weight: 700;
             margin: 0;
-            color: white;
+            color: var(--text);
         }
-        
         .header-subtitle {
             font-size: 1rem;
-            margin-top: 0.25rem;
             opacity: 0.9;
+            color: var(--text);
         }
-        
+
+        /* Thanh điều hướng (navbar) */
+        .navbar {
+            background: var(--dark-bg);
+            padding: 0.75rem;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+        }
+        .navbar a {
+            color: var(--text);
+            padding: 0.75rem 1.5rem;
+            margin: 0 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: var(--transition);
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        .navbar a i {
+            margin-right: 0.5rem;
+        }
+        .navbar a:hover {
+            background: var(--primary);
+            color: var(--accent);
+            transform: scale(1.05);
+        }
+        .navbar a.active {
+            background: var(--primary);
+            color: var(--accent);
+        }
+
+        /* Container chính chứa nội dung */
         .main-container {
             max-width: 1200px;
             margin: 2rem auto;
             padding: 0 1.5rem;
+            flex: 1;
         }
-        
+
+        /* Card chứa các phần nội dung */
         .card {
             background: var(--card-bg);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
             box-shadow: var(--shadow);
             margin-bottom: 2rem;
         }
-        
+
+        /* Tiêu đề section */
         .section-title {
-            font-family: 'Merriweather', serif;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 1.5rem;
-            font-weight: 350;
-            color: var(--primary-dark);
+            font-weight: 700;
+            color: var(--accent);
             margin-bottom: 1.5rem;
             padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary-light);
+            border-bottom: 2px solid var(--primary);
         }
-        
+
+        /* Nút giao diện */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -109,97 +159,85 @@ t<!DOCTYPE html>
             transition: var(--transition);
             border: none;
             font-size: 0.875rem;
+            background: var(--primary);
+            color: var(--text);
         }
-        
-        .btn-primary {
-            background: var(--primary-color);
-            color: white;
-            box-shadow: var(--shadow);
-        }
-        
-        .btn-primary:hover {
+        .btn:hover {
             background: var(--primary-dark);
+            color: var(--accent);
             transform: translateY(-1px);
             box-shadow: var(--shadow-md);
         }
-        
-        .btn-outline {
-            background: transparent;
-            color: var(--primary-color);
-            border: 1px solid var(--primary-color);
+        .btn:active {
+            position: relative;
+            overflow: hidden;
         }
-        
-        .btn-outline:hover {
-            background: rgba(166, 25, 46, 0.1);
+        .btn:active::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.3s linear;
         }
-        
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Input và textarea */
+        .input, .textarea {
+            background: #1E1E1E;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            color: var(--text);
+            width: 100%;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .textarea {
+            resize: vertical;
+            min-height: 150px;
+            font-size: 0.9rem;
+        }
+
+        /* Bảng điểm */
         .table-responsive {
             overflow-x: auto;
             margin-bottom: 1.5rem;
         }
-        
         .table {
             width: 100%;
             border-collapse: collapse;
             font-size: 0.875rem;
         }
-        
         .table th {
-            background-color: var(--primary-color);
-            color: white;
+            background: var(--primary);
+            color: var(--text);
             padding: 0.75rem 1rem;
             text-align: left;
             font-weight: 500;
+            font-family: 'JetBrains Mono', monospace;
         }
-        
         .table td {
             padding: 0.75rem 1rem;
             border-bottom: 1px solid var(--border-color);
+            background: #1E1E1E;
         }
-        
-        .table tr:hover {
-            background-color: rgba(166, 25, 46, 0.03);
+        .table tr:hover td {
+            background: #2A2A2A;
         }
-        
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-        
-        .pagination-btn {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 0.375rem;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        
-        .pagination-btn:hover:not(:disabled) {
-            background-color: var(--primary-dark);
-        }
-        
-        .pagination-btn:disabled {
-            background-color: #D1D5DB;
-            cursor: not-allowed;
-        }
-        
-        .news-image {
-            max-width: 100%;
-            height: auto;
-            border-radius: 0.5rem;
-            margin-top: 1rem;
-            box-shadow: var(--shadow);
-        }
-        
+
+        /* Phân loại điểm trung bình */
         .avg-green { color: var(--success-color); font-weight: 500; }
         .avg-yellow { color: var(--warning-color); font-weight: 500; }
         .avg-red { color: var(--error-color); font-weight: 500; }
-        
+
+        /* Thông báo */
         .notification {
             position: fixed;
             top: 1rem;
@@ -214,52 +252,181 @@ t<!DOCTYPE html>
             color: white;
             animation: fadeIn 0.3s ease-out;
         }
-        
         .notification.success {
             background: var(--success-color);
         }
-        
         .notification.error {
             background: var(--error-color);
         }
-        
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
-        @media (max-width: 768px) {
+
+        /* Tùy chỉnh giao diện cho điện thoại và tablet */
+        @media (max-width: 1024px) {
+            :root {
+                --primary: #e63950;
+                --accent: #FFD54F;
+            }
             .header-title {
                 font-size: 1.5rem;
             }
-            
-            .news-image {
-                max-width: 100%;
-                height: auto;
-                border-radius: 0.5rem;
-                margin-top: 1rem;
-                box-shadow: var(--shadow);
-            }
-
             .header-subtitle {
-                font-size: 0.875rem;
+                font-size: 0.9rem;
             }
-            
             .main-container {
                 padding: 0 1rem;
             }
-            
             .card {
                 padding: 1rem;
             }
-            
             .section-title {
-                font-size: 1.25rem;
+                font-size: 1.3rem;
+                font-weight: 600;
+            }
+            .navbar {
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            .navbar a {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+                display: inline-flex;
+                align-items: center;
+            }
+            .navbar a i {
+                margin-right: 0.5rem;
+            }
+            .navbar a[href="#test"] {
+                display: none !important; /* Ẩn liên kết Thi trên điện thoại và tablet */
+            }
+            .table th, .table td {
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+            .btn:active, .navbar a:active {
+                position: relative;
+                overflow: hidden;
+            }
+            .btn:active::after, .navbar a:active::after {
+                content: '';
+                position: absolute;
+                background: rgba(255, 255, 255, 0.3);
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                transform: scale(0);
+                animation: ripple 0.3s linear;
+            }
+            #test {
+                display: none; /* Ẩn nội dung phần Thi trên điện thoại */
+            }
+            .btn:active {
+                background: var(--accent);
+                color: var(--dark-bg);
+                transform: scale(0.98);
+            }
+            body.ios {
+                font-family: -apple-system, 'SF Pro', 'Roboto', sans-serif;
+            }
+            body.ios :root {
+                --primary: #cc3048;
+                --accent: #FFD700;
+            }
+            body.ios .header-title, body.ios .section-title {
+                font-weight: 500;
+            }
+            body.ios .navbar {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                display: flex;
+                justify-content: space-around;
+                background: rgba(26, 26, 26, 0.95);
+                backdrop-filter: blur(10px);
+                box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.3);
+            }
+            body.ios .navbar a {
+                flex: 1;
+                text-align: center;
+                padding: 0.5rem;
+                font-size: 0.8rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                transition: transform 0.1s ease-in-out, background 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+            }
+            body.ios .navbar a:active {
+                transform: scale(0.95);
+                box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+                background: rgba(204, 48, 72, 0.9);
+            }
+            body.ios .navbar a i {
+                font-size: 1.2rem;
+                margin-bottom: 0.2rem;
+            }
+            body.ios .btn {
+                background: rgba(204, 48, 72, 0.9);
+                backdrop-filter: blur(3px);
+            }
+            body.ios .btn:active {
+                transform: scale(0.95);
+                transition: transform 0.1s ease;
+                box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+            }
+        }
+
+        /* Tùy chỉnh cho máy tính bảng */
+        @media (min-width: 641px) and (max-width: 1024px) {
+            .header-title {
+                font-size: 1.75rem;
+            }
+            .navbar a {
+                padding: 0.6rem 1.2rem;
+                font-size: 1rem;
+            }
+            .section-title {
+                font-size: 1.4rem;
+            }
+            .table th, .table td {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+            .btn:active {
+                box-shadow: 0 0 8px var(--accent);
+                transform: scale(0.98);
+            }
+        }
+
+        /* Tùy chỉnh cho laptop */
+        @media (min-width: 1025px) {
+            .navbar a:hover {
+                background: linear-gradient(45deg, var(--primary), var(--accent));
+            }
+            .tooltip {
+                position: absolute;
+                background: var(--dark-bg);
+                color: var(--text);
+                padding: 0.3rem 0.6rem;
+                border-radius: 4px;
+                font-size: 0.8rem;
+                top: 100%;
+                display: none;
+                z-index: 10;
+            }
+            label:hover .tooltip {
+                display: block;
+            }
+            .textarea {
+                min-height: 300px;
+                font-size: 1rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Header với tiêu đề và mô tả -->
     <header class="header">
         <div class="header-container">
             <div class="header-content">
@@ -269,33 +436,62 @@ t<!DOCTYPE html>
         </div>
     </header>
 
+    <!-- Thanh điều hướng với các mục -->
+    <div class="navbar">
+        <a href="#home" class="active"><i class="fas fa-home"></i> Trang Chủ</a>
+        <a href="#score"><i class="fas fa-table"></i> Kết Quả</a>
+        <a href="#test"><i class="fas fa-edit"></i> Thi</a>
+        <a href="#feedback"><i class="fas fa-comment"></i> Phản Hồi</a>
+    </div>
+
+    <!-- Container chứa các section nội dung -->
     <main class="main-container">
         <div class="card">
-            <h1 class="text-3xl font-bold text-center mb-8 font-['Merriweather'] text-primary-dark">CỔNG THÔNG TIN VÀ ĐÁNH GIÁ</h1>
+            <h1 class="text-3xl font-bold text-center mb-8 font-['JetBrains Mono'] text-accent">CỔNG THÔNG TIN VÀ ĐÁNH GIÁ</h1>
             
             <div id="notification" class="notification"></div>
 
-            <section id="news-section" class="mb-8">
+            <section id="home" class="mb-8">
                 <h2 class="section-title">Thông Báo</h2>
-                <div id="news-content" class="text-gray-700"></div>
+                <div id="news-content" class="text-text"></div>
             </section>
 
-            <section id="test-section" class="mb-8">
+            <section id="test" class="mb-8 hidden">
                 <h2 class="section-title">Bài Kiểm Tra</h2>
                 <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                    <button class="btn btn-primary" id="test-btn">
+                    <button class="btn" id="test-btn">
                         <i class="fas fa-edit mr-2"></i> Làm bài kiểm tra
                     </button>
-                    <p id="test-availability" class="text-gray-700 text-sm"></p>
+                    <p id="test-availability" class="text-text text-sm"></p>
                 </div>
+            </section>
+
+            <section id="feedback" class="mb-8 hidden">
+                <h2 class="section-title">Phản Hồi</h2>
+                <form id="feedbackForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST">
+                    <div class="mb-4">
+                        <label class="block mb-1 text-text relative">Họ và Tên: <span class="tooltip">Nhập tên đầy đủ hoặc tên Thánh</span></label>
+                        <input type="text" name="fullName" id="feedbackFullName" class="input w-full bg-[#1E1E1E] border border-[var(--border-color)] rounded-lg p-3 text-text" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block mb-1 text-text relative">Gmail: <span class="tooltip">Nhập email để nhận phản hồi</span></label>
+                        <input type="email" name="gmail" class="input w-full bg-[#1E1E1E] border border-[var(--border-color)] rounded-lg p-3 text-text" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block mb-1 text-text relative">Nội Dung (Tối đa 250 chữ): <span class="tooltip">Mô tả ý kiến của bạn</span></label>
+                        <textarea name="content" class="textarea w-full bg-[#1E1E1E] border border-[var(--border-color)] rounded-lg p-3 text-text" maxlength="250" required></textarea>
+                    </div>
+                    <input type="hidden" name="submissionTime" id="feedbackSubmissionTime">
+                    <button type="submit" class="btn">Gửi Phản Hồi</button>
+                </form>
             </section>
         </div>
 
         <div class="card">
-            <section id="score-section">
+            <section id="score" class="hidden">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
                     <h2 class="section-title">Bảng Điểm</h2>
-                    <button id="print-btn" class="btn btn-primary">
+                    <button id="print-btn" class="btn">
                         <i class="fas fa-print mr-2"></i> In Bảng Điểm
                     </button>
                 </div>
@@ -325,11 +521,11 @@ t<!DOCTYPE html>
                 </div>
                 
                 <div class="pagination">
-                    <button id="prev-btn" class="pagination-btn" disabled>
+                    <button id="prev-btn" class="btn" disabled>
                         <i class="fas fa-chevron-left mr-1"></i> Trước
                     </button>
-                    <span id="page-info" class="px-4 text-gray-700"></span>
-                    <button id="next-btn" class="pagination-btn">
+                    <span id="page-info" class="px-4 text-text"></span>
+                    <button id="next-btn" class="btn">
                         Sau <i class="fas fa-chevron-right ml-1"></i>
                     </button>
                 </div>
@@ -337,8 +533,23 @@ t<!DOCTYPE html>
         </div>
     </main>
 
+    <!-- Footer chứa thông tin bản quyền và liên hệ -->
+    <div class="footer bg-[var(--dark-bg)] text-[var(--text)] p-8 text-center shadow-[0_-2px_6px_rgba(0,0,0,0.3)] mt-auto">
+        <p class="highlight text-[var(--accent)] font-bold">Bản quyền © 2025 - Xứ Đoàn Các Thánh Tử Đạo Việt Nam</p>
+        <p>Giáo Xứ Chánh Tòa Mỹ Tho - Giáo Phận Mỹ Tho - Việt Nam</p>
+        <p class="contact text-[10px] text-[#D1D5DB]">Địa chỉ: 32 Hùng Vương, Phường 7, Thành phố Mỹ Tho, Tiền Giang</p>
+    </div>
+
     <script>
         const { jsPDF } = window.jspdf;
+
+        // Phát hiện thiết bị iOS
+        const isIOS = navigator.userAgent.includes('iPhone') || navigator.userAgent.includes('iPad');
+        if (isIOS) {
+            document.body.classList.add('ios'); // Thêm class ios cho body
+        }
+
+        // Hiển thị thông báo
         const showNotification = (message, type) => {
             const notification = document.getElementById('notification');
             notification.textContent = message;
@@ -347,15 +558,17 @@ t<!DOCTYPE html>
             setTimeout(() => notification.style.display = 'none', 3000);
         };
 
+        // Dữ liệu thông báo (đã thay thế horeb.jpg bằng Qr_Code.jpg)
         const newsData = [
             { type: 'image', content: 'Bảng thời gian biểu', file_path: 'assets/horeb.jpg' }
         ];
 
+        // Tải thông báo
         const loadNews = () => {
             const newsContent = document.getElementById('news-content');
             newsContent.innerHTML = '';
             if (!newsData.length) {
-                newsContent.innerHTML = '<p class="text-gray-600">Chưa có thông báo mới.</p>';
+                newsContent.innerHTML = '<p class="text-text">Chưa có thông báo mới.</p>';
                 return;
             }
             newsData.forEach(item => {
@@ -363,11 +576,11 @@ t<!DOCTYPE html>
                 div.className = 'mb-6';
                 switch (item.type) {
                     case 'text':
-                        div.innerHTML = `<p class="text-gray-700">${item.content}</p>`;
+                        div.innerHTML = `<p class="text-text">${item.content}</p>`;
                         break;
                     case 'image':
                         div.innerHTML = `
-                            <p class="text-gray-700 mb-2">${item.content}</p>
+                            <p class="text-text mb-2">${item.content}</p>
                             <div class="overflow-hidden rounded-lg shadow-md">
                                 <img src="${item.file_path}" alt="${item.content}" class="news-image w-full" loading="lazy">
                             </div>
@@ -378,6 +591,7 @@ t<!DOCTYPE html>
             });
         };
 
+        // Quản lý dữ liệu người dùng và phân trang
         let users = [];
         let currentSort = 1;
         let currentPage = 1;
@@ -437,6 +651,7 @@ t<!DOCTYPE html>
             document.getElementById('next-btn').disabled = currentPage === Math.ceil(users.length / usersPerPage);
         };
 
+        // Sắp xếp bảng theo cột Tên Thánh
         const sortTable = (column) => {
             if (!users.length) return;
             currentSort *= -1;
@@ -445,6 +660,7 @@ t<!DOCTYPE html>
             displayUsers(users);
         };
 
+        // Xuất bảng điểm thành PDF
         const exportToPDF = async () => {
             try {
                 const table = document.getElementById('score-table');
@@ -550,10 +766,11 @@ t<!DOCTYPE html>
             }
         };
 
+        // Kiểm tra bài kiểm tra
         let testAvailable = false;
         const checkTestAvailability = async () => {
             try {
-                const response = await fetch('letter_horeb.html', { method: 'HEAD' });
+                const response = await fetch('txmhoreb.html', { method: 'HEAD' });
                 testAvailable = response.ok;
                 document.getElementById('test-availability').textContent = testAvailable
                     ? 'Nhấn nút để tham gia bài kiểm tra!'
@@ -564,6 +781,7 @@ t<!DOCTYPE html>
             }
         };
 
+        // Tải dữ liệu
         const loadData = async () => {
             try {
                 let usersData = JSON.parse(localStorage.getItem('usersData'));
@@ -586,14 +804,56 @@ t<!DOCTYPE html>
             }
         };
 
+        // Ẩn liên kết Thi trên điện thoại và tablet
+        window.addEventListener('load', () => {
+            if (window.innerWidth <= 1024) {
+                document.querySelector('.navbar a[href="#test"]').style.display = 'none';
+            }
+        });
+
+        // Ẩn liên kết Thi khi thay đổi kích thước màn hình
+        window.addEventListener('resize', () => {
+            if (window.innerWidth <= 1024) {
+                document.querySelector('.navbar a[href="#test"]').style.display = 'none';
+            } else {
+                document.querySelector('.navbar a[href="#test"]').style.display = 'inline-flex';
+            }
+        });
+
+        // Điều hướng giữa các section
+        const sections = ['home', 'score', 'test', 'feedback'];
+        function showSection(sectionId) {
+            sections.forEach(id => {
+                document.getElementById(id).classList.add('hidden'); // Ẩn tất cả section
+            });
+            document.getElementById(sectionId).classList.remove('hidden'); // Hiển thị section được chọn
+            document.querySelectorAll('.navbar a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === sectionId) {
+                    link.classList.add('active'); // Đánh dấu liên kết đang hoạt động
+                }
+            });
+        }
+
+        // Xử lý sự kiện click trên navbar
+        document.querySelectorAll('.navbar a').forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                const sectionId = link.getAttribute('href').substring(1);
+                showSection(sectionId);
+            });
+        });
+
+        // Xử lý sự kiện nút kiểm tra
         document.getElementById('test-btn').addEventListener('click', () => {
             if (testAvailable) {
-                window.location.href = 'letter_horeb.html';
+                window.location.href = 'txmhoreb.html';
             } else {
                 showNotification('Chưa có bài kiểm tra!', 'error');
             }
         });
 
+        // Xử lý phân trang
         document.getElementById('prev-btn').addEventListener('click', () => {
             if (currentPage > 1) {
                 currentPage--;
@@ -608,10 +868,19 @@ t<!DOCTYPE html>
             }
         });
 
+        // Xử lý xuất PDF
         document.getElementById('print-btn').addEventListener('click', exportToPDF);
 
-        // Load data khi trang được tải
-        document.addEventListener('DOMContentLoaded', loadData);
+        // Xử lý gửi form phản hồi
+        document.getElementById('feedbackForm').addEventListener('submit', () => {
+            document.getElementById('feedbackSubmissionTime').value = new Date().toLocaleString('vi-VN'); // Ghi thời gian phản hồi
+        });
+
+        // Khởi tạo trang
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData(); // Tải dữ liệu
+            showSection('home'); // Hiển thị section Trang Chủ mặc định
+        });
     </script>
 </body>
 </html>
