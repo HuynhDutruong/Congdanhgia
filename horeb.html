@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+t<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -553,7 +553,7 @@
         let testAvailable = false;
         const checkTestAvailability = async () => {
             try {
-                const response = await fetch('morse.html', { method: 'HEAD' });
+                const response = await fetch('letter_horeb.html', { method: 'HEAD' });
                 testAvailable = response.ok;
                 document.getElementById('test-availability').textContent = testAvailable
                     ? 'Nhấn nút để tham gia bài kiểm tra!'
@@ -588,7 +588,7 @@
 
         document.getElementById('test-btn').addEventListener('click', () => {
             if (testAvailable) {
-                window.location.href = 'morse.html';
+                window.location.href = 'letter_horeb.html';
             } else {
                 showNotification('Chưa có bài kiểm tra!', 'error');
             }
