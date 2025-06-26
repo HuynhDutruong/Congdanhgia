@@ -34,7 +34,7 @@
         /* Thiết lập giao diện cơ bản cho body */
         body {
             font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #2D2D2D 0%, #1A1A1A 100%); /* Nền gradient */
+            background: linear-gradient(135deg, #2D2D2D 0%, #1A1A1A 100%);
             color: var(--text);
             line-height: 1.6;
             margin: 0;
@@ -52,7 +52,7 @@
         .header {
             background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: var(--text);
-            padding: 1.5rem;
+            padding: 0.75rem; /* Giảm padding để giảm chiều cao */
             box-shadow: var(--shadow-md);
             position: sticky;
             top: 0;
@@ -62,24 +62,24 @@
         .header-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1.5rem;
+            padding: 0 0.75rem;
         }
         .header-content {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            padding: 0.5rem 0;
+            padding: 0.2rem 0;
         }
         .header-title {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 2rem;
+            font-size: 1.4rem; /* Giảm kích thước font */
             font-weight: 700;
             margin: 0;
             color: var(--text);
         }
         .header-subtitle {
-            font-size: 1rem;
+            font-size: 0.8rem; /* Giảm kích thước font */
             opacity: 0.9;
             color: var(--text);
         }
@@ -87,26 +87,30 @@
         /* Thanh điều hướng (navbar) */
         .navbar {
             background: var(--dark-bg);
-            padding: 0.75rem;
+            padding: 0.4rem; /* Giảm padding để giảm chiều cao */
             display: flex;
             justify-content: center;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 2.5rem; /* Đặt ngay dưới header */
+            z-index: 1100; /* Đảm bảo ở trên footer */
         }
         .navbar a {
             color: var(--text);
-            padding: 0.75rem 1.5rem;
-            margin: 0 0.5rem;
+            padding: 0.4rem 0.8rem; /* Giảm padding */
+            margin: 0 0.2rem;
             font-family: 'JetBrains Mono', monospace;
             font-weight: 500;
+            font-size: 0.8rem; /* Giảm kích thước font */
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 6px;
             transition: var(--transition);
-            position: relative;
             display: inline-flex;
             align-items: center;
         }
         .navbar a i {
-            margin-right: 0.5rem;
+            margin-right: 0.3rem;
+            font-size: 0.85rem; /* Giảm kích thước icon */
         }
         .navbar a:hover {
             background: var(--primary);
@@ -121,8 +125,8 @@
         /* Container chính chứa nội dung */
         .main-container {
             max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
+            margin: 1rem auto; /* Giảm margin */
+            padding: 0 0.75rem;
             flex: 1;
         }
 
@@ -130,20 +134,20 @@
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2rem;
+            border-radius: 10px;
+            padding: 1.25rem; /* Giảm padding */
             box-shadow: var(--shadow);
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
         }
 
         /* Tiêu đề section */
         .section-title {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 1.5rem;
+            font-size: 1.2rem; /* Giảm kích thước font */
             font-weight: 700;
             color: var(--accent);
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.3rem;
             border-bottom: 2px solid var(--primary);
         }
 
@@ -152,13 +156,13 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 0.625rem 1.25rem;
-            border-radius: 0.5rem;
+            padding: 0.4rem 0.8rem; /* Giảm padding */
+            border-radius: 0.3rem;
             font-weight: 500;
             cursor: pointer;
             transition: var(--transition);
             border: none;
-            font-size: 0.875rem;
+            font-size: 0.75rem; /* Giảm kích thước font */
             background: var(--primary);
             color: var(--text);
         }
@@ -176,8 +180,8 @@
             content: '';
             position: absolute;
             background: rgba(255, 255, 255, 0.3);
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             transform: scale(0);
             animation: ripple 0.3s linear;
@@ -193,38 +197,38 @@
         .input, .textarea {
             background: #1E1E1E;
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 0.75rem;
+            border-radius: 6px;
+            padding: 0.5rem; /* Giảm padding */
             color: var(--text);
             width: 100%;
             font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem; /* Giảm kích thước font */
         }
         .textarea {
             resize: vertical;
-            min-height: 150px;
-            font-size: 0.9rem;
+            min-height: 100px; /* Giảm chiều cao tối thiểu */
         }
 
         /* Bảng điểm */
         .table-responsive {
             overflow-x: auto;
-            margin-bottom: 1.5rem;
+            margin-bottom: 0.8rem;
         }
         .table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.875rem;
+            font-size: 0.75rem; /* Giảm kích thước font */
         }
         .table th {
             background: var(--primary);
             color: var(--text);
-            padding: 0.75rem 1rem;
+            padding: 0.5rem 0.75rem; /* Giảm padding */
             text-align: left;
             font-weight: 500;
             font-family: 'JetBrains Mono', monospace;
         }
         .table td {
-            padding: 0.75rem 1rem;
+            padding: 0.5rem 0.75rem; /* Giảm padding */
             border-bottom: 1px solid var(--border-color);
             background: #1E1E1E;
         }
@@ -240,14 +244,14 @@
         /* Thông báo */
         .notification {
             position: fixed;
-            top: 1rem;
-            right: 1rem;
-            padding: 1rem 1.5rem;
-            border-radius: 0.5rem;
-            z-index: 1000;
+            top: 0.5rem;
+            right: 0.5rem;
+            padding: 0.5rem 1rem; /* Giảm padding */
+            border-radius: 0.3rem;
+            z-index: 1200; /* Đảm bảo thông báo ở trên cùng */
             display: none;
             box-shadow: var(--shadow-md);
-            font-size: 0.875rem;
+            font-size: 0.75rem; /* Giảm kích thước font */
             font-weight: 500;
             color: white;
             animation: fadeIn 0.3s ease-out;
@@ -263,73 +267,87 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Footer chứa thông tin bản quyền và liên hệ */
+        .footer {
+            background: var(--dark-bg);
+            color: var(--text);
+            padding: 0.75rem; /* Giảm padding */
+            text-align: center;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.3);
+            margin-top: auto;
+            z-index: 900; /* Đảm bảo thấp hơn navbar */
+        }
+        .footer .highlight {
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            font-size: 0.85rem; /* Giảm kích thước font */
+        }
+        .footer p {
+            font-size: 0.75rem; /* Giảm kích thước font */
+            margin: 0.2rem 0;
+        }
+        .footer .contact {
+            color: #D1D5DB;
+            font-size: 0.7rem; /* Giảm kích thước font */
+        }
+
         /* Tùy chỉnh giao diện cho điện thoại và tablet */
         @media (max-width: 1024px) {
             :root {
                 --primary: #e63950;
                 --accent: #FFD54F;
             }
+            .header {
+                padding: 0.5rem;
+            }
             .header-title {
-                font-size: 0.9rem;
+                font-size: 1.2rem;
             }
             .header-subtitle {
-                font-size: 0.8rem;
+                font-size: 0.7rem;
             }
             .main-container {
-                padding: 0 1rem;
+                padding: 0 0.5rem;
             }
             .card {
-                padding: 1rem;
+                padding: 0.8rem;
             }
             .section-title {
-                font-size: 1.3rem;
+                font-size: 1rem;
                 font-weight: 600;
             }
             .navbar {
+                padding: 0.3rem;
                 overflow-x: auto;
                 white-space: nowrap;
             }
             .navbar a {
-                padding: 0.5rem 1rem;
-                font-size: 0.9rem;
-                display: inline-flex;
-                align-items: center;
+                padding: 0.3rem 0.6rem;
+                font-size: 0.75rem;
             }
             .navbar a i {
-                margin-right: 0.5rem;
+                margin-right: 0.2rem;
+                font-size: 0.75rem;
             }
             .table th, .table td {
-                padding: 0.5rem;
-                font-size: 0.85rem;
+                padding: 0.4rem;
+                font-size: 0.7rem;
             }
-            .btn:active, .navbar a:active {
-                position: relative;
-                overflow: hidden;
+            .btn {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.7rem;
             }
             .btn:active::after, .navbar a:active::after {
                 content: '';
                 position: absolute;
                 background: rgba(255, 255, 255, 0.3);
-                width: 100px;
-                height: 100px;
+                width: 60px;
+                height: 60px;
                 border-radius: 50%;
                 transform: scale(0);
                 animation: ripple 0.3s linear;
-            }
-            .btn:active {
-                background: var(--accent);
-                color: var(--dark-bg);
-                transform: scale(0.98);
-            }
-            body.ios {
-                font-family: -apple-system, 'SF Pro', 'Roboto', sans-serif;
-            }
-            body.ios :root {
-                --primary: #cc3048;
-                --accent: #FFD700;
-            }
-            body.ios .header-title, body.ios .section-title {
-                font-weight: 500;
             }
             body.ios .navbar {
                 position: fixed;
@@ -339,13 +357,14 @@
                 justify-content: space-around;
                 background: rgba(26, 26, 26, 0.95);
                 backdrop-filter: blur(10px);
-                box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.3);
+                box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.3);
+                z-index: 1100;
             }
             body.ios .navbar a {
                 flex: 1;
                 text-align: center;
-                padding: 0.5rem;
-                font-size: 0.8rem;
+                padding: 0.3rem;
+                font-size: 0.7rem;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -353,12 +372,12 @@
             }
             body.ios .navbar a:active {
                 transform: scale(0.95);
-                box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+                box-shadow: 0 0 6px rgba(255, 215, 0, 0.5);
                 background: rgba(204, 48, 72, 0.9);
             }
             body.ios .navbar a i {
-                font-size: 1.2rem;
-                margin-bottom: 0.2rem;
+                font-size: 0.9rem;
+                margin-bottom: 0.1rem;
             }
             body.ios .btn {
                 background: rgba(204, 48, 72, 0.9);
@@ -366,30 +385,78 @@
             }
             body.ios .btn:active {
                 transform: scale(0.95);
-                transition: transform 0.1s ease;
-                box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+                box-shadow: 0 0 6px rgba(255, 215, 0, 0.5);
+            }
+            .footer {
+                padding: 0.5rem;
+            }
+            .footer .highlight {
+                font-size: 0.75rem;
+            }
+            .footer p {
+                font-size: 0.7rem;
+                margin: 0.1rem 0;
+            }
+            .footer .contact {
+                font-size: 0.65rem;
+            }
+            body.ios .footer {
+                background: rgba(26, 26, 26, 0.95);
+                backdrop-filter: blur(10px);
+            }
+            body.ios .footer .contact:active::after {
+                content: '';
+                position: absolute;
+                background: rgba(255, 255, 255, 0.3);
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                transform: scale(0);
+                animation: ripple 0.3s linear;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
             }
         }
 
         /* Tùy chỉnh cho máy tính bảng */
         @media (min-width: 641px) and (max-width: 1024px) {
+            .header {
+                padding: 0.6rem;
+            }
             .header-title {
-                font-size: 1.75rem;
+                font-size: 1.3rem;
+            }
+            .header-subtitle {
+                font-size: 0.75rem;
             }
             .navbar a {
-                padding: 0.6rem 1.2rem;
-                font-size: 1rem;
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
             }
             .section-title {
-                font-size: 1.4rem;
+                font-size: 1.1rem;
             }
             .table th, .table td {
-                padding: 0.75rem;
+                padding: 0.5rem;
+                font-size: 0.75rem;
+            }
+            .btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.75rem;
+            }
+            .footer {
+                padding: 1rem;
+            }
+            .footer .highlight {
                 font-size: 0.9rem;
             }
-            .btn:active {
-                box-shadow: 0 0 8px var(--accent);
-                transform: scale(0.98);
+            .footer p {
+                font-size: 0.8rem;
+                margin: 0.2rem 0;
+            }
+            .footer .contact {
+                font-size: 0.7rem;
             }
         }
 
@@ -402,9 +469,9 @@
                 position: absolute;
                 background: var(--dark-bg);
                 color: var(--text);
-                padding: 0.3rem 0.6rem;
+                padding: 0.2rem 0.5rem;
                 border-radius: 4px;
-                font-size: 0.8rem;
+                font-size: 0.7rem;
                 top: 100%;
                 display: none;
                 z-index: 10;
@@ -413,105 +480,21 @@
                 display: block;
             }
             .textarea {
-                min-height: 300px;
-                font-size: 1rem;
+                min-height: 200px;
+                font-size: 0.85rem;
             }
-        }
-        /* Thiết lập cơ bản cho footer */
-        .footer {
-            background: var(--dark-bg);
-            color: var(--text);
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.3);
-            margin-top: auto;
-            font-family: 'Roboto', sans-serif;
-        }
-
-        /* Các phần tử trong footer */
-        .footer .highlight {
-            color: var(--accent);
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .footer .contact {
-            color: #D1D5DB;
-            font-size: 0.75rem; /* Kích thước chữ mặc định nhỏ */
-        }
-
-        /* Tùy chỉnh cho điện thoại */
-        @media (max-width: 640px) {
             .footer {
-                padding: 0.7rem;
+                padding: 1.5rem;
             }
             .footer .highlight {
-                font-size: 0.7rem;
+                font-size: 1rem;
             }
             .footer p {
-                font-size: 0.7rem;
+                font-size: 0.85rem;
                 margin: 0.3rem 0;
             }
             .footer .contact {
-                font-size: 0.7rem;
-            }
-            /* Hiệu ứng cho iOS */
-            body.ios .footer {
-                background: rgba(26, 26, 26, 0.95);
-                backdrop-filter: blur(10px);
-            }
-            body.ios .footer .contact {
-                position: relative;
-                display: inline-block;
-                transition: var(--transition);
-            }
-            body.ios .footer .contact:active::after {
-                content: '';
-                position: absolute;
-                background: rgba(255, 255, 255, 0.3);
-                width: 100px;
-                height: 100px;
-                border-radius: 50%;
-                transform: scale(0);
-                animation: ripple 0.3s linear;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-            }
-        }
-
-        /* Tùy chỉnh cho máy tính bảng */
-        @media (min-width: 641px) and (max-width: 1024px) {
-            .footer {
-                padding: 2rem;
-            }
-            .footer .highlight {
-                font-size: 1.1rem;
-            }
-            .footer p {
-                font-size: 0.9rem;
-                margin: 0.4rem 0;
-            }
-            .footer .contact {
-                font-size: 0.8rem;
-            }
-        }
-
-        /* Tùy chỉnh cho laptop */
-        @media (min-width: 1025px) {
-            .footer {
-                padding: 2.5rem;
-            }
-            .footer .highlight {
-                font-size: 1.25rem;
-            }
-            .footer p {
-                font-size: 1rem;
-                margin: 0.5rem 0;
-            }
-            .footer .contact {
-                font-size: 0.85rem;
+                font-size: 0.75rem;
                 position: relative;
             }
             .footer .contact:hover .tooltip {
@@ -521,10 +504,10 @@
                 position: absolute;
                 background: var(--dark-bg);
                 color: var(--text);
-                padding: 0.3rem 0.6rem;
+                padding: 0.2rem 0.5rem;
                 border-radius: 4px;
-                font-size: 0.75rem;
-                top: -2rem;
+                font-size: 0.7rem;
+                top: -1.8rem;
                 left: 50%;
                 transform: translateX(-50%);
                 display: none;
@@ -555,39 +538,39 @@
     <!-- Container chứa các section nội dung -->
     <main class="main-container">
         <div class="card">
-            <h1 class="text-3xl font-bold text-center mb-8 font-['JetBrains Mono'] text-accent">CỔNG THÔNG TIN VÀ ĐÁNH GIÁ</h1>
+            <h1 class="text-2xl font-bold text-center mb-6 font-['JetBrains Mono'] text-accent">CỔNG THÔNG TIN VÀ ĐÁNH GIÁ</h1>
             
             <div id="notification" class="notification"></div>
 
-            <section id="home" class="mb-8">
+            <section id="home" class="mb-6">
                 <h2 class="section-title">Thông Báo</h2>
                 <div id="news-content" class="text-text"></div>
             </section>
 
-            <section id="test" class="mb-8">
+            <section id="test" class="mb-6">
                 <h2 class="section-title">Bài Kiểm Tra</h2>
-                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
                     <button class="btn" id="test-btn">
-                        <i class="fas fa-edit mr-2"></i> Làm bài kiểm tra
+                        <i class="fas fa-edit mr-1"></i> Làm bài kiểm tra
                     </button>
-                    <p id="test-availability" class="text-text text-sm"></p>
+                    <p id="test-availability" class="text-text text-xs"></p>
                 </div>
             </section>
 
-            <section id="feedback" class="mb-8 hidden">
+            <section id="feedback" class="mb-6 hidden">
                 <h2 class="section-title">Phản Hồi</h2>
                 <form id="feedbackForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST">
-                    <div class="mb-4">
+                    <div class="mb-3">
                         <label class="block mb-1 text-text relative">Họ và Tên: <span class="tooltip">Nhập tên đầy đủ hoặc tên Thánh</span></label>
-                        <input type="text" name="fullName" id="feedbackFullName" class="input w-full bg-[#1E1E1E] border border-[var(--border-color)] rounded-lg p-3 text-text" required>
+                        <input type="text" name="fullName" id="feedbackFullName" class="input w-full bg-[#1E1E1E] border border-[var(--border-color)] rounded-lg p-2 text-text" required>
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-3">
                         <label class="block mb-1 text-text relative">Gmail: <span class="tooltip">Nhập email để nhận phản hồi</span></label>
-                        <input type="email" name="gmail" class="input w-full bg-[#1E1E1E] border border-[var(--border-color)] rounded-lg p-3 text-text" required>
+                        <input type="email" name="gmail" class="input w-full bg-[#1E1E1E] border border-[var(--border-color)] rounded-lg p-2 text-text" required>
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-3">
                         <label class="block mb-1 text-text relative">Nội Dung (Tối đa 250 chữ): <span class="tooltip">Mô tả ý kiến của bạn</span></label>
-                        <textarea name="content" class="textarea w-full bg-[#1E1E1E] border border-[var(--border-color)] rounded-lg p-3 text-text" maxlength="250" required></textarea>
+                        <textarea name="content" class="textarea w-full bg-[#1E1E1E] border border-[var(--border-color)] rounded-lg p-2 text-text" maxlength="250" required></textarea>
                     </div>
                     <input type="hidden" name="submissionTime" id="feedbackSubmissionTime">
                     <button type="submit" class="btn">Gửi Phản Hồi</button>
@@ -597,14 +580,14 @@
 
         <div class="card">
             <section id="score" class="hidden">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
                     <h2 class="section-title">Bảng Điểm</h2>
                     <button id="print-btn" class="btn">
-                        <i class="fas fa-print mr-2"></i> In Bảng Điểm
+                        <i class="fas fa-print mr-1"></i> In Bảng Điểm
                     </button>
                 </div>
                 
-                <div id="score-error" class="bg-red-50 text-red-600 p-4 rounded-lg mb-4" style="display: none;"></div>
+                <div id="score-error" class="bg-red-50 text-red-600 p-3 rounded-lg mb-3" style="display: none;"></div>
                 
                 <div class="table-responsive">
                     <table id="score-table" class="table">
@@ -628,11 +611,11 @@
                     </table>
                 </div>
                 
-                <div class="pagination">
+                <div class="pagination flex justify-center items-center gap-2">
                     <button id="prev-btn" class="btn" disabled>
                         <i class="fas fa-chevron-left mr-1"></i> Trước
                     </button>
-                    <span id="page-info" class="px-4 text-text"></span>
+                    <span id="page-info" class="px-3 text-text text-sm"></span>
                     <button id="next-btn" class="btn">
                         Sau <i class="fas fa-chevron-right ml-1"></i>
                     </button>
@@ -642,25 +625,25 @@
     </main>
 
     <!-- Footer chứa thông tin bản quyền và liên hệ -->
-    <div class="footer bg-[var(--dark-bg)] text-[var(--text)] p-8 text-center shadow-[0_-2px_6px_rgba(0,0,0,0.3)] mt-auto">
-        <p class="highlight text-[var(--accent)] font-bold">Bản quyền © 2025 - Xứ Đoàn Các Thánh Tử Đạo Việt Nam</p>
+    <footer class="footer">
+        <p class="highlight">Bản quyền © 2025 - Xứ Đoàn Các Thánh Tử Đạo Việt Nam</p>
         <p>Giáo Xứ Chánh Tòa Mỹ Tho - Giáo Phận Mỹ Tho - Việt Nam</p>
-        <p class="contact text-[#D1D5DB]">
+        <p class="contact">
             Địa chỉ: 32 Hùng Vương, Phường 7, Thành phố Mỹ Tho, Tiền Giang
             <span class="tooltip">Liên hệ với chúng tôi</span>
         </p>
-    </div>
+    </footer>
 
     <script>
         const { jsPDF } = window.jspdf;
 
-        // Phát hiện thiết bị iOS
+        // Phát hiện thiết bị iOS để áp dụng phong cách riêng
         const isIOS = navigator.userAgent.includes('iPhone') || navigator.userAgent.includes('iPad');
         if (isIOS) {
-            document.body.classList.add('ios'); // Thêm class ios cho body
+            document.body.classList.add('ios');
         }
 
-        // Hiển thị thông báo
+        // Hàm hiển thị thông báo tạm thời
         const showNotification = (message, type) => {
             const notification = document.getElementById('notification');
             notification.textContent = message;
@@ -669,12 +652,12 @@
             setTimeout(() => notification.style.display = 'none', 3000);
         };
 
-        // Dữ liệu thông báo
+        // Dữ liệu thông báo mẫu
         const newsData = [
             { type: 'image', content: 'Bảng thời gian biểu', file_path: 'assets/horeb.jpg' }
         ];
 
-        // Tải thông báo
+        // Tải nội dung thông báo
         const loadNews = () => {
             const newsContent = document.getElementById('news-content');
             newsContent.innerHTML = '';
@@ -684,7 +667,7 @@
             }
             newsData.forEach(item => {
                 const div = document.createElement('div');
-                div.className = 'mb-6';
+                div.className = 'mb-4';
                 switch (item.type) {
                     case 'text':
                         div.innerHTML = `<p class="text-text">${item.content}</p>`;
@@ -780,7 +763,6 @@
                     return;
                 }
 
-                // Tạo bảng tạm để hiển thị toàn bộ dữ liệu
                 const tempTable = document.createElement('table');
                 tempTable.className = 'table';
                 tempTable.innerHTML = `
@@ -822,12 +804,10 @@
                     tempTbody.appendChild(row);
                 });
 
-                // Thêm bảng tạm vào DOM (ẩn)
                 tempTable.style.position = 'absolute';
                 tempTable.style.left = '-9999px';
                 document.body.appendChild(tempTable);
 
-                // Chuyển bảng thành hình ảnh bằng html2canvas
                 const canvas = await html2canvas(tempTable, { 
                     scale: 2,
                     logging: false,
@@ -835,21 +815,18 @@
                 });
                 const imgData = canvas.toDataURL('image/png');
 
-                // Tạo PDF với jsPDF
                 const pdf = new jsPDF({
                     orientation: 'landscape',
                     unit: 'mm',
                     format: 'a4'
                 });
 
-                // Thêm tiêu đề
                 pdf.setFontSize(16);
                 pdf.setFont('helvetica', 'bold');
                 pdf.text('BẢNG ĐIỂM XỨ ĐOÀN CÁC THÁNH TỬ ĐẠO VIỆT NAM', 105, 15, { align: 'center' });
                 pdf.setFontSize(12);
                 pdf.text('Giáo Xứ Chánh Tòa Mỹ Tho', 105, 22, { align: 'center' });
 
-                // Tính toán kích thước hình ảnh
                 const pageWidth = pdf.internal.pageSize.getWidth() - 20;
                 const pageHeight = pdf.internal.pageSize.getHeight() - 40;
                 const ratio = canvas.height / canvas.width;
@@ -861,13 +838,8 @@
                     imgWidth = imgHeight / ratio;
                 }
 
-                // Thêm hình ảnh bảng vào PDF
                 pdf.addImage(imgData, 'PNG', 10, 30, imgWidth, imgHeight);
-
-                // Lưu PDF
                 pdf.save('Bang_Diem_Xu_Doan.pdf');
-
-                // Xóa bảng tạm
                 document.body.removeChild(tempTable);
 
                 showNotification('Xuất bảng điểm thành PDF thành công!', 'success');
@@ -892,7 +864,7 @@
             }
         };
 
-        // Tải dữ liệu
+        // Tải dữ liệu từ file JSON hoặc localStorage
         const loadData = async () => {
             try {
                 let usersData = JSON.parse(localStorage.getItem('usersData'));
@@ -919,13 +891,13 @@
         const sections = ['home', 'score', 'test', 'feedback'];
         function showSection(sectionId) {
             sections.forEach(id => {
-                document.getElementById(id).classList.add('hidden'); // Ẩn tất cả section
+                document.getElementById(id).classList.add('hidden');
             });
-            document.getElementById(sectionId).classList.remove('hidden'); // Hiển thị section được chọn
+            document.getElementById(sectionId).classList.remove('hidden');
             document.querySelectorAll('.navbar a').forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('href').substring(1) === sectionId) {
-                    link.classList.add('active'); // Đánh dấu liên kết đang hoạt động
+                    link.classList.add('active');
                 }
             });
         }
@@ -968,13 +940,13 @@
 
         // Xử lý gửi form phản hồi
         document.getElementById('feedbackForm').addEventListener('submit', () => {
-            document.getElementById('feedbackSubmissionTime').value = new Date().toLocaleString('vi-VN'); // Ghi thời gian phản hồi
+            document.getElementById('feedbackSubmissionTime').value = new Date().toLocaleString('vi-VN');
         });
 
         // Khởi tạo trang
         document.addEventListener('DOMContentLoaded', () => {
-            loadData(); // Tải dữ liệu
-            showSection('home'); // Hiển thị section Trang Chủ mặc định
+            loadData();
+            showSection('home');
         });
     </script>
 </body>
