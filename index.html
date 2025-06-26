@@ -40,8 +40,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 1rem;
+            padding: 0;
         }
 
         /* Tối ưu font cho iOS */
@@ -53,7 +52,7 @@
         .header {
             background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: var(--text);
-            padding: 0.5rem;
+            padding: 1.5rem;
             box-shadow: var(--shadow-md);
             position: sticky;
             top: 0;
@@ -64,6 +63,16 @@
             justify-content: center;
             text-align: center;
         }
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
         .header .logo {
             width: 100px;
             height: 100px;
@@ -72,15 +81,17 @@
         .header .logo:hover {
             transform: scale(1.1);
         }
-        .header h2 {
+        .header h1 {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 1.5rem;
-            font-weight: 500;
-            margin-bottom: 0.25rem;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--text);
         }
         .header p {
-            font-size: 0.9rem;
+            font-size: 1rem;
             opacity: 0.9;
+            margin-top: 0.25rem;
         }
 
         /* Card chứa form đăng nhập */
@@ -184,11 +195,14 @@
                 --primary: #e63950;
                 --accent: #FFD54F;
             }
-            .header h2 {
-                font-size: 1.25rem;
+            .header {
+                padding: 0.75rem;
+            }
+            .header h1 {
+                font-size: 1.5rem;
             }
             .header p {
-                font-size: 0.8rem;
+                font-size: 0.9rem;
             }
             .header .logo {
                 width: 80px;
@@ -210,7 +224,7 @@
                 --primary: #cc3048;
                 --accent: #FFD700;
             }
-            body.ios .header h2 {
+            body.ios .header h1 {
                 font-weight: 500;
             }
             body.ios .btn {
@@ -230,8 +244,8 @@
 
         /* Tùy chỉnh cho máy tính bảng */
         @media (min-width: 641px) and (max-width: 1024px) {
-            .header h2 {
-                font-size: 1.4rem;
+            .header h1 {
+                font-size: 1.75rem;
             }
             .card {
                 padding: 1.75rem;
@@ -253,10 +267,12 @@
 <body>
     <!-- Header với logo và tiêu đề -->
     <div class="header">
-        <div class="text-center">
-            <img src="Qr_Code.jpg" alt="Logo Xứ Đoàn" class="logo mx-auto">
-            <h2>XỨ ĐOÀN CÁC THÁNH TỬ ĐẠO VIỆT NAM</h2>
-            <p>Giáo Xứ Chánh Tòa Mỹ Tho</p>
+        <div class="header-container">
+            <div class="header-content">
+                <img src="assets/logo.png" alt="Logo Xứ Đoàn" class="logo">
+                <h1>XỨ ĐOÀN CÁC THÁNH TỬ ĐẠO VIỆT NAM</h1>
+                <p>Giáo Xứ Chánh Tòa Mỹ Tho</p>
+            </div>
         </div>
     </div>
 
