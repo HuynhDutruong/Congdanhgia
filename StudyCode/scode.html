@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -240,47 +241,37 @@
             width: 100%;
             font-family: 'Roboto', sans-serif;
         }
-        .footer {
-            background: var(--dark-bg);
-            color: var(--text);
-            padding: 2rem 1rem;
-            text-align: center;
-            box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.3);
-            margin-top: auto;
+        .footer-container {
+            width: 100%;
+            border-top: 1px solid #3C3C3C;
         }
-        .footer p {
-            margin: 0.2rem 0;
+        .footer-container iframe {
+            width: 100%;
+            border: none;
+            height: 120px; /* Default height */
         }
-        .highlight {
-            color: var(--accent);
-            font-weight: 700;
-        }
-        .contact {
-            font-size: 0.2rem;
-            color: #D1D5DB;
-        }
-        /* Điện thoại */
-        @media (max-width: 640px) {
+        /* Điện thoại (<768px) */
+        @media (max-width: 768px) {
             .header h2 {
-                font-size: 1.0rem;
+                font-size: 1.2rem;
             }
             .header p {
-                font-size: 0.9rem;
+                font-size: 0.8rem;
             }
             .navbar a {
-                padding: 0.5rem 1rem;
-                font-size: 0.9rem;
+                padding: 0.5rem 0.8rem;
+                font-size: 0.85rem;
             }
             .card h3 {
-                font-size: 1.3rem;
+                font-size: 1.2rem;
             }
             .table th, .table td {
                 padding: 0.5rem;
-                font-size: 0.85rem;
+                font-size: 0.8rem;
             }
             .calendar div {
                 padding: 0.5rem;
-                font-size: 0.85rem;
+                font-size: 0.8rem;
             }
             #submit {
                 display: none;
@@ -293,32 +284,36 @@
                 bottom: 10px;
                 right: 10px;
                 font-size: 12px;
+                padding: 10px;
             }
             .btn:active {
                 background: var(--accent);
                 color: var(--dark-bg);
                 transform: scale(0.98);
             }
-
-        /* Máy tính bảng */
+            .footer-container iframe {
+                height: 100px;
+            }
+        }
+        /* Máy tính bảng (641px-1024px) */
         @media (min-width: 641px) and (max-width: 1024px) {
             .header h2 {
-                font-size: 1.75rem;
+                font-size: 1.5rem;
             }
             .navbar a {
-                padding: 0.6rem 1.2rem;
-                font-size: 1rem;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
             }
             .card h3 {
-                font-size: 1.4rem;
+                font-size: 1.3rem;
             }
             .table th, .table td {
                 padding: 0.75rem;
-                font-size: 0.9rem;
+                font-size: 0.85rem;
             }
             .calendar div {
                 padding: 0.6rem;
-                font-size: 0.9rem;
+                font-size: 0.85rem;
             }
             #submit {
                 display: none;
@@ -330,8 +325,11 @@
                 box-shadow: 0 0 8px var(--accent);
                 transform: scale(0.98);
             }
+            .footer-container iframe {
+                height: 110px;
+            }
         }
-        /* Laptop */
+        /* Máy tính (>1024px) */
         @media (min-width: 1025px) {
             .navbar a:hover {
                 background: linear-gradient(45deg, var(--primary), var(--accent));
@@ -354,6 +352,9 @@
                 min-height: 300px;
                 font-size: 1rem;
             }
+            .footer-container iframe {
+                height: 130px;
+            }
         }
     </style>
 </head>
@@ -362,7 +363,7 @@
         <h4>THƯ NGỎ</h4>
         <p>
             Chào quý thành viên,<br>
-            Chúng chúng tôi là Ban Truyền Thông & Ban Kỹ Thuật của trang web Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho.<br><br>
+            Chúng tôi là Ban Truyền Thông & Ban Kỹ Thuật của trang web Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho.<br><br>
             Đây là trang phi lợi nhuận nhằm kết nối truyền thông với thời đại mới. Các khóa học miễn phí được tổ chức nhằm giúp phát triển kỹ năng và kiến thức, tất cả do quý Trưởng phân công hướng dẫn.<br><br>
             Mong nhận được sự đóng góp và ủng hộ để duy trì hệ thống hoạt động.<br><br>
             <strong>Mã QR hỗ trợ ở bên dưới:</strong>
@@ -470,10 +471,8 @@
         </div>
     </div>
 
-    <div class="footer">
-        <p class="highlight">Bản quyền © 2025 - Xứ Đoàn Các Thánh Tử Đạo Việt Nam</p>
-        <p>Giáo Xứ Chánh Tòa Mỹ Tho - Giáo Phận Mỹ Tho - Việt Nam</p>
-        <p class="contact">Địa chỉ: 32 Hùng Vương, Phường 7, Thành phố Mỹ Tho, Tiền Giang</p>
+    <div class="footer-container">
+        <iframe src="footer.html" title="Footer"></iframe>
     </div>
 
     <script>
@@ -594,7 +593,18 @@
 
         // Form submission
         document.getElementById('codeForm').addEventListener('submit', (e) => {
+            const codeContent = document.querySelector('textarea[name="codeContent"]').value;
+            const submissionLink = document.querySelector('input[name="submissionLink"]').value;
             const fileInput = document.getElementById('submissionFile');
+
+            // Validate: At least one of codeContent, submissionLink, or file must be provided
+            if (!codeContent && !submissionLink && fileInput.files.length === 0) {
+                e.preventDefault();
+                alert('Vui lòng cung cấp ít nhất mã nguồn, link bài nộp, hoặc file báo cáo.');
+                return;
+            }
+
+            // Validate file size
             if (fileInput.files.length > 0) {
                 const file = fileInput.files[0];
                 if (file.size > 100 * 1024 * 1024) { // 100MB
@@ -603,6 +613,7 @@
                     return;
                 }
             }
+
             document.getElementById('submissionTime').value = new Date().toLocaleString('vi-VN');
         });
 
