@@ -298,9 +298,6 @@
             .navbar a i {
                 margin-right: 0.5rem;
             }
-            .navbar a[href="#test"] {
-                display: none !important; /* Ẩn liên kết Thi trên điện thoại và tablet */
-            }
             .table th, .table td {
                 padding: 0.5rem;
                 font-size: 0.85rem;
@@ -318,9 +315,6 @@
                 border-radius: 50%;
                 transform: scale(0);
                 animation: ripple 0.3s linear;
-            }
-            #test {
-                display: none; /* Ẩn nội dung phần Thi trên điện thoại */
             }
             .btn:active {
                 background: var(--accent);
@@ -456,7 +450,7 @@
                 <div id="news-content" class="text-text"></div>
             </section>
 
-            <section id="test" class="mb-8 hidden">
+            <section id="test" class="mb-8">
                 <h2 class="section-title">Bài Kiểm Tra</h2>
                 <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                     <button class="btn" id="test-btn">
@@ -558,7 +552,7 @@
             setTimeout(() => notification.style.display = 'none', 3000);
         };
 
-        // Dữ liệu thông báo (đã thay thế horeb.jpg bằng Qr_Code.jpg)
+        // Dữ liệu thông báo
         const newsData = [
             { type: 'image', content: 'Bảng thời gian biểu', file_path: 'assets/horeb.jpg' }
         ];
@@ -803,22 +797,6 @@
                 showNotification('Lỗi khi tải dữ liệu, vui lòng thử lại!', 'error');
             }
         };
-
-        // Ẩn liên kết Thi trên điện thoại và tablet
-        window.addEventListener('load', () => {
-            if (window.innerWidth <= 1024) {
-                document.querySelector('.navbar a[href="#test"]').style.display = 'none';
-            }
-        });
-
-        // Ẩn liên kết Thi khi thay đổi kích thước màn hình
-        window.addEventListener('resize', () => {
-            if (window.innerWidth <= 1024) {
-                document.querySelector('.navbar a[href="#test"]').style.display = 'none';
-            } else {
-                document.querySelector('.navbar a[href="#test"]').style.display = 'inline-flex';
-            }
-        });
 
         // Điều hướng giữa các section
         const sections = ['home', 'score', 'test', 'feedback'];
