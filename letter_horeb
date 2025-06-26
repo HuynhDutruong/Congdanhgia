@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Kiểm Tra</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+        }
+        .input-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .message {
+            display: none;
+            margin-top: 20px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        .message.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="input-form">
+            <input type="text" id="name" placeholder="Họ và Tên" required>
+            <input type="date" id="dob" required>
+            <button onclick="showMessage()">Làm bài</button>
+        </div>
+        <div class="message" id="greeting">
+            <h3>Chúc mừng các bạn Hored của Giáo xứ chúng ta!</h3>
+            <p>Các bạn đã sẵn sàng chưa nè? Chỉ còn <strong>3 ngày nữa</strong> là chúng ta sẽ cùng nhau <strong>Tiến vào Sa Mạc</strong> nhé! Trong hành trình đặc biệt này, các bạn sẽ được hóa thân thành đoàn dân Israel khi xưa, cùng nhau vượt qua những thử thách, lắng nghe tiếng Chúa đang nói với mỗi người chúng ta. Sa Mạc không phải là một nơi mà ai cũng dễ dàng vượt qua, nhưng như lời Chúa phán: <em>"Kẻ nào bền chí đến cùng, kẻ ấy sẽ được cứu thoát" (Mt 10, 22)</em>.</p>
+            <p>Hãy chuẩn bị tâm hồn thật tốt, mang theo lòng tin và sự phó thác. Sa Mạc không chỉ là nơi thử thách, mà còn là cơ hội để chúng ta khám phá chính mình, gặp gỡ Chúa và gắn kết với nhau như một cộng đoàn. Hãy để Chúa dẫn dắt từng bước chân, và cùng nhau, chúng ta sẽ viết nên một hành trình đầy ý nghĩa. Hored ơi, hãy cháy hết mình nhé! 🔥</p>
+            <p><strong>Cùng nhau tiến vào Sa Mạc, Hored sẵn sàng!</strong></p>
+        </div>
+    </div>
+
+    <script>
+        function showMessage() {
+            const name = document.getElementById('name').value;
+            const dob = document.getElementById('dob').value;
+            const greeting = document.getElementById('greeting');
+
+            if (name && dob) {
+                document.querySelector('.input-form').style.display = 'none';
+                greeting.classList.add('show');
+            } else {
+                alert('Vui lòng nhập đầy đủ Họ và Tên và Ngày tháng năm sinh!');
+            }
+        }
+    </script>
+</body>
+</html>
