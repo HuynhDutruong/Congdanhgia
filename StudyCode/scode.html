@@ -6,24 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Cổng thông tin học viên lập trình - Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho">
     <meta name="keywords" content="Xứ Đoàn, Giáo Xứ Chánh Tòa Mỹ Tho, Các Thánh Tử Đạo Việt Nam, học lập trình, cổng học viên">
-    <title>Cổng Lập Trình - Xứ Đoàn Các Thánh Tử Đạo Việt Nam</title>
+    <title>Cổng Học Viên Lập Trình - Xứ Đoàn Các Thánh Tử Đạo Việt Nam</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Định nghĩa biến CSS để tái sử dụng màu sắc và phong cách */
         :root {
-            --primary: #cc3048; /* Màu chính */
-            --primary-dark: #b7142a; /* Màu chính tối hơn */
-            --accent: #FFD700; /* Màu nhấn */
-            --dark-bg: #1A1A1A; /* Màu nền tối */
-            --text: #E0E0E0; /* Màu chữ */
-            --error: #EF4444; /* Màu lỗi */
+            --primary: #cc3048;
+            --primary-dark: #b7142a;
+            --accent: #FFD700;
+            --dark-bg: #1A1A1A;
+            --text: #E0E0E0;
+            --error: #EF4444;
         }
 
         /* Thiết lập giao diện cơ bản cho body */
         body {
-            background: linear-gradient(135deg, #2D2D2D 0%, #1A1A1A 100%); /* Nền gradient */
+            background: linear-gradient(135deg, #2D2D2D 0%, #1A1A1A 100%);
             font-family: 'Roboto', sans-serif;
             margin: 0;
             min-height: 100vh;
@@ -52,20 +52,51 @@
             font-size: 14px;
             z-index: 9999;
         }
+        body.ios #thongbao-quangcao {
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 90%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 20px;
+            animation: slide-up 0.5s ease-out;
+        }
+        @keyframes slide-up {
+            from { transform: translate(-50%, 100%); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }
         #thongbao-quangcao h4 {
             margin-top: 0;
             color: #d17b00;
             font-size: 16px;
+        }
+        body.ios #thongbao-quangcao h4 {
+            color: var(--primary);
+            font-size: 18px;
+            text-align: center;
+            font-weight: 600;
         }
         #thongbao-quangcao p {
             margin: 10px 0;
             color: #333;
             line-height: 1.4;
         }
+        body.ios #thongbao-quangcao p {
+            color: #1A1A1A;
+            font-size: 14px;
+            text-align: center;
+        }
         #thongbao-quangcao img {
             display: block;
             max-width: 100%;
             margin: 10px 0;
+        }
+        body.ios #thongbao-quangcao img {
+            max-width: 150px;
+            margin: 15px auto;
+            border-radius: 8px;
         }
         #thongbao-quangcao button {
             background: #ff9800;
@@ -76,8 +107,21 @@
             cursor: pointer;
             float: right;
         }
+        body.ios #thongbao-quangcao button {
+            display: block;
+            margin: 10px auto 0;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            background: var(--primary);
+        }
         #thongbao-quangcao button:hover {
             background: #e68900;
+        }
+        body.ios #thongbao-quangcao button:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
         }
 
         /* Header chứa tiêu đề và mô tả trang */
@@ -91,15 +135,30 @@
             z-index: 1000;
             text-align: center;
         }
+        body.ios .header {
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
         .header h2 {
             font-family: 'JetBrains Mono', monospace;
             font-size: 2rem;
             font-weight: 700;
             margin-bottom: 0.25rem;
         }
+        body.ios .header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
         .header p {
             font-size: 1rem;
             opacity: 0.9;
+        }
+        body.ios .header p {
+            font-size: 0.85rem;
+            color: var(--text);
         }
 
         /* Thanh điều hướng (navbar) */
@@ -138,6 +197,11 @@
             padding: 0 1.5rem;
             flex: 1;
         }
+        body.ios .container {
+            margin: 1rem auto;
+            padding: 0 1rem;
+            padding-bottom: 80px; /* Space for fixed navbar */
+        }
 
         /* Card chứa các phần nội dung */
         .card {
@@ -148,11 +212,29 @@
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
             margin-bottom: 2rem;
         }
+        body.ios .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            animation: slide-in 0.5s ease-out;
+        }
+        @keyframes slide-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         .card h3 {
             font-family: 'JetBrains Mono', monospace;
             font-size: 1.5rem;
             color: var(--accent);
             margin-bottom: 1.5rem;
+        }
+        body.ios .card h3 {
+            font-size: 1.3rem;
+            text-align: center;
+            font-weight: 600;
         }
 
         /* Bảng kết quả học tập */
@@ -168,17 +250,34 @@
             text-align: left;
             font-size: 0.95rem;
         }
+        body.ios .table th, body.ios .table td {
+            padding: 0.75rem;
+            font-size: 0.9rem;
+            border: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
         .table th {
             background: var(--primary);
             color: var(--text);
             font-weight: 700;
             font-family: 'JetBrains Mono', monospace;
         }
+        body.ios .table th {
+            background: rgba(204, 48, 72, 0.2);
+            color: var(--accent);
+        }
         .table td {
             background: #1E1E1E;
         }
+        body.ios .table td {
+            background: transparent;
+            color: var(--text);
+        }
         .table tr:hover td {
             background: #2A2A2A;
+        }
+        body.ios .table tr:hover td {
+            background: rgba(255, 255, 255, 0.1);
         }
 
         /* Icon xếp hạng thành viên */
@@ -202,6 +301,11 @@
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
+        body.ios .calendar {
+            background: transparent;
+            padding: 1rem;
+            gap: 6px;
+        }
         .calendar div {
             padding: 0.75rem;
             text-align: center;
@@ -210,19 +314,36 @@
             cursor: pointer;
             transition: background 0.2s;
         }
+        body.ios .calendar div {
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
         .calendar .header {
             background: var(--primary);
             color: var(--text);
             font-weight: 700;
             font-family: 'JetBrains Mono', monospace;
         }
+        body.ios .calendar .header {
+            background: rgba(204, 48, 72, 0.2);
+            color: var(--accent);
+        }
         .calendar .has-event {
             background: var(--accent);
             color: #1A1A1A;
             font-weight: bold;
         }
+        body.ios .calendar .has-event {
+            background: var(--accent);
+            transform: scale(1.05);
+        }
         .calendar div:hover {
             background: #3C3C3C;
+        }
+        body.ios .calendar div:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         /* Nút giao diện */
@@ -238,13 +359,28 @@
             transition: all 0.2s ease;
             position: relative;
         }
+        body.ios .btn {
+            background: rgba(204, 48, 72, 0.9);
+            border-radius: 12px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+        }
         .btn:hover {
             background: var(--primary-dark);
             color: var(--accent);
             transform: translateY(-2px);
         }
+        body.ios .btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
         .btn:active {
             transform: translateY(0);
+        }
+        body.ios .btn:active {
+            transform: scale(0.95);
+            background: var(--accent);
+            color: var(--dark-bg);
         }
 
         /* Input và textarea */
@@ -257,10 +393,21 @@
             width: 100%;
             font-family: 'JetBrains Mono', monospace;
         }
+        body.ios .input, body.ios .textarea, body.ios select.input {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 12px;
+            padding: 0.85rem;
+            color: var(--text);
+            font-size: 1rem;
+        }
         .textarea {
             resize: vertical;
             min-height: 150px;
             font-size: 0.9rem;
+        }
+        body.ios .textarea {
+            min-height: 120px;
         }
         .file-input {
             background: #1E1E1E;
@@ -270,6 +417,11 @@
             color: var(--text);
             width: 100%;
             font-family: 'Roboto', sans-serif;
+        }
+        body.ios .file-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 12px;
         }
 
         /* Footer */
@@ -281,8 +433,16 @@
             box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.3);
             margin-top: auto;
         }
+        body.ios .footer {
+            padding: 1rem;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+        }
         .footer p {
             margin: 0.2rem 0;
+        }
+        body.ios .footer p {
+            font-size: 0.85rem;
         }
         .highlight {
             color: var(--accent);
@@ -297,10 +457,17 @@
         #gameCanvas {
             display: block;
             margin: 0 auto;
-            border: 1px solid var(--primary);
+            border: 2px solid var(--primary);
             border-radius: 8px;
-            width: 200px;
-            height: 150px;
+            width: 400px;
+            height: 200px;
+        }
+        body.ios #gameCanvas {
+            width: 90vw;
+            height: 180px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
         }
 
         /* Tùy chỉnh giao diện cho điện thoại và tablet */
@@ -310,8 +477,8 @@
                 --accent: #FFD54F;
             }
             #gameCanvas {
-                width: 200px; /* Chiều rộng canvas bằng 90% màn hình */
-                height: 150px; /* Chiều cao canvas tối ưu cho điện thoại */
+                width: 90vw;
+                height: 150px;
             }
             .header h2 {
                 font-size: 1.0rem;
@@ -334,10 +501,10 @@
                 margin-right: 0.5rem;
             }
             .navbar a[href="#submit"] {
-                display: none !important; /* Ẩn liên kết Nộp Bài trên điện thoại và tablet */
+                display: none !important;
             }
             .navbar a[href="#game"] {
-                display: inline-flex; /* Hiển thị liên kết Giải Trí trên điện thoại */
+                display: inline-flex;
             }
             .card h3 {
                 font-size: 1.3rem;
@@ -383,7 +550,7 @@
                 }
             }
             #submit {
-                display: none; /* Ẩn nội dung phần Nộp Bài trên điện thoại */
+                display: none;
             }
             .btn:active {
                 background: var(--accent);
@@ -415,46 +582,43 @@
                 background: rgba(26, 26, 26, 0.95);
                 backdrop-filter: blur(10px);
                 box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.3);
+                padding: 0.5rem 0;
+                z-index: 1000;
             }
             body.ios .navbar a {
                 flex: 1;
                 text-align: center;
                 padding: 0.5rem;
-                font-size: 0.8rem;
+                font-size: 0.75rem;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                transition: transform 0.1s ease-in-out, background 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+                transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+                border-radius: 12px;
+                margin: 0 4px;
+            }
+            body.ios .navbar a i {
+                font-size: 1.5rem;
+                margin-bottom: 0.3rem;
+            }
+            body.ios .navbar a.active {
+                background: rgba(204, 48, 72, 0.2);
+                color: var(--accent);
+                transform: scale(1.1);
+                box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            }
+            body.ios .navbar a:hover {
+                background: rgba(204, 48, 72, 0.3);
+                transform: scale(1.1);
             }
             body.ios .navbar a:active {
                 transform: scale(0.95);
                 box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
-                background: rgba(204, 48, 72, 0.9);
-            }
-            body.ios .navbar a i {
-                font-size: 1.2rem;
-                margin-bottom: 0.2rem;
-            }
-            body.ios #thongbao-quangcao {
-                bottom: 10px;
-                left: 50%;
-                transform: translateX(-50%);
-                max-width: 90%;
-                background: rgba(255, 248, 225, 0.8);
-                backdrop-filter: blur(5px);
-            }
-            body.ios .btn {
-                background: rgba(204, 48, 72, 0.9);
-                backdrop-filter: blur(3px);
-            }
-            body.ios .btn:active {
-                transform: scale(0.95);
-                transition: transform 0.1s ease;
-                box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+                background: rgba(204, 48, 72, 0.4);
             }
             body.ios #eventDetails {
                 position: fixed;
-                bottom: 20%;
+                bottom: 80px;
                 left: 50%;
                 transform: translateX(-50%);
                 background: rgba(26, 26, 26, 0.95);
@@ -462,14 +626,17 @@
                 padding: 1rem;
                 border-radius: 12px;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                max-width: 90%;
+                font-size: 0.9rem;
+                animation: slide-up 0.3s ease-out;
             }
-            #game .mt-4 {
-                font-size: 0.85rem;
+            body.ios #game .mt-4 {
+                font-size: 0.9rem;
                 padding: 0.5rem;
             }
-            #game .btn {
-                padding: 0.5rem 1rem;
-                font-size: 0.9rem;
+            body.ios #game .btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
             }
         }
 
@@ -523,7 +690,7 @@
                 font-size: 1rem;
             }
             .navbar a[href="#game"] {
-                display: none; /* Ẩn liên kết Giải Trí trên laptop */
+                display: none;
             }
         }
     </style>
@@ -546,7 +713,7 @@
     <!-- Header với tiêu đề và mô tả -->
     <div class="header">
         <h2>XỨ ĐOÀN CÁC THÁNH TỬ ĐẠO VIỆT NAM</h2>
-        <p>Cổng Lập Trình - Giáo Xứ Chánh Tòa Mỹ Tho</p>
+        <p>Cổng Học Viên Lập Trình - Giáo Xứ Chánh Tòa Mỹ Tho</p>
     </div>
 
     <!-- Thanh điều hướng với các mục -->
@@ -669,15 +836,15 @@
         const isIOS = navigator.userAgent.includes('iPhone') || navigator.userAgent.includes('iPad');
         const isAndroid = navigator.userAgent.includes('Android');
         if (isIOS) {
-            document.body.classList.add('ios'); // Thêm class ios cho body
-            document.getElementById('qrCode').src = 'Qr_Code.jpg'; // Hình QR cho iOS
-            document.getElementById('gameTitle').textContent = 'Khủng Long Vượt Chướng Ngại Vật'; // Tiêu đề game T-Rex
-            document.getElementById('gameInstructions').innerHTML = 'Nhấn <strong>Space</strong> hoặc chạm màn hình để nhảy. Tránh các chướng ngại vật!'; // Hướng dẫn game T-Rex
+            document.body.classList.add('ios');
+            document.getElementById('qrCode').src = 'Qr_Code.jpg';
+            document.getElementById('gameTitle').textContent = 'Khủng Long Vượt Chướng Ngại Vật';
+            document.getElementById('gameInstructions').innerHTML = 'Chạm màn hình để nhảy. Tránh các chướng ngại vật!';
         } else if (isAndroid) {
-            document.body.classList.add('android'); // Thêm class android cho body
-            document.getElementById('qrCode').src = 'Qr_Code.webp'; // Hình QR tối ưu cho Android
-            document.getElementById('gameTitle').textContent = 'Blast Block'; // Tiêu đề game Blast Block
-            document.getElementById('gameInstructions').innerHTML = 'Chạm vào các khối để phá chúng. Phá càng nhiều khối càng tốt!'; // Hướng dẫn game Blast Block
+            document.body.classList.add('android');
+            document.getElementById('qrCode').src = 'Qr_Code.webp';
+            document.getElementById('gameTitle').textContent = 'Blast Block';
+            document.getElementById('gameInstructions').innerHTML = 'Chạm vào các khối để phá chúng. Phá càng nhiều khối càng tốt!';
         }
 
         // Điều chỉnh kích thước canvas cho game
@@ -685,15 +852,15 @@
         const ctx = canvas.getContext('2d');
         function resizeCanvas() {
             if (window.innerWidth <= 1024) {
-                canvas.width = window.innerWidth * 0.9; // Chiều rộng canvas bằng 90% màn hình
-                canvas.height = 150; // Chiều cao cố định cho điện thoại
+                canvas.width = window.innerWidth * 0.9;
+                canvas.height = isIOS ? 180 : 150;
             } else {
-                canvas.width = 600; // Chiều rộng mặc định cho desktop
-                canvas.height = 200; // Chiều cao mặc định cho desktop
+                canvas.width = 600;
+                canvas.height = 200;
             }
         }
-        window.addEventListener('resize', resizeCanvas); // Điều chỉnh canvas khi thay đổi kích thước màn hình
-        resizeCanvas(); // Gọi hàm khi tải trang
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
         // Ẩn liên kết Nộp Bài trên điện thoại và tablet khi tải trang
         window.addEventListener('load', () => {
@@ -717,7 +884,7 @@
                 const response = await fetch('data/users.json');
                 if (!response.ok) throw new Error('Failed to load users.json');
                 const users = await response.json();
-                populateSubjectsTable(users); // Hiển thị dữ liệu vào bảng
+                populateSubjectsTable(users);
             } catch (error) {
                 console.error('Error loading users data:', error);
                 document.getElementById('subjectsTable').innerHTML = '<tr><td colspan="6">Không thể tải dữ liệu thành viên.</td></tr>';
@@ -730,7 +897,7 @@
                 const response = await fetch('data/calendar.json');
                 if (!response.ok) throw new Error('Failed to load calendar.json');
                 const calendarData = await response.json();
-                renderCalendar(calendarData); // Hiển thị lịch học
+                renderCalendar(calendarData);
             } catch (error) {
                 console.error('Error loading calendar data:', error);
                 document.getElementById('calendarGrid').innerHTML = '<div class="col-span-7 text-center">Không thể tải lịch học.</div>';
@@ -739,12 +906,12 @@
 
         // Tính toán xếp hạng thành viên dựa trên tổng điểm
         function getMembershipRank(totalScore) {
-            if (totalScore < 50) return '<i class="fas fa-user rank-icon rank-thanhvien"></i>'; // Thành viên
-            if (totalScore < 100) return '<i class="fas fa-star rank-icon rank-vip"></i>'; // VIP
-            if (totalScore < 201) return '<i class="fas fa-medal rank-icon rank-silver"></i>'; // Silver
-            if (totalScore < 301) return '<i class="fas fa-medal rank-icon rank-gold"></i>'; // Gold
-            if (totalScore < 501) return '<i class="fas fa-gem rank-icon rank-diamond"></i>'; // Diamond
-            return '<i class="fas fa-crown rank-icon rank-vvip"></i>'; // VVIP
+            if (totalScore < 50) return '<i class="fas fa-user rank-icon rank-thanhvien"></i>';
+            if (totalScore < 100) return '<i class="fas fa-star rank-icon rank-vip"></i>';
+            if (totalScore < 201) return '<i class="fas fa-medal rank-icon rank-silver"></i>';
+            if (totalScore < 301) return '<i class="fas fa-medal rank-icon rank-gold"></i>';
+            if (totalScore < 501) return '<i class="fas fa-gem rank-icon rank-diamond"></i>';
+            return '<i class="fas fa-crown rank-icon rank-vvip"></i>';
         }
 
         // Hiển thị bảng kết quả học tập
@@ -778,7 +945,7 @@
 
             const year = currentDate.getFullYear();
             const month = currentDate.getMonth();
-            monthYear.textContent = `${month + 1}-${year}`; // Hiển thị tháng và năm
+            monthYear.textContent = `${month + 1}-${year}`;
 
             const days = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
             days.forEach(day => {
@@ -792,7 +959,7 @@
             const lastDate = new Date(year, month + 1, 0).getDate();
 
             for (let i = 0; i < firstDay; i++) {
-                calendarGrid.appendChild(document.createElement('div')); // Ô trống trước ngày 1
+                calendarGrid.appendChild(document.createElement('div'));
             }
 
             for (let date = 1; date <= lastDate; date++) {
@@ -811,16 +978,20 @@
                             <p><strong>Buổi:</strong> ${event.session}</p>
                         `;
                     });
-                    // Xử lý chạm lâu trên Android
-                    div.addEventListener('touchstart', function(e) {
-                        if (document.body.classList.contains('android')) {
+                    if (isAndroid) {
+                        div.addEventListener('touchstart', function(e) {
                             setTimeout(() => {
                                 if (div.classList.contains('has-event')) {
                                     div.click();
                                 }
                             }, 500);
-                        }
-                    });
+                        });
+                    } else if (isIOS) {
+                        div.addEventListener('touchstart', function(e) {
+                            e.preventDefault();
+                            div.click();
+                        });
+                    }
                 }
                 calendarGrid.appendChild(div);
             }
@@ -843,18 +1014,18 @@
             const fileInput = document.getElementById('submissionFile');
             if (fileInput.files.length > 0) {
                 const file = fileInput.files[0];
-                if (file.size > 100 * 1024 * 1024) { // Kiểm tra file > 100MB
+                if (file.size > 100 * 1024 * 1024) {
                     e.preventDefault();
                     alert('File quá lớn! Vui lòng chọn file dưới 100MB.');
                     return;
                 }
             }
-            document.getElementById('submissionTime').value = new Date().toLocaleString('vi-VN'); // Ghi thời gian nộp bài
+            document.getElementById('submissionTime').value = new Date().toLocaleString('vi-VN');
         });
 
         // Xử lý gửi form phản hồi
         document.getElementById('feedbackForm').addEventListener('submit', () => {
-            document.getElementById('feedbackSubmissionTime').value = new Date().toLocaleString('vi-VN'); // Ghi thời gian phản hồi
+            document.getElementById('feedbackSubmissionTime').value = new Date().toLocaleString('vi-VN');
         });
 
         // Logic game
@@ -864,43 +1035,43 @@
 
         if (isIOS) {
             // Game T-Rex cho iOS
-            let dino = { x: 50, y: 120, width: 30, height: 30, dy: 0, gravity: 0.6, jumpPower: -10, grounded: true }; // Thông số khủng long
-            let obstacles = []; // Danh sách chướng ngại vật
+            let dino = { x: 50, y: 120, width: 40, height: 40, dy: 0, gravity: 0.8, jumpPower: -12, grounded: true };
+            let obstacles = [];
 
             function drawDino() {
                 ctx.fillStyle = 'white';
-                ctx.fillRect(dino.x, dino.y, dino.width, dino.height); // Vẽ khủng long
+                ctx.beginPath();
+                ctx.arc(dino.x + dino.width / 2, dino.y + dino.height / 2, dino.width / 2, 0, Math.PI * 2);
+                ctx.fill();
             }
 
             function drawObstacles() {
                 ctx.fillStyle = 'green';
                 obstacles.forEach(obstacle => {
-                    ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height); // Vẽ chướng ngại vật
+                    ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
                 });
             }
 
             function spawnObstacle() {
-                const obstacle = { x: canvas.width, y: 120, width: 15, height: 30, speed: 4 }; // Tạo chướng ngại vật mới
+                const obstacle = { x: canvas.width, y: 140, width: 20, height: 40, speed: 5 };
                 obstacles.push(obstacle);
             }
 
             function updateGame() {
                 if (!gameRunning) return;
 
-                ctx.clearRect(0, 0, canvas.width, canvas.height); // Xóa canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                // Cập nhật khủng long
                 dino.dy += dino.gravity;
                 dino.y += dino.dy;
-                if (dino.y > 120) {
-                    dino.y = 120;
+                if (dino.y > 140) {
+                    dino.y = 140;
                     dino.dy = 0;
                     dino.grounded = true;
                 }
                 drawDino();
 
-                // Cập nhật chướng ngại vật
-                if (frameCount % 60 === 0) {
+                if (frameCount % 50 === 0) {
                     spawnObstacle();
                 }
                 obstacles.forEach(obstacle => {
@@ -909,7 +1080,6 @@
                 obstacles = obstacles.filter(obstacle => obstacle.x + obstacle.width > 0);
                 drawObstacles();
 
-                // Phát hiện va chạm
                 for (let obstacle of obstacles) {
                     if (
                         dino.x < obstacle.x + obstacle.width &&
@@ -923,44 +1093,35 @@
                     }
                 }
 
-                // Cập nhật điểm số
                 score = Math.floor(frameCount / 10);
                 document.getElementById('scoreDisplay').textContent = `Điểm: ${score}`;
                 frameCount++;
 
-                requestAnimationFrame(updateGame); // Tiếp tục vòng lặp game
+                requestAnimationFrame(updateGame);
             }
 
             function startGame() {
                 gameRunning = true;
                 score = 0;
                 frameCount = 0;
-                dino.y = 120;
+                dino.y = 140;
                 dino.dy = 0;
                 dino.grounded = true;
                 obstacles = [];
                 document.getElementById('scoreDisplay').textContent = `Điểm: ${score}`;
-                updateGame(); // Bắt đầu game
+                updateGame();
             }
 
-            // Xử lý input cho T-Rex
-            document.addEventListener('keydown', (e) => {
-                if (e.code === 'Space' && dino.grounded && gameRunning) {
+            document.addEventListener('touchstart', (e) => {
+                if (e.target === canvas && dino.grounded && gameRunning) {
                     dino.dy = dino.jumpPower;
-                    dino.grounded = false; // Nhảy khi nhấn Space
-                }
-            });
-
-            canvas.addEventListener('touchstart', () => {
-                if (dino.grounded && gameRunning) {
-                    dino.dy = dino.jumpPower;
-                    dino.grounded = false; // Nhảy khi chạm màn hình
+                    dino.grounded = false;
                 }
             });
         } else if (isAndroid) {
-            // Game Blast Block cho Android
+            // Game Blast Block cho Android (unchanged)
             let blocks = [];
-            const blockSize = 30; // Kích thước khối
+            const blockSize = 30;
             const rows = Math.floor(canvas.height / blockSize);
             const cols = Math.floor(canvas.width / blockSize);
 
@@ -974,7 +1135,7 @@
                                 y: row * blockSize,
                                 width: blockSize,
                                 height: blockSize,
-                                color: `hsl(${Math.random() * 360}, 70%, 50%)` // Màu ngẫu nhiên
+                                color: `hsl(${Math.random() * 360}, 70%, 50%)`
                             });
                         }
                     }
@@ -985,7 +1146,7 @@
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 blocks.forEach(block => {
                     ctx.fillStyle = block.color;
-                    ctx.fillRect(block.x, block.y, block.width - 2, block.height - 2); // Vẽ các khối
+                    ctx.fillRect(block.x, block.y, block.width - 2, block.height - 2);
                 });
             }
 
@@ -994,11 +1155,10 @@
 
                 drawBlocks();
 
-                // Cập nhật điểm số
                 document.getElementById('scoreDisplay').textContent = `Điểm: ${score}`;
                 frameCount++;
 
-                requestAnimationFrame(updateGame); // Tiếp tục vòng lặp game
+                requestAnimationFrame(updateGame);
             }
 
             function startGame() {
@@ -1007,10 +1167,9 @@
                 frameCount = 0;
                 createBlocks();
                 document.getElementById('scoreDisplay').textContent = `Điểm: ${score}`;
-                updateGame(); // Bắt đầu game
+                updateGame();
             }
 
-            // Xử lý input cho Blast Block
             canvas.addEventListener('touchstart', (e) => {
                 if (!gameRunning) return;
                 const rect = canvas.getBoundingClientRect();
@@ -1025,7 +1184,7 @@
                         touchY <= block.y + block.height
                     ) {
                         score += 10;
-                        return false; // Xóa khối khi chạm
+                        return false;
                     }
                     return true;
                 });
@@ -1050,7 +1209,7 @@
                         clickY <= block.y + block.height
                     ) {
                         score += 10;
-                        return false; // Xóa khối khi click
+                        return false;
                     }
                     return true;
                 });
@@ -1066,13 +1225,13 @@
         const sections = ['home', 'calendar', 'submit', 'game', 'feedback'];
         function showSection(sectionId) {
             sections.forEach(id => {
-                document.getElementById(id).classList.add('hidden'); // Ẩn tất cả section
+                document.getElementById(id).classList.add('hidden');
             });
-            document.getElementById(sectionId).classList.remove('hidden'); // Hiển thị section được chọn
+            document.getElementById(sectionId).classList.remove('hidden');
             document.querySelectorAll('.navbar a').forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('href').substring(1) === sectionId) {
-                    link.classList.add('active'); // Đánh dấu liên kết đang hoạt động
+                    link.classList.add('active');
                 }
             });
         }
@@ -1084,13 +1243,20 @@
                 const sectionId = link.getAttribute('href').substring(1);
                 showSection(sectionId);
             });
+            if (isIOS) {
+                link.addEventListener('touchstart', e => {
+                    e.preventDefault();
+                    const sectionId = link.getAttribute('href').substring(1);
+                    showSection(sectionId);
+                });
+            }
         });
 
         // Khởi tạo trang
         document.addEventListener('DOMContentLoaded', () => {
-            loadUsersData(); // Tải dữ liệu thành viên
-            loadCalendarData(); // Tải dữ liệu lịch học
-            showSection('home'); // Hiển thị section Trang Chủ mặc định
+            loadUsersData();
+            loadCalendarData();
+            showSection('home');
         });
     </script>
 </body>
