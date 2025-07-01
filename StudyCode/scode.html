@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Cổng thông tin học viên lập trình - Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho">
     <meta name="keywords" content="Xứ Đoàn, Giáo Xứ Chánh Tòa Mỹ Tho, Các Thánh Tử Đạo Việt Nam, học lập trình, cổng học viên">
-    <title>Cổng Lập Trình - Xứ Đoàn Các Thánh Tử Đạo Việt Nam</title>
+    <title>Cổng Học Viên Lập Trình - Xứ Đoàn Các Thánh Tử Đạo Việt Nam</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #A61C00; /* Màu đỏ tử đạo */
-            --primary-dark: #7A1400;
-            --accent: #F5C518; /* Màu vàng ánh kim */
+            --primary: #cc3048; /* Màu đỏ tử đạo */
+            --primary-dark: #b7142a;
+            --accent: #FFD700; /* Màu vàng ánh kim */
             --dark-bg: #1A1A1A;
             --text: #E0E0E0;
             --error: #EF4444;
@@ -34,59 +34,17 @@
             font-family: -apple-system, 'SF Pro', 'Roboto', sans-serif;
         }
 
-        #thongbao-quangcao {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            max-width: 280px;
-            background: #fff8e1;
-            border: 1px solid #ffd54f;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 12px;
-            z-index: 9999;
-            animation: slideUp 0.3s ease-in-out;
-        }
-        @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
-        }
-        #thongbao-quangcao h4 {
-            margin-top: 0;
-            color: #d17b00;
-            font-size: 14px;
-        }
-        #thongbao-quangcao p {
-            margin: 8px 0;
-            color: #333;
-            line-height: 1.3;
-        }
-        #thongbao-quangcao img {
-            max-width: 100%;
-            margin: 8px 0;
-        }
-        #thongbao-quangcao button {
-            background: #ff9800;
-            border: none;
-            color: white;
-            padding: 5px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            float: right;
-        }
-        #thongbao-quangcao button:hover {
-            background: #e68900;
-        }
-
         .header {
             background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: var(--text);
             padding: 1rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
             text-align: center;
         }
-        .header h1 {
+        .header h2 {
             font-family: 'JetBrains Mono', monospace;
             font-size: 1.8rem;
             font-weight: 700;
@@ -130,28 +88,30 @@
             max-width: 1000px;
             margin: 1rem auto 4rem;
             padding: 0 1rem;
+            flex: 1;
         }
 
         .card {
-            background: var(--dark-bg);
+            background: #252526;
             border: 1px solid #3C3C3C;
-            border-radius: 8px;
-            padding: 1rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            margin-bottom: 1rem;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+            display: none;
         }
-        .card.show {
-            opacity: 1;
-            transform: translateY(0);
+        .card.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .card h3 {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             color: var(--accent);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .prayer-widget {
@@ -159,7 +119,7 @@
             color: var(--text);
             padding: 0.8rem;
             border-radius: 6px;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
             text-align: center;
             font-style: italic;
             font-size: 0.9rem;
@@ -169,13 +129,13 @@
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            margin-top: 0.8rem;
+            margin-top: 1rem;
         }
         .table th, .table td {
-            padding: 0.6rem;
+            padding: 0.75rem;
             border: 1px solid #3C3C3C;
             text-align: left;
-            font-size: 0.85rem;
+            font-size: 0.95rem;
         }
         .table th {
             background: var(--primary);
@@ -184,14 +144,14 @@
             font-family: 'JetBrains Mono', monospace;
         }
         .table td {
-            background: var(--dark-bg);
+            background: #1E1E1E;
         }
         .table tr:hover td {
             background: #2A2A2A;
         }
 
         .rank-icon {
-            font-size: 1rem;
+            font-size: 1.2rem;
         }
         .rank-thanhvien { color: #B0B0B0; }
         .rank-vip { color: #FFD700; }
@@ -203,24 +163,24 @@
         .calendar {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 2px;
-            background: var(--dark-bg);
-            padding: 0.8rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            gap: 4px;
+            background: #252526;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-        .calendar div {
-            padding: 0.4rem;
-            text-align: center;
-            border: 1px solid #3C3C3C;
-            border-radius: 4px;
-            font-size: 0.75rem;
-        }
-        .calendar《calendar .header {
+        .calendar .header {
             background: var(--primary);
             color: var(--text);
             font-weight: 700;
             font-family: 'JetBrains Mono', monospace;
+        }
+        .calendar div {
+            padding: 0.5rem;
+            text-align: center;
+            border: 1px solid #3C3C3C;
+            border-radius: 6px;
+            font-size: 0.9rem;
         }
         .calendar .has-event {
             background: var(--accent);
@@ -231,7 +191,7 @@
             background: #3C3C3C;
         }
         .calendar div a {
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             color: #60A5FA;
             display: block;
             margin-top: 2px;
@@ -243,21 +203,21 @@
             left: 50%;
             transform: translateX(-50%);
             background: rgba(26, 26, 26, 0.95);
-            padding: 0.8rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             max-width: 90%;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             z-index: 1000;
             display: none;
         }
 
         .btn {
-            background: var(--(primary);
+            background: var(--primary);
             color: var(--text);
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1.5rem;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             font-family: 'JetBrains Mono', monospace;
             font-weight: 500;
@@ -273,24 +233,24 @@
         }
 
         .input, .textarea, select.input {
-            background: var(--dark-bg);
+            background: #1E1E1E;
             border: 1px solid #3C3C3C;
-            border-radius: 6px;
-            padding: 0.5rem;
+            border-radius: 8px;
+            padding: 0.75rem;
             color: var(--text);
             width: 100%;
             font-family: 'Roboto', sans-serif;
         }
         .textarea {
             resize: vertical;
-            min-height: 120px;
-            font-size: 0.85rem;
+            min-height: 150px;
+            font-size: 0.9rem;
         }
         .file-input {
-            background: var(--dark-bg);
+            background: #1E1E1E;
             border: 1px solid #3C3C3C;
-            border-radius: 6px;
-            padding: 0.5rem;
+            border-radius: 8px;
+            padding: 0.75rem;
             color: var(--text);
             width: 100%;
             font-family: 'Roboto', sans-serif;
@@ -305,7 +265,7 @@
             margin-top: auto;
         }
         .footer p {
-            margin: 0.1rem 0;
+            margin: 0.2rem 0;
             font-size: 0.8rem;
         }
         .footer .contact {
@@ -316,17 +276,21 @@
         #gameCanvas {
             display: block;
             margin: 0 auto;
-            border: 1px solid var(--primary);
-            border-radius: 6px;
-            width: 200px;
-            height: 150px;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            width: 400px;
+            height: 200px;
         }
 
         @media (max-width: 1024px) {
+            :root {
+                --primary: #e63950;
+                --accent: #FFD54F;
+            }
             .header {
                 padding: 0.6rem;
             }
-            .header h1 {
+            .header h2 {
                 font-size: 1.5rem;
             }
             .header p {
@@ -339,43 +303,39 @@
                 padding: 0.4rem;
                 font-size: 1rem;
             }
+            .navbar a[href="#submit"] {
+                display: none;
+            }
             .card {
-                padding: 0.8rem;
-                margin-bottom: 0.8rem;
+                padding: 1rem;
             }
             .card h3 {
-                font-size: 1rem;
+                font-size: 1.3rem;
             }
             .table th, .table td {
-                padding: 0.4rem;
-                font-size: 0.5rem;
+                padding: 0.5rem;
+                font-size: 0.85rem;
             }
             .calendar div {
-                padding: 0.2rem;
-                font-size: 0.5rem;
-            }
-            #thongbao-quangcao {
-                max-width: 85%;
-                bottom: 50px;
-                right: 5px;
-                font-size: 10px;
+                padding: 0.4rem;
+                font-size: 0.85rem;
             }
             .btn {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.8rem;
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
             }
             #gameCanvas {
                 width: 90vw;
-                height: 100px;
+                height: 150px;
             }
             .footer {
                 padding: 0.6rem;
             }
             .footer p {
-                font-size: 0.6rem;
+                font-size: 0.75rem;
             }
             .footer .contact {
-                font-size: 0.6rem;
+                font-size: 0.7rem;
             }
             body.ios .navbar {
                 background: rgba(26, 26, 26, 0.95);
@@ -383,36 +343,42 @@
             }
             body.ios .navbar a:active {
                 transform: scale(0.95);
-                box-shadow: 0 0 6px rgba(255, 215, 0, 0.5);
-                background: rgba(166, 28, 0, 0.9);
+                box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+                background: rgba(204, 48, 72, 0.9);
             }
             body.ios .btn:active {
                 transform: scale(0.95);
-                box-shadow: 0 0 6px rgba(255, 215, 0, 0.5);
+                box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
             }
             body.ios #eventPopup {
                 bottom: 20%;
+            }
+            #submit {
+                display: none;
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .navbar a[href="#game"] {
+                display: none;
+            }
+            #game {
+                display: none;
+            }
+            .navbar a:hover {
+                background: linear-gradient(45deg, var(--primary), var(--accent));
+            }
+            .textarea {
+                min-height: 200px;
+                font-size: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <div id="thongbao-quangcao">
-        <h4>THƯ NGỎ</h4>
-        <p>
-            Chào quý thành viên,<br>
-            Chúng tôi là Ban Truyền Thông & Ban Kỹ Thuật của Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho.<br>
-            Trang phi lợi nhuận nhằm kết nối truyền thông. Các khóa học miễn phí giúp phát triển kỹ năng, do quý Trưởng hướng dẫn.<br>
-            Mong nhận sự ủng hộ để duy trì hệ thống.<br>
-            <strong>Mã QR hỗ trợ:</strong>
-        </p>
-        <img id="qrCode" src="Qr_Code.jpg" alt="Mã QR hỗ trợ">
-        <button onclick="document.getElementById('thongbao-quangcao').style.display='none'">Đóng</button>
-    </div>
-
     <div class="header">
-        <h1>XỨ ĐOÀN CÁC THÁNH TỬ ĐẠO VIỆT NAM</h1>
-        <p>Cổng Học Tập - Giáo Xứ Chánh Tòa Mỹ Tho</p>
+        <h2>XỨ ĐOÀN CÁC THÁNH TỬ ĐẠO VIỆT NAM</h2>
+        <p>Cổng Học Viên Lập Trình - Giáo Xứ Chánh Tòa Mỹ Tho</p>
     </div>
 
     <div class="navbar">
@@ -425,7 +391,7 @@
     </div>
 
     <div class="container">
-        <div id="home" class="card">
+        <div id="home" class="card active">
             <div class="prayer-widget">
                 <p id="dailyPrayer">“Kẻ nào bền chí đến cùng, kẻ ấy sẽ được cứu độ.” (Mt 24:13)</p>
             </div>
@@ -506,22 +472,7 @@
 
         <div id="feedback" class="card">
             <h3>Phản Hồi</h3>
-            <form id="feedbackForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST">
-                <div class="mb-4">
-                    <label class="block mb-1 text-text">Họ và Tên:</label>
-                    <input type="text" name="fullName" id="feedbackFullName" class="input" required>
-                </div>
-                <div class="mb-4">
-                    <label class="block mb-1 text-text">Gmail:</label>
-                    <input type="email" name="gmail" class="input" required>
-                </div>
-                <div class="mb-4">
-                    <label class="block mb-1 text-text">Nội Dung (Tối đa 250 chữ):</label>
-                    <textarea name="content" class="textarea" maxlength="250" required></textarea>
-                </div>
-                <input type="hidden" name="submissionTime" id="feedbackSubmissionTime">
-                <button type="submit" class="btn">Gửi Phản Hồi</button>
-            </form>
+            <div id="feedbackContent"></div>
         </div>
 
         <div id="resources" class="card">
@@ -537,18 +488,40 @@
     </div>
 
     <script>
+        const isMobile = window.innerWidth <= 1024;
         const isIOS = navigator.userAgent.includes('iPhone') || navigator.userAgent.includes('iPad');
         const isAndroid = navigator.userAgent.includes('Android');
-        if (isIOS) {
-            document.body.classList.add('ios');
-            document.getElementById('qrCode').src = 'Qr_Code.jpg';
-            document.getElementById('gameTitle').textContent = 'Khủng Long';
-            document.getElementById('gameInstructions').innerHTML = 'Chạm màn hình để nhảy!';
-        } else if (isAndroid) {
-            document.body.classList.add('android');
-            document.getElementById('qrCode').src = 'Qr_Code.webp';
-            document.getElementById('gameTitle').textContent = 'Blast Block';
-            document.getElementById('gameInstructions').innerHTML = 'Chạm để phá khối!';
+
+        if (isMobile) {
+            document.getElementById('feedbackContent').innerHTML = `
+                <p>Nhấn vào nút dưới để gửi phản hồi qua Messenger:</p>
+                <a href="https://m.me/tnttchanhtoamytho" target="_blank" class="btn">Gửi Phản Hồi</a>
+            `;
+        } else {
+            document.getElementById('feedbackContent').innerHTML = `
+                <form id="feedbackForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST">
+                    <div class="mb-4">
+                        <label class="block mb-1 text-text">Họ và Tên:</label>
+                        <input type="text" name="fullName" id="feedbackFullName" class="input" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block mb-1 text-text">Gmail:</label>
+                        <input type="email" name="gmail" class="input" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block mb-1 text-text">Nội Dung (Tối đa 250 chữ):</label>
+                        <textarea name="content" class="textarea" maxlength="250" required></textarea>
+                    </div>
+                    <input type="hidden" name="submissionTime" id="feedbackSubmissionTime">
+                    <button type="submit" class="btn">Gửi Phản Hồi</button>
+                </form>
+            `;
+        }
+
+        if (isIOS && isMobile) {
+            document.getElementById('gameInstructions').textContent = 'Chạm màn hình để nhảy!';
+        } else if (isAndroid && isMobile) {
+            document.getElementById('gameInstructions').textContent = 'Chạm để phá khối!';
         }
 
         const canvas = document.getElementById('gameCanvas');
@@ -562,21 +535,16 @@
                 canvas.height = 200;
             }
         }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        window.addEventListener('load', () => {
-            if (window.innerWidth <= 1024) {
-                document.querySelector('.navbar a[href="#submit"]').style.display = 'none';
-            }
-        });
         window.addEventListener('resize', () => {
+            resizeCanvas();
             if (window.innerWidth <= 1024) {
                 document.querySelector('.navbar a[href="#submit"]').style.display = 'none';
             } else {
-                document.querySelector('.navbar a[href="#submit"]').style.display = 'flex';
+                document.querySelector('.navbar a[href="#submit"]').style.display = 'inline-flex';
+                document.querySelector('.navbar a[href="#game"]').style.display = 'none';
             }
         });
+        resizeCanvas();
 
         async function loadDailyPrayer() {
             try {
@@ -714,17 +682,19 @@
                     if (event.videoLink) {
                         div.innerHTML += `<a href="${event.videoLink}" target="_blank" class="text-blue-400 text-xs">Video</a>`;
                     }
+                    const showEvent = () => {
+                        document.getElementById('eventPopup').innerHTML = `
+                            <p><strong>Môn:</strong> ${event.subject}</p>
+                            <p><strong>Thời gian:</strong> ${event.startTime} - ${event.endTime}</p>
+                            <p><strong>Buổi:</strong> ${event.session}</p>
+                            ${event.videoLink ? `<p><a href="${event.videoLink}" target="_blank" class="text-blue-400">Xem Video</a></p>` : ''}
+                        `;
+                        document.getElementById('eventPopup').style.display = 'block';
+                    };
+                    div.addEventListener('click', showEvent);
                     let touchTimeout;
                     div.addEventListener('touchstart', () => {
-                        touchTimeout = setTimeout(() => {
-                            document.getElementById('eventPopup').innerHTML = `
-                                <p><strong>Môn:</strong> ${event.subject}</p>
-                                <p><strong>Thời gian:</strong> ${event.startTime} - ${event.endTime}</p>
-                                <p><strong>Buổi:</strong> ${event.session}</p>
-                                ${event.videoLink ? `<p><a href="${event.videoLink}" target="_blank" class="text-blue-400">Xem Video</a></p>` : ''}
-                            `;
-                            document.getElementById('eventPopup').style.display = 'block';
-                        }, 500);
+                        touchTimeout = setTimeout(showEvent, 500);
                     });
                     div.addEventListener('touchend', () => {
                         clearTimeout(touchTimeout);
@@ -762,206 +732,210 @@
             document.getElementById('submissionTime').value = new Date().toLocaleString('vi-VN');
         });
 
-        document.getElementById('feedbackForm').addEventListener('submit', () => {
-            document.getElementById('feedbackSubmissionTime').value = new Date().toLocaleString('vi-VN');
-        });
+        if (!isMobile) {
+            document.getElementById('feedbackForm')?.addEventListener('submit', () => {
+                document.getElementById('feedbackSubmissionTime').value = new Date().toLocaleString('vi-VN');
+            });
+        }
 
         let gameRunning = false;
         let score = 0;
         let frameCount = 0;
 
-        if (isIOS) {
-            let dino = { x: 50, y: 120, width: 40, height: 40, dy: 0, gravity: 0.5, jumpPower: -12, grounded: true };
-            let obstacles = [];
+        if (isMobile) {
+            if (isIOS) {
+                let dino = { x: 50, y: 120, width: 30, height: 30, dy: 0, gravity: 0.6, jumpPower: -10, grounded: true };
+                let obstacles = [];
 
-            function drawDino() {
-                ctx.fillStyle = 'white';
-                ctx.fillRect(dino.x, dino.y, dino.width, dino.height);
-            }
+                function drawDino() {
+                    ctx.fillStyle = 'white';
+                    ctx.fillRect(dino.x, dino.y, dino.width, dino.height);
+                }
 
-            function drawObstacles() {
-                ctx.fillStyle = 'green';
-                obstacles.forEach(obstacle => {
-                    ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
-                });
-            }
+                function drawObstacles() {
+                    ctx.fillStyle = 'green';
+                    obstacles.forEach(obstacle => {
+                        ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+                    });
+                }
 
-            function spawnObstacle() {
-                const obstacle = { x: canvas.width, y: 120, width: 15, height: 30, speed: 3 };
-                obstacles.push(obstacle);
-            }
+                function spawnObstacle() {
+                    const obstacle = { x: canvas.width, y: 120, width: 15, height: 30, speed: 4 };
+                    obstacles.push(obstacle);
+                }
 
-            function updateGame() {
-                if (!gameRunning) return;
+                function updateGame() {
+                    if (!gameRunning) return;
 
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                dino.dy += dino.gravity;
-                dino.y += dino.dy;
-                if (dino.y > 120) {
+                    dino.dy += dino.gravity;
+                    dino.y += dino.dy;
+                    if (dino.y > 120) {
+                        dino.y = 120;
+                        dino.dy = 0;
+                        dino.grounded = true;
+                    }
+                    drawDino();
+
+                    if (frameCount % 60 === 0) {
+                        spawnObstacle();
+                    }
+                    obstacles.forEach(obstacle => {
+                        obstacle.x -= obstacle.speed;
+                    });
+                    obstacles = obstacles.filter(obstacle => obstacle.x + obstacle.width > 0);
+                    drawObstacles();
+
+                    for (let obstacle of obstacles) {
+                        if (
+                            dino.x < obstacle.x + obstacle.width &&
+                            dino.x + dino.width > obstacle.x &&
+                            dino.y < obstacle.y + obstacle.height &&
+                            dino.y + dino.height > obstacle.y
+                        ) {
+                            gameRunning = false;
+                            updateHighScore();
+                            alert(`Game Over! Điểm: ${score}, Điểm cao: ${localStorage.getItem('highScore') || 0}`);
+                            return;
+                        }
+                    }
+
+                    score = Math.floor(frameCount / 10);
+                    document.getElementById('scoreDisplay').textContent = `Điểm: ${score}`;
+                    frameCount++;
+
+                    requestAnimationFrame(updateGame);
+                }
+
+                function startGame() {
+                    gameRunning = true;
+                    score = 0;
+                    frameCount = 0;
                     dino.y = 120;
                     dino.dy = 0;
                     dino.grounded = true;
+                    obstacles = [];
+                    document.getElementById('scoreDisplay').textContent = `Điểm: ${score}`;
+                    updateGame();
                 }
-                drawDino();
 
-                if (frameCount % 60 === 0) {
-                    spawnObstacle();
-                }
-                obstacles.forEach(obstacle => {
-                    obstacle.x -= obstacle.speed;
-                });
-                obstacles = obstacles.filter(obstacle => obstacle.x + obstacle.width > 0);
-                drawObstacles();
-
-                for (let obstacle of obstacles) {
-                    if (
-                        dino.x < obstacle.x + obstacle.width &&
-                        dino.x + dino.width > obstacle.x &&
-                        dino.y < obstacle.y + obstacle.height &&
-                        dino.y + dino.height > obstacle.y
-                    ) {
-                        gameRunning = false;
-                        updateHighScore();
-                        alert(`Game Over! Điểm: ${score}, Điểm cao: ${localStorage.getItem('highScore') || 0}`);
-                        return;
+                document.addEventListener('keydown', (e) => {
+                    if (e.code === 'Space' && dino.grounded && gameRunning) {
+                        dino.dy = dino.jumpPower;
+                        dino.grounded = false;
                     }
-                }
+                });
 
-                score = Math.floor(frameCount / 10);
-                document.getElementById('scoreDisplay').textContent = `Điểm: ${score}`;
-                frameCount++;
+                canvas.addEventListener('touchstart', () => {
+                    if (dino.grounded && gameRunning) {
+                        dino.dy = dino.jumpPower;
+                        dino.grounded = false;
+                    }
+                });
+            } else if (isAndroid) {
+                let blocks = [];
+                const blockSize = 30;
+                const rows = Math.floor(canvas.height / blockSize);
+                const cols = Math.floor(canvas.width / blockSize);
 
-                requestAnimationFrame(updateGame);
-            }
-
-            function startGame() {
-                gameRunning = true;
-                score = 0;
-                frameCount = 0;
-                dino.y = 120;
-                dino.dy = 0;
-                dino.grounded = true;
-                obstacles = [];
-                document.getElementById('scoreDisplay').textContent = `Điểm: ${score}`;
-                updateGame();
-            }
-
-            document.addEventListener('keydown', (e) => {
-                if (e.code === 'Space' && dino.grounded && gameRunning) {
-                    dino.dy = dino.jumpPower;
-                    dino.grounded = false;
-                }
-            });
-
-            canvas.addEventListener('touchstart', () => {
-                if (dino.grounded && gameRunning) {
-                    dino.dy = dino.jumpPower;
-                    dino.grounded = false;
-                }
-            });
-        } else if (isAndroid) {
-            let blocks = [];
-            const blockSize = 40;
-            const rows = Math.floor(canvas.height / blockSize);
-            const cols = Math.floor(canvas.width / blockSize);
-
-            function createBlocks() {
-                blocks = [];
-                for (let row = 0; row < rows; row++) {
-                    for (let col = 0; col < cols; col++) {
-                        if (Math.random() > 0.5) {
-                            blocks.push({
-                                x: col * blockSize,
-                                y: row * blockSize,
-                                width: blockSize,
-                                height: blockSize,
-                                color: `hsl(${Math.random() * 360}, 70%, 50%)`
-                            });
+                function createBlocks() {
+                    blocks = [];
+                    for (let row = 0; row < rows; row++) {
+                        for (let col = 0; col < cols; col++) {
+                            if (Math.random() > 0.3) {
+                                blocks.push({
+                                    x: col * blockSize,
+                                    y: row * blockSize,
+                                    width: blockSize,
+                                    height: blockSize,
+                                    color: `hsl(${Math.random() * 360}, 70%, 50%)`
+                                });
+                            }
                         }
                     }
                 }
-            }
 
-            function drawBlocks() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                blocks.forEach(block => {
-                    ctx.fillStyle = block.color;
-                    ctx.fillRect(block.x, block.y, block.width - 2, block.height - 2);
-                });
-            }
-
-            function updateGame() {
-                if (!gameRunning) return;
-
-                drawBlocks();
-
-                document.getElementById('scoreDisplay').textContent = `Điểm: ${score}`;
-                frameCount++;
-
-                requestAnimationFrame(updateGame);
-            }
-
-            function startGame() {
-                gameRunning = true;
-                score = 0;
-                frameCount = 0;
-                createBlocks();
-                document.getElementById('scoreDisplay').textContent = `Điểm: ${score}`;
-                updateGame();
-            }
-
-            canvas.addEventListener('touchstart', (e) => {
-                if (!gameRunning) return;
-                const rect = canvas.getBoundingClientRect();
-                const touchX = e.touches[0].clientX - rect.left;
-                const touchY = e.touches[0].clientY - rect.top;
-
-                blocks = blocks.filter(block => {
-                    if (
-                        touchX >= block.x &&
-                        touchX <= block.x + block.width &&
-                        touchY >= block.y &&
-                        touchY <= block.y + block.height
-                    ) {
-                        score += 10;
-                        return false;
-                    }
-                    return true;
-                });
-
-                if (blocks.length === 0) {
-                    gameRunning = false;
-                    updateHighScore();
-                    alert(`Chúc mừng! Điểm: ${score}, Điểm cao: ${localStorage.getItem('highScore') || 0}`);
+                function drawBlocks() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    blocks.forEach(block => {
+                        ctx.fillStyle = block.color;
+                        ctx.fillRect(block.x, block.y, block.width - 2, block.height - 2);
+                    });
                 }
-            });
 
-            document.addEventListener('click', (e) => {
-                if (!gameRunning) return;
-                const rect = canvas.getBoundingClientRect();
-                const clickX = e.clientX - rect.left;
-                const clickY = e.clientY - rect.top;
+                function updateGame() {
+                    if (!gameRunning) return;
 
-                blocks = blocks.filter(block => {
-                    if (
-                        clickX >= block.x &&
-                        clickX <= block.x + block.width &&
-                        clickY >= block.y &&
-                        clickY <= block.y + block.height
-                    ) {
-                        score += 10;
-                        return false;
+                    drawBlocks();
+
+                    document.getElementById('scoreDisplay').textContent = `Điểm: ${score}`;
+                    frameCount++;
+
+                    requestAnimationFrame(updateGame);
+                }
+
+                function startGame() {
+                    gameRunning = true;
+                    score = 0;
+                    frameCount = 0;
+                    createBlocks();
+                    document.getElementById('scoreDisplay').textContent = `Điểm: ${score}`;
+                    updateGame();
+                }
+
+                canvas.addEventListener('touchstart', (e) => {
+                    if (!gameRunning) return;
+                    const rect = canvas.getBoundingClientRect();
+                    const touchX = e.touches[0].clientX - rect.left;
+                    const touchY = e.touches[0].clientY - rect.top;
+
+                    blocks = blocks.filter(block => {
+                        if (
+                            touchX >= block.x &&
+                            touchX <= block.x + block.width &&
+                            touchY >= block.y &&
+                            touchY <= block.y + block.height
+                        ) {
+                            score += 10;
+                            return false;
+                        }
+                        return true;
+                    });
+
+                    if (blocks.length === 0) {
+                        gameRunning = false;
+                        updateHighScore();
+                        alert(`Chúc mừng! Điểm: ${score}, Điểm cao: ${localStorage.getItem('highScore') || 0}`);
                     }
-                    return true;
                 });
 
-                if (blocks.length === 0) {
-                    gameRunning = false;
-                    updateHighScore();
-                    alert(`Chúc mừng! Điểm: ${score}, Điểm cao: ${localStorage.getItem('highScore') || 0}`);
-                }
-            });
+                document.addEventListener('click', (e) => {
+                    if (!gameRunning) return;
+                    const rect = canvas.getBoundingClientRect();
+                    const clickX = e.clientX - rect.left;
+                    const clickY = e.clientY - rect.top;
+
+                    blocks = blocks.filter(block => {
+                        if (
+                            clickX >= block.x &&
+                            clickX <= block.x + block.width &&
+                            clickY >= block.y &&
+                            clickY <= block.y + block.height
+                        ) {
+                            score += 10;
+                            return false;
+                        }
+                        return true;
+                    });
+
+                    if (blocks.length === 0) {
+                        gameRunning = false;
+                        updateHighScore();
+                        alert(`Chúc mừng! Điểm: ${score}, Điểm cao: ${localStorage.getItem('highScore') || 0}`);
+                    }
+                });
+            }
         }
 
         function updateHighScore() {
@@ -972,23 +946,43 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            loadUsersData();
-            loadCalendarData();
-            loadDailyPrayer();
-            loadResources();
-            document.querySelectorAll('.card').forEach(card => card.classList.add('show'));
-            document.getElementById('highScore').textContent = localStorage.getItem('highScore') || 0;
-        });
+        const sections = ['home', 'calendar', 'submit', 'game', 'feedback', 'resources'];
+        function showSection(sectionId) {
+            sections.forEach(id => {
+                const section = document.getElementById(id);
+                if (section) section.classList.remove('active');
+            });
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) targetSection.classList.add('active');
+            document.querySelectorAll('.navbar a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === sectionId) {
+                    link.classList.add('active');
+                }
+            });
+        }
 
         document.querySelectorAll('.navbar a').forEach(link => {
             link.addEventListener('click', e => {
                 e.preventDefault();
                 const sectionId = link.getAttribute('href').substring(1);
-                document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
-                document.querySelectorAll('.navbar a').forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
+                if (sectionId === 'feedback' && isMobile) {
+                    window.open('https://m.me/tnttchanhtoamytho', '_blank');
+                } else {
+                    showSection(sectionId);
+                }
             });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadUsersData();
+            loadCalendarData();
+            loadDailyPrayer();
+            loadResources();
+            showSection('home');
+            if (isMobile) {
+                document.getElementById('highScore').textContent = localStorage.getItem('highScore') || 0;
+            }
         });
     </script>
 </body>
