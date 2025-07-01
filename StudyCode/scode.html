@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="Cổng thông tin học viên lập trình - Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho">
     <meta name="keywords" content="Xứ Đoàn, Giáo Xứ Chánh Tòa Mỹ Tho, Các Thánh Tử Đạo Việt Nam, học lập trình, cổng học viên">
     <title>Cổng Học Viên Lập Trình - Xứ Đoàn Các Thánh Tử Đạo Việt Nam</title>
@@ -11,9 +11,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #cc3048; /* Màu đỏ tử đạo */
+            --primary: #cc3048;
             --primary-dark: #b7142a;
-            --accent: #FFD700; /* Màu vàng ánh kim */
+            --accent: #FFD700;
             --dark-bg: #1A1A1A;
             --text: #E0E0E0;
             --error: #EF4444;
@@ -23,11 +23,11 @@
             background: linear-gradient(135deg, #2D2D2D 0%, #1A1A1A 100%);
             font-family: 'Roboto', sans-serif;
             margin: 0;
-            min-height: 100vh;
+            color: var(--text);
+            overflow: hidden;
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            color: var(--text);
-            overflow-x: hidden;
         }
 
         body.ios {
@@ -69,10 +69,17 @@
         .navbar a {
             color: var(--text);
             padding: 0.5rem;
-            font-size: 1.2rem;
+            font-size: 1rem;
             text-align: center;
             border-radius: 6px;
             transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .navbar a i {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
         }
         .navbar a:hover {
             background: var(--primary);
@@ -85,10 +92,12 @@
         }
 
         .container {
-            max-width: 1000px;
-            margin: 1rem auto 4rem;
-            padding: 0 1rem;
             flex: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            overflow-y: auto;
+            height: calc(100vh - 60px - 60px - 60px); /* header: 60px, navbar: 60px, footer: 60px */
         }
 
         .card {
@@ -98,6 +107,8 @@
             padding: 1.5rem;
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
             display: none;
+            height: 100%;
+            overflow-y: auto;
         }
         .card.active {
             display: block;
@@ -135,7 +146,7 @@
             padding: 0.75rem;
             border: 1px solid #3C3C3C;
             text-align: left;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
         .table th {
             background: var(--primary);
@@ -262,7 +273,7 @@
             padding: 1rem;
             text-align: center;
             box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.3);
-            margin-top: auto;
+            z-index: 1000;
         }
         .footer p {
             margin: 0.2rem 0;
@@ -287,6 +298,9 @@
                 --primary: #e63950;
                 --accent: #FFD54F;
             }
+            body {
+                overflow-y: hidden;
+            }
             .header {
                 padding: 0.6rem;
             }
@@ -301,13 +315,23 @@
             }
             .navbar a {
                 padding: 0.4rem;
+                font-size: 0.8rem;
+            }
+            .navbar a i {
                 font-size: 1rem;
             }
             .navbar a[href="#submit"] {
                 display: none;
             }
+            .container {
+                margin: 0 auto;
+                padding: 0.5rem;
+                height: calc(100vh - 50px - 50px - 50px); /* header: 50px, navbar: 50px, footer: 50px */
+            }
             .card {
                 padding: 1rem;
+                height: 100%;
+                overflow-y: auto;
             }
             .card h3 {
                 font-size: 1.3rem;
@@ -372,6 +396,9 @@
                 min-height: 200px;
                 font-size: 1rem;
             }
+            .container {
+                height: calc(100vh - 80px - 60px - 80px); /* header: 80px, navbar: 60px, footer: 80px */
+            }
         }
     </style>
 </head>
@@ -382,12 +409,12 @@
     </div>
 
     <div class="navbar">
-        <a href="#home" class="active"><i class="fas fa-home"></i></a>
-        <a href="#calendar"><i class="fas fa-calendar"></i></a>
-        <a href="#submit"><i class="fas fa-upload"></i></a>
-        <a href="#game"><i class="fas fa-gamepad"></i></a>
-        <a href="#feedback"><i class="fas fa-comment"></i></a>
-        <a href="#resources"><i class="fas fa-book"></i></a>
+        <a href="#home" class="active"><i class="fas fa-home"></i><span>Trang Chủ</span></a>
+        <a href="#calendar"><i class="fas fa-calendar"></i><span>Lịch Học</span></a>
+        <a href="#submit"><i class="fas fa-upload"></i><span>Nộp Bài</span></a>
+        <a href="#game"><i class="fas fa-gamepad"></i><span>Giải Trí</span></a>
+        <a href="#feedback"><i class="fas fa-comment"></i><span>Phản Hồi</span></a>
+        <a href="#resources"><i class="fas fa-book"></i><span>Tài Liệu</span></a>
     </div>
 
     <div class="container">
