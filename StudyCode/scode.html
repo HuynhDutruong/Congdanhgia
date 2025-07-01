@@ -8,34 +8,44 @@
     <meta name="keywords" content="Xứ Đoàn, Giáo Xứ Chánh Tòa Mỹ Tho, Các Thánh Tử Đạo Việt Nam, học lập trình, cổng học viên">
     <title>Cổng Lập Trình - Xứ Đoàn Các Thánh Tử Đạo Việt Nam</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Times+New+Roman&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Định nghĩa biến CSS để tái sử dụng màu sắc và phong cách */
         :root {
-            --primary: #cc3048; /* Màu chính */
-            --primary-dark: #b7142a; /* Màu chính tối hơn */
-            --accent: #FFD700; /* Màu nhấn */
+            --primary: #A61C00; /* Màu đỏ tử đạo */
+            --primary-dark: #7A1400; /* Màu đỏ đậm hơn */
+            --accent: #F5C518; /* Màu vàng ánh kim */
             --dark-bg: #1A1A1A; /* Màu nền tối */
-            --text: #E0E0E0; /* Màu chữ */
+            --light-bg: #F5F5F5; /* Màu nền sáng */
+            --text: #E0E0E0; /* Màu chữ tối */
+            --text-light: #333333; /* Màu chữ sáng */
             --error: #EF4444; /* Màu lỗi */
+        }
+
+        /* Chế độ sáng */
+        body.light-mode {
+            --dark-bg: var(--light-bg);
+            --text: var(--text-light);
+            background: linear-gradient(135deg, #FFFFFF 0%, #F5F5F5 100%);
         }
 
         /* Thiết lập giao diện cơ bản cho body */
         body {
-            background: linear-gradient(135deg, #2D2D2D 0%, #1A1A1A 100%); /* Nền gradient */
-            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #2D2D2D 0%, #1A1A1A 100%); /* Nền gradient tối */
+            font-family: 'Times New Roman', serif;
             margin: 0;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             color: var(--text);
             overflow-x: hidden;
+            transition: background 0.3s ease;
         }
 
         /* Tối ưu font cho iOS */
         body.ios {
-            font-family: -apple-system, 'SF Pro', 'Roboto', sans-serif;
+            font-family: -apple-system, 'SF Pro', 'Times New Roman', serif;
         }
 
         /* Popup thông báo quảng cáo */
@@ -51,6 +61,11 @@
             border-radius: 8px;
             font-size: 14px;
             z-index: 9999;
+            animation: slideUp 0.3s ease-in-out;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
         }
         #thongbao-quangcao h4 {
             margin-top: 0;
@@ -101,6 +116,16 @@
             font-size: 1rem;
             opacity: 0.9;
         }
+        .theme-toggle {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
 
         /* Thanh điều hướng (navbar) */
         .navbar {
@@ -141,18 +166,36 @@
 
         /* Card chứa các phần nội dung */
         .card {
-            background: #252526;
+            background: var(--dark-bg);
             border: 1px solid #3C3C3C;
             border-radius: 12px;
             padding: 2rem;
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
             margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .card.show {
+            opacity: 1;
+            transform: translateY(0);
         }
         .card h3 {
             font-family: 'JetBrains Mono', monospace;
             font-size: 1.5rem;
             color: var(--accent);
             margin-bottom: 1.5rem;
+        }
+
+        /* Widget cầu nguyện */
+        .prayer-widget {
+            background: var(--primary);
+            color: var(--text);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-style: italic;
         }
 
         /* Bảng kết quả học tập */
@@ -175,7 +218,7 @@
             font-family: 'JetBrains Mono', monospace;
         }
         .table td {
-            background: #1E1E1E;
+            background: var(--dark-bg);
         }
         .table tr:hover td {
             background: #2A2A2A;
@@ -197,7 +240,7 @@
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 4px;
-            background: #252526;
+            background: var(--dark-bg);
             padding: 1.5rem;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -224,6 +267,12 @@
         .calendar div:hover {
             background: #3C3C3C;
         }
+        .calendar div a {
+            font-size: 0.75rem;
+            color: #60A5FA;
+            display: block;
+            margin-top: 4px;
+        }
 
         /* Nút giao diện */
         .btn {
@@ -249,7 +298,7 @@
 
         /* Input và textarea */
         .input, .textarea, select.input {
-            background: #1E1E1E;
+            background: var(--dark-bg);
             border: 1px solid #3C3C3C;
             border-radius: 8px;
             padding: 0.75rem;
@@ -263,13 +312,13 @@
             font-size: 0.9rem;
         }
         .file-input {
-            background: #1E1E1E;
+            background: var(--dark-bg);
             border: 1px solid #3C3C3C;
             border-radius: 8px;
             padding: 0.75rem;
             color: var(--text);
             width: 100%;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Times New Roman', serif;
         }
 
         /* Footer */
@@ -303,18 +352,18 @@
             height: 150px;
         }
 
-        /* Tùy chỉnh giao diện cho điện thoại và tablet */
+        /* Tùy chỉnh giao diện cho điện thoại */
         @media (max-width: 1024px) {
             :root {
-                --primary: #e63950;
-                --accent: #FFD54F;
+                --primary: #A61C00;
+                --accent: #F5C518;
             }
             #gameCanvas {
-                width: 200px; /* Chiều rộng canvas bằng 90% màn hình */
-                height: 150px; /* Chiều cao canvas tối ưu cho điện thoại */
+                width: 90vw;
+                height: 150px;
             }
             .header h2 {
-                font-size: 1.0rem;
+                font-size: 1.5rem;
             }
             .header p {
                 font-size: 0.9rem;
@@ -334,17 +383,17 @@
                 margin-right: 0.5rem;
             }
             .navbar a[href="#submit"] {
-                display: none !important; /* Ẩn liên kết Nộp Bài trên điện thoại và tablet */
+                display: none !important;
             }
             .navbar a[href="#game"] {
-                display: inline-flex; /* Hiển thị liên kết Giải Trí trên điện thoại */
+                display: inline-flex;
             }
             .card h3 {
                 font-size: 1.3rem;
                 font-weight: 600;
             }
             .table th, .table td {
-                padding: 0.5rem;
+                paddingMT: 0.5rem;
                 font-size: 0.85rem;
             }
             .calendar div {
@@ -356,11 +405,7 @@
                 bottom: 10px;
                 right: 10px;
                 font-size: 12px;
-                animation: shake 0.5s ease-in-out;
-            }
-            @keyframes shake {
-                0%, 100% { transform: translateX(0); }
-                50% { transform: translateX(-5px); }
+                animation: slideUp 0.5s ease-in-out;
             }
             .btn:active, .navbar a:active {
                 position: relative;
@@ -383,7 +428,7 @@
                 }
             }
             #submit {
-                display: none; /* Ẩn nội dung phần Nộp Bài trên điện thoại */
+                display: none;
             }
             .btn:active {
                 background: var(--accent);
@@ -397,14 +442,7 @@
                 font-size: 10px;
             }
             body.ios {
-                font-family: -apple-system, 'SF Pro', 'Roboto', sans-serif;
-            }
-            body.ios :root {
-                --primary: #cc3048;
-                --accent: #FFD700;
-            }
-            body.ios .header h2, body.ios .card h3 {
-                font-weight: 500;
+                font-family: -apple-system, 'SF Pro', 'Times New Roman', serif;
             }
             body.ios .navbar {
                 position: fixed;
@@ -429,7 +467,7 @@
             body.ios .navbar a:active {
                 transform: scale(0.95);
                 box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
-                background: rgba(204, 48, 72, 0.9);
+                background: rgba(166, 28, 0, 0.9);
             }
             body.ios .navbar a i {
                 font-size: 1.2rem;
@@ -444,7 +482,7 @@
                 backdrop-filter: blur(5px);
             }
             body.ios .btn {
-                background: rgba(204, 48, 72, 0.9);
+                background: rgba(166, 28, 0, 0.9);
                 backdrop-filter: blur(3px);
             }
             body.ios .btn:active {
@@ -472,60 +510,6 @@
                 font-size: 0.9rem;
             }
         }
-
-        /* Tùy chỉnh cho máy tính bảng */
-        @media (min-width: 641px) and (max-width: 1024px) {
-            .header h2 {
-                font-size: 1.75rem;
-            }
-            .navbar a {
-                padding: 0.6rem 1.2rem;
-                font-size: 1rem;
-            }
-            .card h3 {
-                font-size: 1.4rem;
-            }
-            .table th, .table td {
-                padding: 0.75rem;
-                font-size: 0.9rem;
-            }
-            .calendar div {
-                padding: 0.6rem;
-                font-size: 0.9rem;
-            }
-            .btn:active {
-                box-shadow: 0 0 8px var(--accent);
-                transform: scale(0.98);
-            }
-        }
-
-        /* Tùy chỉnh cho laptop */
-        @media (min-width: 1025px) {
-            .navbar a:hover {
-                background: linear-gradient(45deg, var(--primary), var(--accent));
-            }
-            .tooltip {
-                position: absolute;
-                background: var(--dark-bg);
-                color: var(--text);
-                padding: 0.3rem 0.6rem;
-                border-radius: 4px;
-                font-size: 0.8rem;
-                top: 100%;
-                display: none;
-                z-index: 10;
-            }
-            label:hover .tooltip {
-                display: block;
-            }
-            .textarea {
-                min-height: 300px;
-                font-size: 1rem;
-            }
-            .navbar a[href="#game"] {
-                display: none; /* Ẩn liên kết Giải Trí trên laptop */
-            }
-        }
     </style>
 </head>
 <body>
@@ -534,7 +518,7 @@
         <h4>THƯ NGỎ</h4>
         <p>
             Chào quý thành viên,<br>
-            Chúng chúng tôi là Ban Truyền Thông & Ban Kỹ Thuật của trang web Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho.<br><br>
+            Chúng tôi là Ban Truyền Thông & Ban Kỹ Thuật của trang web Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho.<br><br>
             Đây là trang phi lợi nhuận nhằm kết nối truyền thông với thời đại mới. Các khóa học miễn phí được tổ chức nhằm giúp phát triển kỹ năng và kiến thức, tất cả do quý Trưởng phân công hướng dẫn.<br><br>
             Mong nhận được sự đóng góp và ủng hộ để duy trì hệ thống hoạt động.<br><br>
             <strong>Mã QR hỗ trợ ở bên dưới:</strong>
@@ -543,8 +527,9 @@
         <button onclick="document.getElementById('thongbao-quangcao').style.display='none'">Đóng</button>
     </div>
 
-    <!-- Header với tiêu đề và mô tả -->
+    <!-- Header với tiêu đề, mô tả và nút chế độ tối/sáng -->
     <div class="header">
+        <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-sun"></i></button>
         <h2>XỨ ĐOÀN CÁC THÁNH TỬ ĐẠO VIỆT NAM</h2>
         <p>Cổng Lập Trình - Giáo Xứ Chánh Tòa Mỹ Tho</p>
     </div>
@@ -556,12 +541,16 @@
         <a href="#submit"><i class="fas fa-upload"></i> Nộp Bài</a>
         <a href="#game" class="hidden"><i class="fas fa-gamepad"></i> Giải Trí</a>
         <a href="#feedback"><i class="fas fa-comment"></i> Phản Hồi</a>
+        <a href="#resources"><i class="fas fa-book"></i> Tài Liệu</a>
     </div>
 
     <!-- Container chứa các section nội dung -->
     <div class="container">
-        <!-- Section Trang Chủ: Hiển thị kết quả học tập -->
+        <!-- Section Trang Chủ: Widget cầu nguyện và kết quả học tập -->
         <div id="home" class="card">
+            <div class="prayer-widget">
+                <p id="dailyPrayer">“Kẻ nào bền chí đến cùng, kẻ ấy sẽ được cứu độ.” (Mt 24:13)</p>
+            </div>
             <h3>Kết Quả Học Tập Khoá</h3>
             <table class="table">
                 <thead>
@@ -578,9 +567,13 @@
             </table>
         </div>
 
-        <!-- Section Lịch Học: Hiển thị lịch học theo tháng -->
+        <!-- Section Lịch Học: Tìm kiếm và lịch -->
         <div id="calendar" class="card hidden">
             <h3>Lịch Học</h3>
+            <div class="mb-4">
+                <input type="text" id="calendarSearch" class="input" placeholder="Tìm kiếm môn học hoặc buổi...">
+            </div>
+            <div id="searchResults" class="mb-4"></div>
             <div class="flex justify-between mb-4">
                 <button class="btn" onclick="prevMonth()">◄</button>
                 <h4 id="monthYear" class="font-bold text-accent"></h4>
@@ -631,6 +624,7 @@
             <div class="mt-4 text-center">
                 <p id="gameInstructions"></p>
                 <p id="scoreDisplay">Điểm: 0</p>
+                <p id="highScoreDisplay">Điểm cao: <span id="highScore">0</span></p>
                 <button class="btn" onclick="startGame()">Bắt Đầu Lại</button>
             </div>
         </div>
@@ -655,6 +649,12 @@
                 <button type="submit" class="btn">Gửi Phản Hồi</button>
             </form>
         </div>
+
+        <!-- Section Tài Liệu -->
+        <div id="resources" class="card hidden">
+            <h3>Tài Liệu</h3>
+            <div id="resourcesList"></div>
+        </div>
     </div>
 
     <!-- Footer chứa thông tin bản quyền và liên hệ -->
@@ -669,15 +669,15 @@
         const isIOS = navigator.userAgent.includes('iPhone') || navigator.userAgent.includes('iPad');
         const isAndroid = navigator.userAgent.includes('Android');
         if (isIOS) {
-            document.body.classList.add('ios'); // Thêm class ios cho body
-            document.getElementById('qrCode').src = 'Qr_Code.jpg'; // Hình QR cho iOS
-            document.getElementById('gameTitle').textContent = 'Khủng Long Vượt Chướng Ngại Vật'; // Tiêu đề game T-Rex
-            document.getElementById('gameInstructions').innerHTML = 'Nhấn <strong>Space</strong> hoặc chạm màn hình để nhảy. Tránh các chướng ngại vật!'; // Hướng dẫn game T-Rex
+            document.body.classList.add('ios');
+            document.getElementById('qrCode').src = 'Qr_Code.jpg';
+            document.getElementById('gameTitle').textContent = 'Khủng Long Vượt Chướng Ngại Vật';
+            document.getElementById('gameInstructions').innerHTML = 'Nhấn <strong>Space</strong> hoặc chạm màn hình để nhảy. Tránh các chướng ngại vật!';
         } else if (isAndroid) {
-            document.body.classList.add('android'); // Thêm class android cho body
-            document.getElementById('qrCode').src = 'Qr_Code.webp'; // Hình QR tối ưu cho Android
-            document.getElementById('gameTitle').textContent = 'Blast Block'; // Tiêu đề game Blast Block
-            document.getElementById('gameInstructions').innerHTML = 'Chạm vào các khối để phá chúng. Phá càng nhiều khối càng tốt!'; // Hướng dẫn game Blast Block
+            document.body.classList.add('android');
+            document.getElementById('qrCode').src = 'Qr_Code.webp';
+            document.getElementById('gameTitle').textContent = 'Blast Block';
+            document.getElementById('gameInstructions').innerHTML = 'Chạm vào các khối để phá chúng. Phá càng nhiều khối càng tốt!';
         }
 
         // Điều chỉnh kích thước canvas cho game
@@ -685,24 +685,22 @@
         const ctx = canvas.getContext('2d');
         function resizeCanvas() {
             if (window.innerWidth <= 1024) {
-                canvas.width = window.innerWidth * 0.9; // Chiều rộng canvas bằng 90% màn hình
-                canvas.height = 150; // Chiều cao cố định cho điện thoại
+                canvas.width = window.innerWidth * 0.9;
+                canvas.height = 150;
             } else {
-                canvas.width = 600; // Chiều rộng mặc định cho desktop
-                canvas.height = 200; // Chiều cao mặc định cho desktop
+                canvas.width = 600;
+                canvas.height = 200;
             }
         }
-        window.addEventListener('resize', resizeCanvas); // Điều chỉnh canvas khi thay đổi kích thước màn hình
-        resizeCanvas(); // Gọi hàm khi tải trang
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
-        // Ẩn liên kết Nộp Bài trên điện thoại và tablet khi tải trang
+        // Ẩn liên kết Nộp Bài trên điện thoại và tablet
         window.addEventListener('load', () => {
             if (window.innerWidth <= 1024) {
                 document.querySelector('.navbar a[href="#submit"]').style.display = 'none';
             }
         });
-
-        // Ẩn liên kết Nộp Bài khi thay đổi kích thước màn hình
         window.addEventListener('resize', () => {
             if (window.innerWidth <= 1024) {
                 document.querySelector('.navbar a[href="#submit"]').style.display = 'none';
@@ -711,13 +709,43 @@
             }
         });
 
+        // Chế độ tối/sáng
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            document.querySelector('.theme-toggle i').classList.toggle('fa-sun', !isLight);
+            document.querySelector('.theme-toggle i').classList.toggle('fa-moon', isLight);
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                document.querySelector('.theme-toggle i').classList.add('fa-moon');
+            }
+        });
+
+        // Widget cầu nguyện
+        async function loadDailyPrayer() {
+            try {
+                const response = await fetch('data/prayers.json');
+                if (!response.ok) throw new Error('Failed to load prayers.json');
+                const prayers = await response.json();
+                const today = new Date().getDay();
+                document.getElementById('dailyPrayer').textContent = prayers[today % prayers.length].text;
+            } catch (error) {
+                console.error('Error loading prayers:', error);
+                document.getElementById('dailyPrayer').textContent = '“Kẻ nào bền chí đến cùng, kẻ ấy sẽ được cứu độ.” (Mt 24:13)';
+            }
+        }
+
         // Tải dữ liệu thành viên từ users.json
         async function loadUsersData() {
             try {
                 const response = await fetch('data/users.json');
                 if (!response.ok) throw new Error('Failed to load users.json');
                 const users = await response.json();
-                populateSubjectsTable(users); // Hiển thị dữ liệu vào bảng
+                populateSubjectsTable(users);
             } catch (error) {
                 console.error('Error loading users data:', error);
                 document.getElementById('subjectsTable').innerHTML = '<tr><td colspan="6">Không thể tải dữ liệu thành viên.</td></tr>';
@@ -725,26 +753,60 @@
         }
 
         // Tải dữ liệu lịch học từ calendar.json
+        let calendarData = [];
         async function loadCalendarData() {
             try {
                 const response = await fetch('data/calendar.json');
                 if (!response.ok) throw new Error('Failed to load calendar.json');
-                const calendarData = await response.json();
-                renderCalendar(calendarData); // Hiển thị lịch học
+                calendarData = await response.json();
+                renderCalendar(calendarData);
             } catch (error) {
                 console.error('Error loading calendar data:', error);
                 document.getElementById('calendarGrid').innerHTML = '<div class="col-span-7 text-center">Không thể tải lịch học.</div>';
             }
         }
 
+        // Tìm kiếm lịch học
+        document.getElementById('calendarSearch')?.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const results = calendarData.filter(event =>
+                event.subject.toLowerCase().includes(query) ||
+                event.session.toLowerCase().includes(query)
+            );
+            const resultsDiv = document.getElementById('searchResults');
+            resultsDiv.innerHTML = results.length ? results.map(event => `
+                <p><strong>${event.date}</strong>: ${event.subject} (${event.session}, ${event.startTime} - ${event.endTime})
+                ${event.videoLink ? `<a href="${event.videoLink}" target="_blank" class="text-blue-400">Xem Video</a>` : ''}</p>
+            `).join('') : '<p>Không tìm thấy kết quả.</p>';
+        });
+
+        // Tải tài liệu từ resources.json
+        async function loadResources() {
+            try {
+                const response = await fetch('data/resources.json');
+                if (!response.ok) throw new Error('Failed to load resources.json');
+                const resources = await response.json();
+                const resourcesList = document.getElementById('resourcesList');
+                resourcesList.innerHTML = resources.map(res => `
+                    <div class="mb-2">
+                        <a href="${res.url}" target="_blank" class="btn">${res.name}</a>
+                        <p class="text-sm">${res.description}</p>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading resources:', error);
+                document.getElementById('resourcesList').innerHTML = '<p>Không thể tải tài liệu.</p>';
+            }
+        }
+
         // Tính toán xếp hạng thành viên dựa trên tổng điểm
         function getMembershipRank(totalScore) {
-            if (totalScore < 50) return '<i class="fas fa-user rank-icon rank-thanhvien"></i>'; // Thành viên
-            if (totalScore < 100) return '<i class="fas fa-star rank-icon rank-vip"></i>'; // VIP
-            if (totalScore < 201) return '<i class="fas fa-medal rank-icon rank-silver"></i>'; // Silver
-            if (totalScore < 301) return '<i class="fas fa-medal rank-icon rank-gold"></i>'; // Gold
-            if (totalScore < 501) return '<i class="fas fa-gem rank-icon rank-diamond"></i>'; // Diamond
-            return '<i class="fas fa-crown rank-icon rank-vvip"></i>'; // VVIP
+            if (totalScore < 50) return '<i class="fas fa-user rank-icon rank-thanhvien"></i>';
+            if (totalScore < 100) return '<i class="fas fa-star rank-icon rank-vip"></i>';
+            if (totalScore < 201) return '<i class="fas fa-medal rank-icon rank-silver"></i>';
+            if (totalScore < 301) return '<i class="fas fa-medal rank-icon rank-gold"></i>';
+            if (totalScore < 501) return '<i class="fas fa-gem rank-icon rank-diamond"></i>';
+            return '<i class="fas fa-crown rank-icon rank-vvip"></i>';
         }
 
         // Hiển thị bảng kết quả học tập
@@ -778,7 +840,7 @@
 
             const year = currentDate.getFullYear();
             const month = currentDate.getMonth();
-            monthYear.textContent = `${month + 1}-${year}`; // Hiển thị tháng và năm
+            monthYear.textContent = `${month + 1}-${year}`;
 
             const days = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
             days.forEach(day => {
@@ -792,7 +854,7 @@
             const lastDate = new Date(year, month + 1, 0).getDate();
 
             for (let i = 0; i < firstDay; i++) {
-                calendarGrid.appendChild(document.createElement('div')); // Ô trống trước ngày 1
+                calendarGrid.appendChild(document.createElement('div'));
             }
 
             for (let date = 1; date <= lastDate; date++) {
@@ -804,14 +866,17 @@
                 });
                 if (event) {
                     div.classList.add('has-event');
+                    if (event.videoLink) {
+                        div.innerHTML += `<a href="${event.videoLink}" target="_blank" class="text-blue-400 text-xs">Xem Video</a>`;
+                    }
                     div.addEventListener('click', () => {
                         document.getElementById('eventDetails').innerHTML = `
                             <p><strong>Môn:</strong> ${event.subject}</p>
                             <p><strong>Thời gian:</strong> Từ ${event.startTime} đến ${event.endTime}</p>
                             <p><strong>Buổi:</strong> ${event.session}</p>
+                            ${event.videoLink ? `<p><a href="${event.videoLink}" target="_blank" class="text-blue-400">Xem Video</a></p>` : ''}
                         `;
                     });
-                    // Xử lý chạm lâu trên Android
                     div.addEventListener('touchstart', function(e) {
                         if (document.body.classList.contains('android')) {
                             setTimeout(() => {
@@ -843,53 +908,52 @@
             const fileInput = document.getElementById('submissionFile');
             if (fileInput.files.length > 0) {
                 const file = fileInput.files[0];
-                if (file.size > 100 * 1024 * 1024) { // Kiểm tra file > 100MB
+                if (file.size > 100 * 1024 * 1024) {
                     e.preventDefault();
                     alert('File quá lớn! Vui lòng chọn file dưới 100MB.');
                     return;
                 }
             }
-            document.getElementById('submissionTime').value = new Date().toLocaleString('vi-VN'); // Ghi thời gian nộp bài
+            document.getElementById('submissionTime').value = new Date().toLocaleString('vi-VN');
         });
 
         // Xử lý gửi form phản hồi
         document.getElementById('feedbackForm').addEventListener('submit', () => {
-            document.getElementById('feedbackSubmissionTime').value = new Date().toLocaleString('vi-VN'); // Ghi thời gian phản hồi
+            document.getElementById('feedbackSubmissionTime').value = new Date().toLocaleString('vi-VN');
         });
 
-        // Logic game
+        // Logic game (không có âm thanh)
         let gameRunning = false;
         let score = 0;
         let frameCount = 0;
 
         if (isIOS) {
             // Game T-Rex cho iOS
-            let dino = { x: 50, y: 120, width: 30, height: 30, dy: 0, gravity: 0.6, jumpPower: -10, grounded: true }; // Thông số khủng long
-            let obstacles = []; // Danh sách chướng ngại vật
+            let dino = { x: 50, y: 120, width: 40, height: 40, dy: 0, gravity: 0.5, jumpPower: -12, grounded: true };
+            let obstacles = [];
 
             function drawDino() {
                 ctx.fillStyle = 'white';
-                ctx.fillRect(dino.x, dino.y, dino.width, dino.height); // Vẽ khủng long
+                ctx.fillRect(dino.x, dino.y, dino.width, dino.height);
             }
 
             function drawObstacles() {
                 ctx.fillStyle = 'green';
                 obstacles.forEach(obstacle => {
-                    ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height); // Vẽ chướng ngại vật
+                    ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
                 });
             }
 
             function spawnObstacle() {
-                const obstacle = { x: canvas.width, y: 120, width: 15, height: 30, speed: 4 }; // Tạo chướng ngại vật mới
+                const obstacle = { x: canvas.width, y: 120, width: 15, height: 30, speed: 3 };
                 obstacles.push(obstacle);
             }
 
             function updateGame() {
                 if (!gameRunning) return;
 
-                ctx.clearRect(0, 0, canvas.width, canvas.height); // Xóa canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                // Cập nhật khủng long
                 dino.dy += dino.gravity;
                 dino.y += dino.dy;
                 if (dino.y > 120) {
@@ -899,7 +963,6 @@
                 }
                 drawDino();
 
-                // Cập nhật chướng ngại vật
                 if (frameCount % 60 === 0) {
                     spawnObstacle();
                 }
@@ -909,7 +972,6 @@
                 obstacles = obstacles.filter(obstacle => obstacle.x + obstacle.width > 0);
                 drawObstacles();
 
-                // Phát hiện va chạm
                 for (let obstacle of obstacles) {
                     if (
                         dino.x < obstacle.x + obstacle.width &&
@@ -918,17 +980,17 @@
                         dino.y + dino.height > obstacle.y
                     ) {
                         gameRunning = false;
-                        alert(`Game Over! Điểm: ${score}`);
+                        updateHighScore();
+                        alert(`Game Over! Điểm: ${score}, Điểm cao: ${localStorage.getItem('highScore') || 0}`);
                         return;
                     }
                 }
 
-                // Cập nhật điểm số
                 score = Math.floor(frameCount / 10);
                 document.getElementById('scoreDisplay').textContent = `Điểm: ${score}`;
                 frameCount++;
 
-                requestAnimationFrame(updateGame); // Tiếp tục vòng lặp game
+                requestAnimationFrame(updateGame);
             }
 
             function startGame() {
@@ -940,27 +1002,26 @@
                 dino.grounded = true;
                 obstacles = [];
                 document.getElementById('scoreDisplay').textContent = `Điểm: ${score}`;
-                updateGame(); // Bắt đầu game
+                updateGame();
             }
 
-            // Xử lý input cho T-Rex
             document.addEventListener('keydown', (e) => {
                 if (e.code === 'Space' && dino.grounded && gameRunning) {
                     dino.dy = dino.jumpPower;
-                    dino.grounded = false; // Nhảy khi nhấn Space
+                    dino.grounded = false;
                 }
             });
 
             canvas.addEventListener('touchstart', () => {
                 if (dino.grounded && gameRunning) {
                     dino.dy = dino.jumpPower;
-                    dino.grounded = false; // Nhảy khi chạm màn hình
+                    dino.grounded = false;
                 }
             });
         } else if (isAndroid) {
             // Game Blast Block cho Android
             let blocks = [];
-            const blockSize = 30; // Kích thước khối
+            const blockSize = 40;
             const rows = Math.floor(canvas.height / blockSize);
             const cols = Math.floor(canvas.width / blockSize);
 
@@ -968,13 +1029,13 @@
                 blocks = [];
                 for (let row = 0; row < rows; row++) {
                     for (let col = 0; col < cols; col++) {
-                        if (Math.random() > 0.3) {
+                        if (Math.random() > 0.5) {
                             blocks.push({
                                 x: col * blockSize,
                                 y: row * blockSize,
                                 width: blockSize,
                                 height: blockSize,
-                                color: `hsl(${Math.random() * 360}, 70%, 50%)` // Màu ngẫu nhiên
+                                color: `hsl(${Math.random() * 360}, 70%, 50%)`
                             });
                         }
                     }
@@ -985,7 +1046,7 @@
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 blocks.forEach(block => {
                     ctx.fillStyle = block.color;
-                    ctx.fillRect(block.x, block.y, block.width - 2, block.height - 2); // Vẽ các khối
+                    ctx.fillRect(block.x, block.y, block.width - 2, block.height - 2);
                 });
             }
 
@@ -994,11 +1055,10 @@
 
                 drawBlocks();
 
-                // Cập nhật điểm số
                 document.getElementById('scoreDisplay').textContent = `Điểm: ${score}`;
                 frameCount++;
 
-                requestAnimationFrame(updateGame); // Tiếp tục vòng lặp game
+                requestAnimationFrame(updateGame);
             }
 
             function startGame() {
@@ -1007,10 +1067,9 @@
                 frameCount = 0;
                 createBlocks();
                 document.getElementById('scoreDisplay').textContent = `Điểm: ${score}`;
-                updateGame(); // Bắt đầu game
+                updateGame();
             }
 
-            // Xử lý input cho Blast Block
             canvas.addEventListener('touchstart', (e) => {
                 if (!gameRunning) return;
                 const rect = canvas.getBoundingClientRect();
@@ -1025,14 +1084,15 @@
                         touchY <= block.y + block.height
                     ) {
                         score += 10;
-                        return false; // Xóa khối khi chạm
+                        return false;
                     }
                     return true;
                 });
 
                 if (blocks.length === 0) {
                     gameRunning = false;
-                    alert(`Chúc mừng! Bạn đã phá hết khối! Điểm: ${score}`);
+                    updateHighScore();
+                    alert(`Chúc mừng! Điểm: ${score}, Điểm cao: ${localStorage.getItem('highScore') || 0}`);
                 }
             });
 
@@ -1050,29 +1110,43 @@
                         clickY <= block.y + block.height
                     ) {
                         score += 10;
-                        return false; // Xóa khối khi click
+                        return false;
                     }
                     return true;
                 });
 
                 if (blocks.length === 0) {
                     gameRunning = false;
-                    alert(`Chúc mừng! Bạn đã phá hết khối! Điểm: ${score}`);
+                    updateHighScore();
+                    alert(`Chúc mừng! Điểm: ${score}, Điểm cao: ${localStorage.getItem('highScore') || 0}`);
                 }
             });
         }
 
+        // Cập nhật điểm cao
+        function updateHighScore() {
+            const highScore = localStorage.getItem('highScore') || 0;
+            if (score > highScore) {
+                localStorage.setItem('highScore', score);
+                document.getElementById('highScore').textContent = score;
+            }
+        }
+
         // Điều hướng giữa các section
-        const sections = ['home', 'calendar', 'submit', 'game', 'feedback'];
+        const sections = ['home', 'calendar', 'submit', 'game', 'feedback', 'resources'];
         function showSection(sectionId) {
             sections.forEach(id => {
-                document.getElementById(id).classList.add('hidden'); // Ẩn tất cả section
+                const section = document.getElementById(id);
+                section.classList.add('hidden');
+                section.classList.remove('show');
             });
-            document.getElementById(sectionId).classList.remove('hidden'); // Hiển thị section được chọn
+            const activeSection = document.getElementById(sectionId);
+            activeSection.classList.remove('hidden');
+            setTimeout(() => activeSection.classList.add('show'), 10);
             document.querySelectorAll('.navbar a').forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('href').substring(1) === sectionId) {
-                    link.classList.add('active'); // Đánh dấu liên kết đang hoạt động
+                    link.classList.add('active');
                 }
             });
         }
@@ -1088,9 +1162,12 @@
 
         // Khởi tạo trang
         document.addEventListener('DOMContentLoaded', () => {
-            loadUsersData(); // Tải dữ liệu thành viên
-            loadCalendarData(); // Tải dữ liệu lịch học
-            showSection('home'); // Hiển thị section Trang Chủ mặc định
+            loadUsersData();
+            loadCalendarData();
+            loadDailyPrayer();
+            loadResources();
+            showSection('home');
+            document.getElementById('highScore').textContent = localStorage.getItem('highScore') || 0;
         });
     </script>
 </body>
