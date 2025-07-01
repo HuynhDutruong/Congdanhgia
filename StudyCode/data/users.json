@@ -1,9 +1,9 @@
 {
     "members": [
         {
-            "fullName": null,
+            "fullName": "Admin",
             "subjects": [
-                { "name": null, "duration": null, "completion": null, "score": null }
+                { "name": "Admin", "duration": 100, "completion": 1000, "score": 100 }
             ]
         }
     ]
