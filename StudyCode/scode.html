@@ -482,8 +482,8 @@
 
     <script>
         const isMobile = window.innerWidth <= 1024;
-        const isIOS = navigator.userAgent.includes('iPhone') || navigator.userAgent.includes('iPad');
-        const isAndroid = navigator.userAgent.includes('Android');
+        const isIOS = /iPhone|iPad/.test(navigator.userAgent);
+        const isAndroid = /Android/.test(navigator.userAgent);
 
         // Load feedback content based on device
         if (isMobile) {
@@ -748,9 +748,17 @@
         let score = 0;
         let frameCount = 0;
 
+        function updateHighScore() {
+            const highScore = localStorage.getItem('highScore') || 0;
+            if (score > highScore) {
+                localStorage.setItem('highScore', score);
+                document.getElementById('highScore').textContent = score;
+            }
+        }
+
         if (isMobile) {
             if (isIOS) {
-                let dino = { x: 50, y: 120, width: 30, height: 30, dy: 0, gravity: 0.6, jumpPower: -10, grounded: true };
+                let dino = { x: 50, y: canvas.height - 30, width: 30, height: 30, dy: 0, gravity: 0.8, jumpPower: -12, grounded: true };
                 let obstacles = [];
 
                 function drawDino() {
@@ -766,7 +774,7 @@
                 }
 
                 function spawnObstacle() {
-                    const obstacle = { x: canvas.width, y: 120, width: 15, height: 30, speed: 4 };
+                    const obstacle = { x: canvas.width, y: canvas.height - 30, width: 20, height: 30, speed: 5 };
                     obstacles.push(obstacle);
                 }
 
@@ -775,15 +783,17 @@
 
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+                    // Update dino
                     dino.dy += dino.gravity;
                     dino.y += dino.dy;
-                    if (dino.y > 120) {
-                        dino.y = 120;
+                    if (dino.y > canvas.height - dino.height) {
+                        dino.y = canvas.height - dino.height;
                         dino.dy = 0;
                         dino.grounded = true;
                     }
                     drawDino();
 
+                    // Spawn obstacles
                     if (frameCount % 60 === 0) {
                         spawnObstacle();
                     }
@@ -793,6 +803,7 @@
                     obstacles = obstacles.filter(obstacle => obstacle.x + obstacle.width > 0);
                     drawObstacles();
 
+                    // Collision detection
                     for (let obstacle of obstacles) {
                         if (
                             dino.x < obstacle.x + obstacle.width &&
@@ -818,7 +829,7 @@
                     gameRunning = true;
                     score = 0;
                     frameCount = 0;
-                    dino.y = 120;
+                    dino.y = canvas.height - 30;
                     dino.dy = 0;
                     dino.grounded = true;
                     obstacles = [];
@@ -833,7 +844,8 @@
                     }
                 });
 
-                canvas.addEventListener('touchstart', () => {
+                canvas.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
                     if (dino.grounded && gameRunning) {
                         dino.dy = dino.jumpPower;
                         dino.grounded = false;
@@ -892,6 +904,7 @@
 
                 canvas.addEventListener('touchstart', (e) => {
                     if (!gameRunning) return;
+                    e.preventDefault();
                     const rect = canvas.getBoundingClientRect();
                     const touchX = e.touches[0].clientX - rect.left;
                     const touchY = e.touches[0].clientY - rect.top;
@@ -913,43 +926,9 @@
                         gameRunning = false;
                         updateHighScore();
                         alert(`Chúc mừng! Điểm: ${score}, Điểm cao: ${localStorage.getItem('highScore') || 0}`);
+                        createBlocks();
                     }
                 });
-
-                document.addEventListener('click', (e) => {
-                    if (!gameRunning) return;
-                    const rect = canvas.getBoundingClientRect();
-                    const clickX = e.clientX - rect.left;
-                    const clickY = e.clientY - rect.top;
-
-                    blocks = blocks.filter(block => {
-                        if (
-                            clickX >= block.x &&
-                            clickX <= block.x + block.width &&
-                            clickY >= block.y &&
-                            clickY <= block.y + block.height
-                        ) {
-                            score += 10;
-                            return false;
-                        }
-                        return true;
-                    });
-
-                    if (blocks.length === 0) {
-                        gameRunning = false;
-                        updateHighScore();
-                        alert(`Chúc mừng! Điểm: ${score}, Điểm cao: ${localStorage.getItem('highScore') || 0}`);
-                    }
-                });
-            }
-        }
-
-        // Update high score
-        function updateHighScore() {
-            const highScore = localStorage.getItem('highScore') || 0;
-            if (score > highScore) {
-                localStorage.setItem('highScore', score);
-                document.getElementById('highScore').textContent = score;
             }
         }
 
