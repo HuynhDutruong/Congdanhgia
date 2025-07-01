@@ -13,12 +13,12 @@
     <style>
         /* Định nghĩa biến CSS để tái sử dụng màu sắc và phong cách */
         :root {
-            --primary: #cc3048;
-            --primary-dark: #b7142a;
-            --accent: #FFD700;
-            --dark-bg: #1A1A1A;
-            --text: #E0E0E0;
-            --error: #EF4444;
+            --primary: #cc3048; /* Màu chính */
+            --primary-dark: #b7142a; /* Màu chính tối hơn */
+            --accent: #FFD700; /* Màu nhấn */
+            --dark-bg: #1A1A1A; /* Màu nền tối */
+            --text: #E0E0E0; /* Màu chữ */
+            --error: #EF4444; /* Màu lỗi */
         }
 
         /* Thiết lập giao diện cơ bản cho body */
@@ -53,6 +53,7 @@
             z-index: 9999;
         }
         body.ios #thongbao-quangcao {
+            /* Center popup on iOS and position above navbar */
             bottom: 80px;
             left: 50%;
             transform: translateX(-50%);
@@ -110,7 +111,7 @@
         body.ios #thongbao-quangcao button {
             display: block;
             margin: 10px auto 0;
-            padding: 10px 20px;
+            padding: 10px Social20px;
             border-radius: 12px;
             font-size: 16px;
             font-weight: 500;
@@ -136,6 +137,7 @@
             text-align: center;
         }
         body.ios .header {
+            /* Use translucent header for iOS app-like feel */
             padding: 1rem;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
@@ -198,9 +200,10 @@
             flex: 1;
         }
         body.ios .container {
+            /* Add padding to avoid overlap with fixed navbar on iOS */
             margin: 1rem auto;
             padding: 0 1rem;
-            padding-bottom: 80px; /* Space for fixed navbar */
+            padding-bottom: 80px;
         }
 
         /* Card chứa các phần nội dung */
@@ -213,12 +216,14 @@
             margin-bottom: 2rem;
         }
         body.ios .card {
+            /* Use translucent cards for iOS with animation */
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border: none;
             border-radius: 16px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
+            max-width: 100%; /* Prevent cards from exceeding screen width */
             animation: slide-in 0.5s ease-out;
         }
         @keyframes slide-in {
@@ -244,6 +249,12 @@
             border-spacing: 0;
             margin-top: 1rem;
         }
+        /* Wrap table in a scrollable container for iOS */
+        body.ios .table-container {
+            overflow-x: auto;
+            max-width: 100%;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        }
         .table th, .table td {
             padding: 1rem;
             border: 1px solid #3C3C3C;
@@ -251,8 +262,9 @@
             font-size: 0.95rem;
         }
         body.ios .table th, body.ios .table td {
-            padding: 0.75rem;
-            font-size: 0.9rem;
+            /* Reduce padding and font size for compact table on iOS */
+            padding: 0.5rem;
+            font-size: 0.8rem;
             border: none;
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
@@ -279,6 +291,11 @@
         body.ios .table tr:hover td {
             background: rgba(255, 255, 255, 0.1);
         }
+        /* Hide non-essential columns on iOS to reduce table width */
+        body.ios .table th:nth-child(2), body.ios .table td:nth-child(2),
+        body.ios .table th:nth-child(4), body.ios .table td:nth-child(4) {
+            display: none;
+        }
 
         /* Icon xếp hạng thành viên */
         .rank-icon {
@@ -302,9 +319,12 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
         body.ios .calendar {
+            /* Optimize calendar for iOS with smaller cells and no background */
             background: transparent;
-            padding: 1rem;
-            gap: 6px;
+            padding: 0.5rem;
+            gap: 3px;
+            max-width: 100%; /* Ensure calendar fits screen width */
+            grid-template-columns: repeat(7, minmax(0, 1fr)); /* Flexible columns */
         }
         .calendar div {
             padding: 0.75rem;
@@ -315,10 +335,12 @@
             transition: background 0.2s;
         }
         body.ios .calendar div {
+            /* Smaller calendar cells for iOS */
             border: none;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            font-size: 0.9rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            padding: 0.4rem;
         }
         .calendar .header {
             background: var(--primary);
@@ -329,6 +351,7 @@
         body.ios .calendar .header {
             background: rgba(204, 48, 72, 0.2);
             color: var(--accent);
+            font-size: 0.8rem;
         }
         .calendar .has-event {
             background: var(--accent);
@@ -463,7 +486,8 @@
             height: 200px;
         }
         body.ios #gameCanvas {
-            width: 90vw;
+            /* Constrain canvas width to fit iOS screen */
+            width: min(90vw, 360px);
             height: 180px;
             border: none;
             background: rgba(255, 255, 255, 0.1);
@@ -574,6 +598,7 @@
                 font-weight: 500;
             }
             body.ios .navbar {
+                /* Fixed bottom navbar for iOS with icon-focused design */
                 position: fixed;
                 bottom: 0;
                 width: 100%;
@@ -617,6 +642,7 @@
                 background: rgba(204, 48, 72, 0.4);
             }
             body.ios #eventDetails {
+                /* Position event details above navbar on iOS */
                 position: fixed;
                 bottom: 80px;
                 left: 50%;
@@ -730,19 +756,22 @@
         <!-- Section Trang Chủ: Hiển thị kết quả học tập -->
         <div id="home" class="card">
             <h3>Kết Quả Học Tập Khoá</h3>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Tên</th>
-                        <th>Hạng Thành Viên</th>
-                        <th>Môn</th>
-                        <th>Thời Lượng</th>
-                        <th>Đã Hoàn Tất (%)</th>
-                        <th>Điểm</th>
-                    </tr>
-                </thead>
-                <tbody id="subjectsTable"></tbody>
-            </table>
+            <!-- Wrap table in a div for scrollable container on iOS -->
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Tên</th>
+                            <th>Hạng Thành Viên</th>
+                            <th>Môn</th>
+                            <th>Thời Lượng</th>
+                            <th>Đã Hoàn Tất (%)</th>
+                            <th>Điểm</th>
+                        </tr>
+                    </thead>
+                    <tbody id="subjectsTable"></tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Section Lịch Học: Hiển thị lịch học theo tháng -->
@@ -852,7 +881,8 @@
         const ctx = canvas.getContext('2d');
         function resizeCanvas() {
             if (window.innerWidth <= 1024) {
-                canvas.width = window.innerWidth * 0.9;
+                // Constrain canvas width to fit mobile screen, max 360px for iOS
+                canvas.width = isIOS ? Math.min(window.innerWidth * 0.9, 360) : window.innerWidth * 0.9;
                 canvas.height = isIOS ? 180 : 150;
             } else {
                 canvas.width = 600;
@@ -923,6 +953,7 @@
                 const rank = getMembershipRank(totalScore);
                 member.subjects.forEach(subject => {
                     const row = document.createElement('tr');
+                    // Include all columns, but CSS hides non-essential ones on iOS
                     row.innerHTML = `
                         <td>${member.fullName}</td>
                         <td>${rank}</td>
@@ -1013,7 +1044,7 @@
         document.getElementById('codeForm').addEventListener('submit', (e) => {
             const fileInput = document.getElementById('submissionFile');
             if (fileInput.files.length > 0) {
-                const file = fileInput.files[0];
+                const file = fileInput.files[0);
                 if (file.size > 100 * 1024 * 1024) {
                     e.preventDefault();
                     alert('File quá lớn! Vui lòng chọn file dưới 100MB.');
@@ -1039,6 +1070,7 @@
             let obstacles = [];
 
             function drawDino() {
+                // Draw circular dino for a modern iOS look
                 ctx.fillStyle = 'white';
                 ctx.beginPath();
                 ctx.arc(dino.x + dino.width / 2, dino.y + dino.height / 2, dino.width / 2, 0, Math.PI * 2);
@@ -1053,7 +1085,8 @@
             }
 
             function spawnObstacle() {
-                const obstacle = { x: canvas.width, y: 140, width: 20, height: 40, speed: 5 };
+                // Adjust obstacle size for smaller canvas on iOS
+                const obstacle = { x: canvas.width, y: 140, width: 15, height: 30, speed: 5 };
                 obstacles.push(obstacle);
             }
 
