@@ -97,7 +97,7 @@
             margin: 0 auto;
             padding: 0 1rem;
             overflow-y: auto;
-            height: calc(100vh - 60px - 60px - 60px); /* header: 60px, navbar: 60px, footer: 60px */
+            height: calc(100vh - 60px - 60px); /* header: 60px, navbar: 60px */
         }
 
         .card {
@@ -208,7 +208,7 @@
             margin-top: 2px;
         }
 
-        #eventPopup {
+        #eventPopup, #detailsPopup {
             position: fixed;
             bottom: 15%;
             left: 50%;
@@ -267,32 +267,6 @@
             font-family: 'Roboto', sans-serif;
         }
 
-        .footer {
-            background: var(--dark-bg);
-            color: var(--text);
-            padding: 1rem;
-            text-align: center;
-            box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-        }
-        .footer p {
-            margin: 0.2rem 0;
-            font-size: 0.8rem;
-        }
-        .footer .contact {
-            font-size: 0.75rem;
-            color: #D1D5DB;
-        }
-
-        #gameCanvas {
-            display: block;
-            margin: 0 auto;
-            border: 2px solid var(--primary);
-            border-radius: 8px;
-            width: 400px;
-            height: 200px;
-        }
-
         @media (max-width: 1024px) {
             :root {
                 --primary: #e63950;
@@ -326,7 +300,7 @@
             .container {
                 margin: 0 auto;
                 padding: 0.5rem;
-                height: calc(100vh - 50px - 50px - 50px); /* header: 50px, navbar: 50px, footer: 50px */
+                height: calc(100vh - 50px - 50px); /* header: 50px, navbar: 50px */
             }
             .card {
                 padding: 1rem;
@@ -352,15 +326,6 @@
                 width: 90vw;
                 height: 150px;
             }
-            .footer {
-                padding: 0.6rem;
-            }
-            .footer p {
-                font-size: 0.75rem;
-            }
-            .footer .contact {
-                font-size: 0.7rem;
-            }
             body.ios .navbar {
                 background: rgba(26, 26, 26, 0.95);
                 backdrop-filter: blur(10px);
@@ -374,7 +339,7 @@
                 transform: scale(0.95);
                 box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
             }
-            body.ios #eventPopup {
+            body.ios #eventPopup, body.ios #detailsPopup {
                 bottom: 20%;
             }
             #submit {
@@ -397,7 +362,7 @@
                 font-size: 1rem;
             }
             .container {
-                height: calc(100vh - 80px - 60px - 80px); /* header: 80px, navbar: 60px, footer: 80px */
+                height: calc(100vh - 80px - 60px); /* header: 80px, navbar: 60px */
             }
         }
     </style>
@@ -415,6 +380,7 @@
         <a href="#game"><i class="fas fa-gamepad"></i><span>Giải Trí</span></a>
         <a href="#feedback"><i class="fas fa-comment"></i><span>Phản Hồi</span></a>
         <a href="#resources"><i class="fas fa-book"></i><span>Tài Liệu</span></a>
+        <a href="#details"><i class="fas fa-info-circle"></i><span>Chi Tiết</span></a>
     </div>
 
     <div class="container">
@@ -506,12 +472,12 @@
             <h3>Tài Liệu</h3>
             <div id="resourcesList"></div>
         </div>
-    </div>
 
-    <div class="footer">
-        <p class="highlight">© 2025 - Xứ Đoàn Các Thánh Tử Đạo Việt Nam</p>
-        <p>Giáo Xứ Chánh Tòa Mỹ Tho</p>
-        <p class="contact">32 Hùng Vương, P.7, TP. Mỹ Tho, Tiền Giang</p>
+        <div id="details" class="card">
+            <h3>Thông Tin Chi Tiết</h3>
+            <div id="detailsContent"></div>
+            <div id="detailsPopup"></div>
+        </div>
     </div>
 
     <script>
@@ -519,6 +485,7 @@
         const isIOS = navigator.userAgent.includes('iPhone') || navigator.userAgent.includes('iPad');
         const isAndroid = navigator.userAgent.includes('Android');
 
+        // Load feedback content based on device
         if (isMobile) {
             document.getElementById('feedbackContent').innerHTML = `
                 <p>Nhấn vào nút dưới để gửi phản hồi qua Messenger:</p>
@@ -545,12 +512,14 @@
             `;
         }
 
+        // Set game instructions based on device
         if (isIOS && isMobile) {
             document.getElementById('gameInstructions').textContent = 'Chạm màn hình để nhảy!';
         } else if (isAndroid && isMobile) {
             document.getElementById('gameInstructions').textContent = 'Chạm để phá khối!';
         }
 
+        // Resize canvas for game
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         function resizeCanvas() {
@@ -573,6 +542,7 @@
         });
         resizeCanvas();
 
+        // Load daily prayer
         async function loadDailyPrayer() {
             try {
                 const response = await fetch('data/prayers.json');
@@ -586,6 +556,7 @@
             }
         }
 
+        // Load users data
         async function loadUsersData() {
             try {
                 const response = await fetch('data/users.json');
@@ -598,6 +569,7 @@
             }
         }
 
+        // Load calendar data
         let calendarData = [];
         async function loadCalendarData() {
             try {
@@ -611,6 +583,7 @@
             }
         }
 
+        // Calendar search
         document.getElementById('calendarSearch')?.addEventListener('input', (e) => {
             const query = e.target.value.toLowerCase();
             const results = calendarData.filter(event =>
@@ -624,6 +597,7 @@
             `).join('') : '<p>Không tìm thấy.</p>';
         });
 
+        // Load resources
         async function loadResources() {
             try {
                 const response = await fetch('data/resources.json');
@@ -642,6 +616,7 @@
             }
         }
 
+        // Membership rank logic
         function getMembershipRank(totalScore) {
             if (totalScore < 50) return '<i class="fas fa-user rank-icon rank-thanhvien"></i>';
             if (totalScore < 100) return '<i class="fas fa-star rank-icon rank-vip"></i>';
@@ -651,6 +626,7 @@
             return '<i class="fas fa-crown rank-icon rank-vvip"></i>';
         }
 
+        // Populate subjects table
         function populateSubjectsTable(users) {
             const subjectsTable = document.getElementById('subjectsTable');
             subjectsTable.innerHTML = '';
@@ -672,6 +648,7 @@
             });
         }
 
+        // Render calendar
         let currentDate = new Date();
         function renderCalendar(calendarData) {
             const calendarGrid = document.getElementById('calendarGrid');
@@ -746,6 +723,7 @@
             renderCalendar(calendarData);
         }
 
+        // Form submission handling
         document.getElementById('codeForm').addEventListener('submit', (e) => {
             const fileInput = document.getElementById('submissionFile');
             if (fileInput.files.length > 0) {
@@ -765,6 +743,7 @@
             });
         }
 
+        // Game logic
         let gameRunning = false;
         let score = 0;
         let frameCount = 0;
@@ -965,6 +944,7 @@
             }
         }
 
+        // Update high score
         function updateHighScore() {
             const highScore = localStorage.getItem('highScore') || 0;
             if (score > highScore) {
@@ -973,7 +953,39 @@
             }
         }
 
-        const sections = ['home', 'calendar', 'submit', 'game', 'feedback', 'resources'];
+        // Details section logic
+        function formatTime(seconds) {
+            const hrs = Math.floor(seconds / 3600);
+            const mins = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function updateDetails() {
+            const startTime = sessionStorage.getItem('startTime') ? parseInt(sessionStorage.getItem('startTime')) : Date.now();
+            if (!sessionStorage.getItem('startTime')) {
+                sessionStorage.setItem('startTime', startTime);
+            }
+            const currentTime = Date.now();
+            const sessionTime = Math.floor((currentTime - startTime) / 1000);
+            const currentDateTime = new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
+            const deviceInfo = navigator.userAgent;
+            const platform = navigator.platform || 'Không xác định';
+
+            document.getElementById('detailsContent').innerHTML = `
+                <p><strong>Công thông tin:</strong> Xứ Đoàn Các Thánh Tử Đạo Việt Nam</p>
+                <p><strong>Giáo Xứ:</strong> Chánh Tòa Mỹ Tho</p>
+                <p><strong>Phiên bản thiết bị:</strong> ${deviceInfo}</p>
+                <p><strong>Thời gian dùng:</strong> ${formatTime(sessionTime)} (Cập nhật: ${currentDateTime})</p>
+                <p><strong>Vị trí thiết bị:</strong> ${platform}</p>
+                <p><strong>Được thiết kế bởi:</strong> Ban Truyền thông và Ban Kỹ thuật</p>
+            `;
+        }
+
+        setInterval(updateDetails, 60000); // Update every minute
+
+        // Section navigation
+        const sections = ['home', 'calendar', 'submit', 'game', 'feedback', 'resources', 'details'];
         function showSection(sectionId) {
             sections.forEach(id => {
                 const section = document.getElementById(id);
@@ -987,6 +999,30 @@
                     link.classList.add('active');
                 }
             });
+
+            if (sectionId === 'details') {
+                updateDetails();
+                document.getElementById('detailsPopup').style.display = 'block';
+                let touchTimeout;
+                document.getElementById('details').addEventListener('click', () => {
+                    document.getElementById('detailsPopup').style.display = 'block';
+                });
+                document.getElementById('details').addEventListener('touchstart', () => {
+                    touchTimeout = setTimeout(() => {
+                        document.getElementById('detailsPopup').style.display = 'block';
+                    }, 500);
+                });
+                document.getElementById('details').addEventListener('touchend', () => {
+                    clearTimeout(touchTimeout);
+                    document.getElementById('detailsPopup').style.display = 'none';
+                });
+                document.getElementById('details').addEventListener('touchcancel', () => {
+                    clearTimeout(touchTimeout);
+                    document.getElementById('detailsPopup').style.display = 'none';
+                });
+            } else {
+                document.getElementById('detailsPopup').style.display = 'none';
+            }
         }
 
         document.querySelectorAll('.navbar a').forEach(link => {
@@ -1001,6 +1037,7 @@
             });
         });
 
+        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             loadUsersData();
             loadCalendarData();
@@ -1010,6 +1047,7 @@
             if (isMobile) {
                 document.getElementById('highScore').textContent = localStorage.getItem('highScore') || 0;
             }
+            updateDetails();
         });
     </script>
 </body>
