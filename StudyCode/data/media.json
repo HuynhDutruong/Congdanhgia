@@ -1,0 +1,50 @@
+{
+  "members": [
+    
+    {
+      "fullName": "Giuse Mai Hồng Phúc",
+      "class": "Ban Truyền Thông",
+      "memberpoint": 10,
+      "monthlyPoints": [
+        {"month": "2025-07", "points": 10},
+        {"month": "2025-06", "points": 0}
+      ]
+    },
+    {
+      "fullName": "Maria Đào Ngọc Nhã Trân",
+      "class": "Ban Truyền Thông",
+      "memberpoint": 10,
+      "monthlyPoints": [
+        {"month": "2025-07", "points": 10},
+        {"month": "2025-06", "points": 0}
+      ]
+    },
+    {
+      "fullName": "Phêrô Nguyễn Minh Khang",
+      "class": "Ban Truyền Thông",
+      "memberpoint": 10,
+      "monthlyPoints": [
+        {"month": "2025-07", "points": 10},
+        {"month": "2025-06", "points": 0}
+      ]
+    },
+    {
+      "fullName": "Giuse Lê Hoàng Thiên Lộc",
+      "class": "Ban Truyền Thông",
+      "memberpoint": 10,
+      "monthlyPoints": [
+        {"month": "2025-07", "points": 10},
+        {"month": "2025-06", "points": 0}
+      ]
+    },
+    {
+      "fullName": "Gioan Baotixita Lê Hoàng Minh",
+      "class": "Ban Truyền Thông",
+      "memberpoint": 10,
+      "monthlyPoints": [
+        {"month": "2025-07", "points": 10},
+        {"month": "2025-06", "points": 0}
+      ]
+    }
+  ]
+}
