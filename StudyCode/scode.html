@@ -135,7 +135,7 @@
         }
 
         .card {
-            margin-bottom:20px;
+            margin-bottom: 20px;
             margin-top: 18px;
             background: #252526;
             border: 1px solid #3C3C3C;
@@ -422,6 +422,7 @@
             color: var(--text);
             width: 100%;
             font-family: 'Roboto', sans-serif;
+            font-size: 0.9rem;
         }
         .textarea {
             resize: vertical;
@@ -471,7 +472,7 @@
                 height: calc(100vh - 50px - 50px);
             }
             .card {
-                margin-bottom:17px;
+                margin-bottom: 17px;
                 margin-top: 15px;
                 padding: 1rem;
                 height: 100%;
@@ -549,7 +550,7 @@
 <body>
     <div class="popup-overlay" id="successOverlay">
         <div class="popup" id="successPopup">
-            <p>Yêu cầu đổi quà đang được xem xét, sẽ có thông báo tại Gmail của bạn.</p>
+            <p id="successMessage">Yêu cầu đổi quà đang được xem xét, sẽ có thông báo tại Gmail của bạn.</p>
             <button class="btn mt-4" onclick="closeSuccessPopup()">Thoát</button>
         </div>
     </div>
@@ -679,20 +680,14 @@
                 
                 <details class="guide-section" open>
                     <summary><i class="fas fa-star"></i> Cách Tính Điểm Thành Viên</summary>
-                    <p>Điểm thành viên được tính dựa trên các hoạt động sau:</p>
+                    <p>Điểm thành viên được nhập thủ công bởi ban quản lý dựa trên các hoạt động và thành tích của học viên.</p>
                     <ul class="list-disc pl-5 mb-4">
-                        <li><strong>Chi tiêu:</strong> Cứ 1000đ chi tiêu (ví dụ: đóng góp, mua tài liệu) = 1 điểm.</li>
-                        <li><strong>Tham gia lớp học:</strong> Mỗi buổi học hoàn thành = 1 điểm.</li>
-                        <li><strong>Thành quả học tập:</strong>
-                            <ul class="list-circle pl-5">
-                                <li>Đạt trên 60% điểm môn học = 2 điểm.</li>
-                                <li>Đạt trên 80% điểm môn học = 3 điểm.</li>
-                                <li>Đạt trên 95% điểm môn học = 5 điểm.</li>
-                            </ul>
-                        </li>
-                        <li><strong>Hoạt động ngoại khóa:</strong> Mỗi lần tham gia = 2 điểm.</li>
+                        <li><strong>Chi tiêu:</strong> Đóng góp hoặc mua tài liệu.</li>
+                        <li><strong>Tham gia lớp học:</strong> Tham gia các buổi học lập trình.</li>
+                        <li><strong>Thành quả học tập:</strong> Điểm số dựa trên bài tập và kiểm tra.</li>
+                        <li><strong>Hoạt động ngoại khóa:</strong> Tham gia các sự kiện của Xứ Đoàn.</li>
                     </ul>
-                    <p><strong>Ví dụ:</strong> Bạn Nguyễn Văn A chi tiêu 50000đ (50 điểm), tham gia 10 buổi học (10 điểm), đạt 85% môn học (3 điểm), và tham gia 3 hoạt động ngoại khóa (6 điểm). Tổng điểm: 69 điểm.</p>
+                    <p><strong>Lưu ý:</strong> Điểm thành viên được cập nhật định kỳ và phản ánh tổng hợp các hoạt động trên.</p>
                 </details>
 
                 <details class="guide-section">
@@ -702,6 +697,7 @@
                         <li><strong>Đổi quà:</strong> Sử dụng điểm để đổi các phần quà hấp dẫn như sổ tay, áo thun, hoặc bình nước.</li>
                         <li><strong>Xếp hạng động lực:</strong> Điểm cao giúp bạn lọt vào Bảng Xếp Hạng Động Lực, được vinh danh trên cổng học viên.</li>
                         <li><strong>Khuyến khích học tập:</strong> Điểm phản ánh nỗ lực học tập và đóng góp, giúp bạn theo dõi tiến độ cá nhân.</li>
+                        <li><strong>Các loại hạng thành viên:</strong> Có tổng 6 hạng thành viên: Thành Viên (0-49 điểm, biểu tượng người dùng), VIP (50-99 điểm, biểu tượng ngôi sao), Bạc (100-200 điểm, biểu tượng huy chương), Vàng (201-300 điểm, biểu tượng huy chương), Kim Cương (301-500 điểm, biểu tượng viên ngọc), và VVip (501 điểm trở lên, biểu tượng vương miện). Các hạng này phản ánh mức độ tích lũy điểm của học viên, được sử dụng để xếp hạng động lực và đổi quà trong hệ thống.</li>
                     </ul>
                 </details>
 
@@ -751,7 +747,7 @@
                         <select name="subject" id="redeemSubject" class="input" required></select>
                     </div>
                     <div class="mb-4">
-                        <label class="block mb-1 text-text">Số Điểm Hiện Tại:</label>
+                        <label class="block mb-1 text-text">Số Điểm Thành Viên:</label>
                         <input type="text" id="redeemPoints" name="points" class="input" readonly>
                     </div>
                     <div class="mb-4">
@@ -868,8 +864,8 @@
                 populateSubjectOptions();
             } catch (error) {
                 console.error('Error loading users:', error);
-                document.getElementById('subjectsProgress').innerHTML = '<p>Không thể tải dữ liệu.</p>';
-                document.getElementById('lookupResult').innerHTML = '<p>Không thể tải dữ liệu.</p>';
+                document.getElementById('subjectsProgress').innerHTML = '<p class="text-error">Không thể tải dữ liệu.</p>';
+                document.getElementById('lookupResult').innerHTML = '<p class="text-error">Không thể tải dữ liệu.</p>';
             }
         }
 
@@ -883,7 +879,7 @@
                 renderCalendar(calendarData);
             } catch (error) {
                 console.error('Error loading calendar:', error);
-                document.getElementById('calendarGrid').innerHTML = '<div class="col-span-7 text-center">Không thể tải lịch.</div>';
+                document.getElementById('calendarGrid').innerHTML = '<div class="col-span-7 text-center text-error">Không thể tải lịch.</div>';
             }
         }
 
@@ -902,26 +898,27 @@
                 `).join('');
             } catch (error) {
                 console.error('Error loading resources:', error);
-                document.getElementById('resourcesList').innerHTML = '<p>Không thể tải tài liệu.</p>';
+                document.getElementById('resourcesList').innerHTML = '<p class="text-error">Không thể tải tài liệu.</p>';
             }
         }
 
         // Load gifts data
+        let giftsData = [];
         async function loadGifts() {
             try {
                 const response = await fetch('data/gifts.json');
                 if (!response.ok) throw new Error('Failed to load gifts.json');
-                const gifts = await response.json();
+                giftsData = await response.json();
                 const giftList = document.getElementById('giftList');
-                giftList.innerHTML = gifts.map(gift => `
+                giftList.innerHTML = giftsData.map(gift => `
                     <div class="gift-item">
                         <img src="${gift.image}" alt="${gift.name}">
-                        <p>${gift.name} (Mã: ${gift.code})</p>
+                        <p>${gift.name} (Mã: ${gift.code}, ${gift.points} điểm)</p>
                     </div>
                 `).join('');
             } catch (error) {
                 console.error('Error loading gifts:', error);
-                document.getElementById('giftList').innerHTML = '<p>Không thể tải danh sách quà.</p>';
+                document.getElementById('giftList').innerHTML = '<p class="text-error">Không thể tải danh sách quà.</p>';
             }
         }
 
@@ -930,6 +927,8 @@
             const subjects = [...new Set(usersData.members.flatMap(member => member.subjects.map(s => s.name)))];
             const lookupSubject = document.getElementById('lookupSubject');
             const redeemSubject = document.getElementById('redeemSubject');
+            lookupSubject.innerHTML = '<option value="">Chọn lớp</option>';
+            redeemSubject.innerHTML = '<option value="">Chọn lớp</option>';
             subjects.forEach(subject => {
                 const option = document.createElement('option');
                 option.value = subject;
@@ -976,26 +975,13 @@ END:VEVENT\n`;
         }
 
         // Membership rank logic
-        function getMembershipRank(totalScore) {
-            if (totalScore < 50) return '<i class="fas fa-user rank-icon rank-thanhvien"></i> Thành Viên';
-            if (totalScore < 100) return '<i class="fas fa-star rank-icon rank-vip"></i> VIP';
-            if (totalScore < 201) return '<i class="fas fa-medal rank-icon rank-silver"></i> Bạc';
-            if (totalScore < 301) return '<i class="fas fa-medal rank-icon rank-gold"></i> Vàng';
-            if (totalScore < 501) return '<i class="fas fa-gem rank-icon rank-diamond"></i> Kim Cương';
+        function getMembershipRank(memberScore) {
+            if (memberScore < 50) return '<i class="fas fa-user rank-icon rank-thanhvien"></i> Thành Viên';
+            if (memberScore < 100) return '<i class="fas fa-star rank-icon rank-vip"></i> VIP';
+            if (memberScore < 201) return '<i class="fas fa-medal rank-icon rank-silver"></i> Bạc';
+            if (memberScore < 301) return '<i class="fas fa-medal rank-icon rank-gold"></i> Vàng';
+            if (memberScore < 501) return '<i class="fas fa-gem rank-icon rank-diamond"></i> Kim Cương';
             return '<i class="fas fa-crown rank-icon rank-vvip"></i> VVip';
-        }
-
-        // Calculate points
-        function calculatePoints(member) {
-            let points = Math.floor(member.spending / 1000); // 1000đ = 1 point
-            points += member.sessions || 0; // 1 session = 1 point
-            member.subjects.forEach(subject => {
-                if (subject.completion > 95) points += 5;
-                else if (subject.completion > 80) points += 3;
-                else if (subject.completion > 60) points += 2;
-            });
-            points += (member.activities || 0) * 2; // 2 points per activity
-            return points;
         }
 
         // Populate progress bars
@@ -1003,21 +989,19 @@ END:VEVENT\n`;
             const subjectsProgress = document.getElementById('subjectsProgress');
             subjectsProgress.innerHTML = '';
             users.members.forEach(member => {
-                const points = calculatePoints(member);
+                const learningScore = Math.min(member.LearningScore || 0, 100); // Fallback to 0 if undefined
                 const div = document.createElement('div');
                 div.className = 'member-card';
                 div.innerHTML = `
-                    <h4>${member.fullName} (Hạng: ${getMembershipRank(points)})</h4>
-                    ${member.subjects.map(subject => {
-                        const normalizedScore = Math.min(subject.score, 100);
-                        return `
-                            <div class="progress-item">
-                                <p>${subject.name}</p>
-                                <p>Thời lượng: ${subject.duration} | Điểm: ${normalizedScore}/100 | Hoàn tất: ${subject.completion}%</p>
-                                <div class="progress-bar"><div class="progress-fill" style="width: ${subject.completion}%"></div></div>
-                            </div>
-                        `;
-                    }).join('')}
+                    <h4>${member.fullName} (Hạng: ${getMembershipRank(member.memberpoint || 0)})</h4>
+                    ${member.subjects.map(subject => `
+                        <div class="progress-item">
+                            <p>${subject.name}</p>
+                            <p>Thời lượng: ${subject.duration}h | Điểm học tập: ${learningScore}%</p>
+                            <div class="progress-bar"><div class="progress-fill" style="width: ${learningScore}%"></div></div>
+                        </div>
+                    `).join('')}
+                    <p><strong>Điểm thành viên:</strong> ${member.memberpoint || 0}</p>
                 `;
                 subjectsProgress.appendChild(div);
             });
@@ -1029,7 +1013,7 @@ END:VEVENT\n`;
             const sortedMembers = users.members
                 .map(member => ({
                     fullName: member.fullName,
-                    points: calculatePoints(member)
+                    points: member.memberpoint || 0
                 }))
                 .sort((a, b) => b.points - a.points)
                 .slice(0, 5);
@@ -1085,6 +1069,11 @@ END:VEVENT\n`;
                         `;
                         document.getElementById('eventPopup').style.display = 'block';
                     };
+                    // Remove existing listeners to prevent duplicates
+                    div.removeEventListener('click', showEvent);
+                    div.removeEventListener('touchstart', showEvent);
+                    div.removeEventListener('touchend', showEvent);
+                    div.removeEventListener('touchcancel', showEvent);
                     div.addEventListener('click', showEvent);
                     let touchTimeout;
                     div.addEventListener('touchstart', () => {
@@ -1121,13 +1110,13 @@ END:VEVENT\n`;
             const member = usersData.members.find(m => m.fullName.toLowerCase() === name.toLowerCase() && m.subjects.some(s => s.name === subject));
             const resultDiv = document.getElementById('lookupResult');
             if (member) {
-                const points = calculatePoints(member);
                 resultDiv.innerHTML = `
                     <p><strong>Họ và Tên:</strong> ${member.fullName}</p>
-                    <p><strong>Số Điểm:</strong> ${points}</p>
+                    <p><strong>Điểm thành viên:</strong> ${member.memberpoint || 0}</p>
+                    <p><strong>Điểm học tập:</strong> ${member.LearningScore || 0}%</p>
                 `;
             } else {
-                resultDiv.innerHTML = '<p>Không tìm thấy học viên hoặc môn học.</p>';
+                resultDiv.innerHTML = '<p class="text-error">Không tìm thấy học viên hoặc môn học.</p>';
             }
         });
 
@@ -1137,24 +1126,52 @@ END:VEVENT\n`;
             const subject = document.getElementById('redeemSubject').value;
             const pointsField = document.getElementById('redeemPoints');
             const member = usersData.members.find(m => m.fullName.toLowerCase() === name.toLowerCase() && m.subjects.some(s => s.name === subject));
-            if (member) {
-                const points = calculatePoints(member);
-                pointsField.value = points;
-            } else {
-                pointsField.value = '';
-            }
+            pointsField.value = member ? (member.memberpoint || 0) : '';
         }
 
         document.getElementById('redeemName').addEventListener('input', updateRedeemPoints);
         document.getElementById('redeemSubject').addEventListener('change', updateRedeemPoints);
 
-        // Redeem form submission
-        document.getElementById('redeemForm').addEventListener('submit', (e) => {
-            document.getElementById('redeemSubmissionTime').value = new Date().toLocaleString('vi-VN');
-            setTimeout(() => {
+        // Redeem form submission with validation
+        document.getElementById('redeemForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('redeemName').value.trim();
+            const subject = document.getElementById('redeemSubject').value;
+            const giftCode = document.getElementById('giftCode').value.trim();
+            const member = usersData.members.find(m => m.fullName.toLowerCase() === name.toLowerCase() && m.subjects.some(s => s.name === subject));
+            const gift = giftsData.find(g => g.code.toLowerCase() === giftCode.toLowerCase());
+            const successMessage = document.getElementById('successMessage');
+
+            if (!member) {
+                successMessage.textContent = 'Không tìm thấy học viên hoặc môn học.';
+                successMessage.style.color = 'var(--error)';
                 document.getElementById('successOverlay').style.display = 'block';
                 document.getElementById('successPopup').style.display = 'block';
-            }, 500); // Delay to simulate form submission
+                return;
+            }
+
+            if (!gift) {
+                successMessage.textContent = 'Mã quà không hợp lệ.';
+                successMessage.style.color = 'var(--error)';
+                document.getElementById('successOverlay').style.display = 'block';
+                document.getElementById('successPopup').style.display = 'block';
+                return;
+            }
+
+            if ((member.memberpoint || 0) < gift.points) {
+                successMessage.textContent = 'Không đủ điểm để đổi quà này.';
+                successMessage.style.color = 'var(--error)';
+                document.getElementById('successOverlay').style.display = 'block';
+                document.getElementById('successPopup').style.display = 'block';
+                return;
+            }
+
+            document.getElementById('redeemSubmissionTime').value = new Date().toLocaleString('vi-VN');
+            successMessage.textContent = 'Yêu cầu đổi quà đang được xem xét, sẽ có thông báo tại Gmail của bạn.';
+            successMessage.style.color = 'var(--text)';
+            document.getElementById('successOverlay').style.display = 'block';
+            document.getElementById('successPopup').style.display = 'block';
+            document.getElementById('redeemForm').submit(); // Proceed with form submission
         });
 
         // Close success popup
@@ -1180,7 +1197,7 @@ END:VEVENT\n`;
         });
 
         if (!isMobile) {
-            document.getElementById('feedbackForm')?.addEventListener('submit', () => {
+            document.getElementById('feedbackForm')?.addEventListener('submit', (e) => {
                 document.getElementById('feedbackSubmissionTime').value = new Date().toLocaleString('vi-VN');
             });
         }
@@ -1427,6 +1444,11 @@ END:VEVENT\n`;
                 const showPopup = () => {
                     document.getElementById('detailsPopup').style.display = 'block';
                 };
+                // Remove existing listeners
+                detailsSection.removeEventListener('click', showPopup);
+                detailsSection.removeEventListener('touchstart', showPopup);
+                detailsSection.removeEventListener('touchend', showPopup);
+                detailsSection.removeEventListener('touchcancel', showPopup);
                 detailsSection.addEventListener('click', showPopup);
                 detailsSection.addEventListener('touchstart', () => {
                     touchTimeout = setTimeout(showPopup, 500);
