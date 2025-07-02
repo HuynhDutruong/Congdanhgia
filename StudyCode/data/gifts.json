@@ -1,8 +1,8 @@
 [
-    { "name": "SÁCH GIÁO LÝ SỐNG ĐẠO - 30 points", "code": "GIFT-30", "image": "images/SSD-30.png" },
-    { "name": "CHUỖI MÂN CÔI - 50 points", "code": "GIFT-50", "image": "images/CMC-50.png" },
-    { "name": "TÂN ƯỚC NHỎ - 100 points", "code": "GIFT-100", "image": "images/TU-100.png" },
-    { "name": "KINH THÁNH TRỌN BỘ - 550 points", "code": "GIFT-550", "image": "images/KTTB-550.png" },
-    { "name": "NHẪN MÂN CÔI - 50 points", "code": "NMC-G50", "image": "images/CMC-50.png" },
-    { "name": "QUYỂN NỘI QUY TNTT - 35 points", "code": "GIFT-45", "image": "images/NQTNTT-35.png" }
+  { "name": "SÁCH GIÁO LÝ SỐNG ĐẠO", "code": "GIFT-30", "image": "images/SSD-30.png", "points": 30 },
+  { "name": "CHUỖI MÂN CÔI", "code": "GIFT-50", "image": "images/CMC-50.png", "points": 50 },
+  { "name": "TÂN ƯỚC NHỎ", "code": "GIFT-100", "image": "images/TU-100.png", "points": 100 },
+  { "name": "KINH THÁNH TRỌN BỘ", "code": "GIFT-550", "image": "images/KTTB-550.png", "points": 550 },
+  { "name": "NHẪN MÂN CÔI", "code": "NMC-G50", "image": "images/CMC-50.png", "points": 50 },
+  { "name": "QUYỂN NỘI QUY TNTT", "code": "GIFT-45", "image": "images/NQTNTT-35.png", "points": 35 }
 ]
