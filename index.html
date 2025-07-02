@@ -1,38 +1,33 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <!-- Thiết lập metadata và liên kết tài nguyên -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <meta name="description" content="Hệ Thống Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho, đăng nhập để làm bài kiểm tra.">
-    <meta name="keywords" content="Xứ Đoàn, Giáo Xứ Chánh Tòa Mỹ Tho, Đăng Nhập, Các Thánh Tử Đạo Việt Nam">
-    <title>Đăng Nhập Kiểm Tra</title>
+    <meta name="description" content="Hệ Thống Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho, đăng nhập để quản lý điểm Ban Truyền Thông.">
+    <meta name="keywords" content="Ban Truyền Thông, Xứ Đoàn, Giáo Xứ Chánh Tòa Mỹ Tho, Đăng Nhập">
+    <title>Đăng Nhập - Ban Truyền Thông</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Định nghĩa biến CSS để tái sử dụng màu sắc và phong cách */
         :root {
-            --primary: #cc3048; /* Màu chính */
-            --primary-dark: #b7142a; /* Màu chính tối hơn */
-            --accent: #FFD700; /* Màu nhấn */
-            --dark-bg: #1A1A1A; /* Màu nền tối */
-            --text: #E0E0E0; /* Màu chữ */
-            --error: #EF4444; /* Màu lỗi */
-            --card-bg: #252526; /* Màu nền card */
-            --border-color: #3C3C3C; /* Màu viền */
-            --success-color: #10B981; /* Màu thành công */
-            --warning-color: #FBBF24; /* Màu cảnh báo */
+            --primary: #cc3048;
+            --primary-dark: #b7142a;
+            --accent: #FFD700;
+            --dark-bg: #1A1A1A;
+            --text: #E0E0E0;
+            --error: #EF4444;
+            --card-bg: #252526;
+            --border-color: #3C3C3C;
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --transition: all 0.15s ease-in-out;
         }
 
-        /* Thiết lập giao diện cơ bản cho body */
         body {
             font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #2D2D2D 0%, #1A1A1A 100%); /* Nền gradient */
+            background: linear-gradient(135deg, #2D2D2D 0%, #1A1A1A 100%);
             color: var(--text);
             line-height: 1.6;
             margin: 0;
@@ -43,12 +38,10 @@
             padding: 0;
         }
 
-        /* Tối ưu font cho iOS */
         body.ios {
             font-family: -apple-system, 'SF Pro', 'Roboto', sans-serif;
         }
 
-        /* Header chứa logo và tiêu đề */
         .header {
             background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: var(--text);
@@ -94,19 +87,17 @@
             margin-top: 0.25rem;
         }
 
-        /* Card chứa form đăng nhập */
         .card {
-            max-width: 24rem; /* 384px */
+            max-width: 24rem;
             width: 100%;
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             padding: 2rem;
             border-radius: 1rem;
             box-shadow: var(--shadow);
-            margin-top: 6rem; /* Đẩy card xuống để không bị che bởi header */
+            margin-top: 6rem;
         }
 
-        /* Nút đăng nhập */
         .btn {
             display: flex;
             align-items: center;
@@ -149,7 +140,6 @@
             }
         }
 
-        /* Input */
         .input {
             width: 100%;
             padding: 0.75rem;
@@ -166,7 +156,6 @@
             box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.3);
         }
 
-        /* Thông báo */
         .notification {
             position: fixed;
             top: 1rem;
@@ -189,7 +178,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Tùy chỉnh giao diện cho điện thoại và tablet */
         @media (max-width: 1024px) {
             :root {
                 --primary: #e63950;
@@ -212,28 +200,12 @@
                 padding: 1.5rem;
                 margin-top: 5rem;
             }
-            .btn:active {
-                background: var(--accent);
-                color: var(--dark-bg);
-                transform: scale(0.98);
-            }
-            body.ios {
-                font-family: -apple-system, 'SF Pro', 'Roboto', sans-serif;
-            }
-            body.ios :root {
-                --primary: #cc3048;
-                --accent: #FFD700;
-            }
-            body.ios .header h1 {
-                font-weight: 500;
-            }
             body.ios .btn {
                 background: rgba(204, 48, 72, 0.9);
                 backdrop-filter: blur(3px);
             }
             body.ios .btn:active {
                 transform: scale(0.95);
-                transition: transform 0.1s ease;
                 box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
             }
             body.ios .card {
@@ -242,7 +214,6 @@
             }
         }
 
-        /* Tùy chỉnh cho máy tính bảng */
         @media (min-width: 641px) and (max-width: 1024px) {
             .header h1 {
                 font-size: 1.75rem;
@@ -250,13 +221,8 @@
             .card {
                 padding: 1.75rem;
             }
-            .btn:active {
-                box-shadow: 0 0 8px var(--accent);
-                transform: scale(0.98);
-            }
         }
 
-        /* Tùy chỉnh cho laptop */
         @media (min-width: 1025px) {
             .btn:hover {
                 background: linear-gradient(45deg, var(--primary), var(--accent));
@@ -265,7 +231,6 @@
     </style>
 </head>
 <body>
-    <!-- Header với logo và tiêu đề -->
     <div class="header">
         <div class="header-container">
             <div class="header-content">
@@ -276,9 +241,8 @@
         </div>
     </div>
 
-    <!-- Card chứa form đăng nhập -->
     <div class="card">
-        <h1 class="text-2xl font-bold text-center mb-6 font-['JetBrains Mono'] text-[var(--accent)]">Đăng Nhập Kiểm Tra</h1>
+        <h1 class="text-2xl font-bold text-center mb-6 font-['JetBrains Mono'] text-[var(--accent)]">Đăng Nhập Hệ Thống</h1>
         <div id="notification" class="notification"></div>
         <form id="login-form" class="space-y-4 font-['Roboto']">
             <div>
@@ -294,13 +258,11 @@
     </div>
 
     <script>
-        // Phát hiện thiết bị iOS
         const isIOS = navigator.userAgent.includes('iPhone') || navigator.userAgent.includes('iPad');
         if (isIOS) {
-            document.body.classList.add('ios'); // Thêm class ios cho body
+            document.body.classList.add('ios');
         }
 
-        // Hiển thị thông báo
         const showNotification = (message, type) => {
             const notification = document.getElementById('notification');
             notification.textContent = message;
@@ -311,10 +273,9 @@
             }, 3000);
         };
 
-        // Xử lý đăng nhập
-        document.getElementById('login-form').addEventListener('submit', (e) => {
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const username = document.getElementById('username').value.toLowerCase();
+            const username = document.getElementById('username').value.trim().toLowerCase();
             const password = document.getElementById('password').value;
             const currentYear = new Date().getFullYear().toString();
 
@@ -326,9 +287,26 @@
             };
 
             if (users[username] && password === currentYear) {
+                sessionStorage.setItem('loggedInUser', username);
                 window.location.href = users[username];
-            } else {
-                showNotification('Tên đăng nhập hoặc mật khẩu không đúng!', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch('StudyCode/data/media.json');
+                if (!response.ok) throw new Error('Không thể tải danh sách thành viên.');
+                const data = await response.json();
+                const member = data.members.find(m => m.fullName.toLowerCase() === username);
+                
+                if (member && password === currentYear) {
+                    sessionStorage.setItem('loggedInUser', member.fullName);
+                    window.location.href = 'media.html';
+                } else {
+                    showNotification('Tên đăng nhập hoặc mật khẩu không đúng!', 'error');
+                }
+            } catch (error) {
+                showNotification('Lỗi khi kiểm tra đăng nhập. Vui lòng thử lại.', 'error');
+                console.error('Error:', error);
             }
         });
     </script>
