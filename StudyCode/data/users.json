@@ -1,9 +1,9 @@
 {
     "members": [
         {
-            "fullName": "Admin",
+            "fullName": "Giuse Mai Hồng Phúc",
             "subjects": [
-                { "name": "Admin", "duration": 100, "completion": 1000, "score": 100 }
+                { "name": "Html-1", "duration": 16, "completion": 0, "score": 0 }
             ]
         }
     ]
