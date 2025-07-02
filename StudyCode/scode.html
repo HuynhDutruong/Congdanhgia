@@ -734,32 +734,34 @@
         </div>
 
         <div id="redeem" class="card">
-            <h3>Đổi Quà</h3>
-            <div class="gift-grid" id="giftList"></div>
-            <form id="redeemForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST">
-                <div class="mb-4">
-                    <label class="block mb-1 text-text">Họ và Tên Thánh:</label>
-                    <input type="text" name="fullName" id="redeemName" class="input" required>
-                </div>
-                <div class="mb-4">
-                    <label class="block mb-1 text-text">Gmail:</label>
-                    <input type="email" name="gmail" id="redeemGmail" class="input" required>
-                </div>
-                <div class="mb-4">
-                    <label class="block mb-1 text-text">Lớp:</label>
-                    <select name="subject" id="redeemSubject" class="input" required></select>
-                </div>
-                <div class="mb-4">
-                    <label class="block mb-1 text-text">Số Điểm Hiện Tại:</label>
-                    <input type="text" id="redeemPoints" name="points" class="input" readonly>
-                </div>
-                <div class="mb-4">
-                    <label class="block mb-1 text-text">Mã Quà:</label>
-                    <input type="text" name="giftCode" id="giftCode" class="input" required>
-                </div>
-                <input type="hidden" name="submissionTime" id="redeemSubmissionTime">
-                <button type="submit" class="btn">Đổi Quà</button>
-            </form>
+            <div class="py-8">
+                <h3>Đổi Quà</h3>
+                <div class="gift-grid" id="giftList"></div>
+                <form id="redeemForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST">
+                    <div class="mb-4">
+                        <label class="block mb-1 text-text">Họ và Tên Thánh:</label>
+                        <input type="text" name="fullName" id="redeemName" class="input" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block mb-1 text-text">Gmail:</label>
+                        <input type="email" name="gmail" id="redeemGmail" class="input" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block mb-1 text-text">Lớp:</label>
+                        <select name="subject" id="redeemSubject" class="input" required></select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block mb-1 text-text">Số Điểm Hiện Tại:</label>
+                        <input type="text" id="redeemPoints" name="points" class="input" readonly>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block mb-1 text-text">Mã Quà:</label>
+                        <input type="text" name="giftCode" id="giftCode" class="input" required>
+                    </div>
+                    <input type="hidden" name="submissionTime" id="redeemSubmissionTime">
+                    <button type="submit" class="btn">Đổi Quà</button>
+                </form>
+            </div>
         </div>
     </div>
 
