@@ -1,9 +1,14 @@
 {
     "members": [
         {
-            "fullName": "Giuse Mai Hồng Phúc",
+            "fullName": "Mai Hồng Phúc",
+            "spending": 0,
+            "sessions": 0,
+            "activities": 0,
+            "memberpoint": 10,
+            "LearningScore": 0,
             "subjects": [
-                { "name": "Html-1", "duration": 16, "completion": 0, "score": 0 }
+                { "name": "HTML-1", "duration": "18", "completion": 0, "score": 0 }
             ]
         }
     ]
