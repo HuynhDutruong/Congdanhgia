@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="Cổng thông tin học viên lập trình - Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho">
-    <meta name="keywords" content="Xứ Đoàn, Giáo Xứ Chánh Tòa Mỹ Tho, Các Thánh Tử Đạo Việt Nam, học lập trình, cổng học viên">
-    <title>Cổng Học Viên Lập Trình - Xứ Đoàn Các Thánh Tử Đạo Việt Nam</title>
+    <meta name="description" content="Cổng Học Viên Lập Trình & Điểm Thành Viên - Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho">
+    <meta name="keywords" content="Xứ Đoàn, Giáo Xứ Chánh Tòa Mỹ Tho, Các Thánh Tử Đạo Việt Nam, học lập trình, điểm thành viên, đổi quà">
+    <title>Cổng Học Viên & Điểm Thành Viên - Xứ Đoàn Các Thánh Tử Đạo Việt Nam</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -97,7 +97,7 @@
             margin: 0 auto;
             padding: 0 1rem;
             overflow-y: auto;
-            height: calc(100vh - 60px - 60px); /* header: 60px, navbar: 60px */
+            height: calc(100vh - 60px - 60px);
         }
 
         .card {
@@ -109,20 +109,23 @@
             display: none;
             height: 100%;
             overflow-y: auto;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
         }
         .card.active {
             display: block;
-            animation: fadeIn 0.3s ease;
+            animation: flipIn 0.6s ease forwards;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes flipIn {
+            from { opacity: 0; transform: rotateY(90deg); }
+            to { opacity: 1; transform: rotateY(0); }
         }
         .card h3 {
             font-family: 'JetBrains Mono', monospace;
             font-size: 1.5rem;
             color: var(--accent);
             margin-bottom: 1.5rem;
+            text-align: center;
         }
 
         .prayer-widget {
@@ -136,40 +139,46 @@
             font-size: 0.9rem;
         }
 
-        .table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
+        .progress-container {
             margin-top: 1rem;
         }
-        .table th, .table td {
-            padding: 0.75rem;
-            border: 1px solid #3C3C3C;
-            text-align: left;
+        .progress-item {
+            margin-bottom: 1rem;
+        }
+        .progress-item p {
             font-size: 0.9rem;
+            margin-bottom: 0.5rem;
         }
-        .table th {
-            background: var(--primary);
-            color: var(--text);
-            font-weight: 700;
-            font-family: 'JetBrains Mono', monospace;
-        }
-        .table td {
+        .progress-bar {
             background: #1E1E1E;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 20px;
         }
-        .table tr:hover td {
-            background: #2A2A2A;
+        .progress-fill {
+            background: var(--primary);
+            height: 100%;
+            transition: width 0.5s ease;
         }
 
-        .rank-icon {
-            font-size: 1.2rem;
+        .rank-widget {
+            background: #252526;
+            border: 1px solid #3C3C3C;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
         }
-        .rank-thanhvien { color: #B0B0B0; }
-        .rank-vip { color: #FFD700; }
-        .rank-silver { color: #C0C0C0; }
-        .rank-gold { color: #FFD700; }
-        .rank-diamond { color: #B9F2FF; }
-        .rank-vvip { color: #FF69B4; }
+        .rank-widget h4 {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        .rank-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+        }
 
         .calendar {
             display: grid;
@@ -210,7 +219,7 @@
 
         #eventPopup, #detailsPopup {
             position: fixed;
-            bottom: 15%;
+            bottom: 20%;
             left: 50%;
             transform: translateX(-50%);
             background: rgba(26, 26, 26, 0.95);
@@ -218,7 +227,119 @@
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             max-width: 90%;
+            width: 300px;
             font-size: 0.9rem;
+            z-index: 1001;
+            display: none;
+            text-align: left;
+        }
+
+        .details-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .details-list p {
+            margin: 0;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .details-list p strong {
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 0.2rem;
+        }
+        .details-list p span {
+            color: var(--text);
+            word-break: break-word;
+        }
+
+        .guide-section {
+            background: #1E1E1E;
+            border: 1px solid #3C3C3C;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .guide-section summary {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            color: var(--accent);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .guide-section summary i {
+            color: var(--primary);
+        }
+        .guide-section p, .guide-section ul {
+            font-size: 0.9rem;
+            color: var(--text);
+            margin-top: 0.5rem;
+        }
+        .guide-section ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+        }
+        .guide-section ul ul {
+            list-style-type: circle;
+            padding-left: 1.5rem;
+        }
+
+        .gift-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .gift-item {
+            background: #1E1E1E;
+            border: 1px solid #3C3C3C;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+        .gift-item:hover {
+            transform: scale(1.05);
+        }
+        .gift-item img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+        }
+        .gift-item p {
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(26, 26, 26, 0.95);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            max-width: 90%;
+            width: 300px;
+            font-size: 0.9rem;
+            z-index: 1001;
+            text-align: center;
+            display: none;
+        }
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
             z-index: 1000;
             display: none;
         }
@@ -294,13 +415,10 @@
             .navbar a i {
                 font-size: 1rem;
             }
-            .navbar a[href="#submit"] {
-                display: none;
-            }
             .container {
                 margin: 0 auto;
                 padding: 0.5rem;
-                height: calc(100vh - 50px - 50px); /* header: 50px, navbar: 50px */
+                height: calc(100vh - 50px - 50px);
             }
             .card {
                 padding: 1rem;
@@ -310,12 +428,14 @@
             .card h3 {
                 font-size: 1.3rem;
             }
-            .table th, .table td {
-                padding: 0.5rem;
+            .progress-item p, .rank-list li, .guide-section p, .guide-section ul {
                 font-size: 0.85rem;
             }
             .calendar div {
                 padding: 0.4rem;
+                font-size: 0.85rem;
+            }
+            .gift-item p {
                 font-size: 0.85rem;
             }
             .btn {
@@ -339,7 +459,7 @@
                 transform: scale(0.95);
                 box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
             }
-            body.ios #eventPopup, body.ios #detailsPopup {
+            body.ios #eventPopup, body.ios #detailsPopup, body.ios .popup {
                 bottom: 20%;
             }
             #submit {
@@ -362,25 +482,50 @@
                 font-size: 1rem;
             }
             .container {
-                height: calc(100vh - 80px - 60px); /* header: 80px, navbar: 60px */
+                height: calc(100vh - 80px - 60px);
+            }
+            .navbar a[href="#more"] {
+                display: none;
+            }
+            .navbar a[href="#back"] {
+                display: none;
+            }
+            .details-list p, .progress-item p, .rank-list li, .guide-section p, .guide-section ul {
+                font-size: 1rem;
+            }
+            #detailsPopup, .popup {
+                max-width: 400px;
+                padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h2>XỨ ĐOÀN CÁC THÁNH TỬ ĐẠO VIỆT NAM</h2>
-        <p>Cổng Học Viên Lập Trình - Giáo Xứ Chánh Tòa Mỹ Tho</p>
+    <div class="popup-overlay" id="successOverlay">
+        <div class="popup" id="successPopup">
+            <p>Yêu cầu đổi quà đang được xem xét, sẽ có thông báo tại Gmail của bạn.</p>
+            <button class="btn mt-4" onclick="closeSuccessPopup()">Thoát</button>
+        </div>
     </div>
 
-    <div class="navbar">
-        <a href="#home" class="active"><i class="fas fa-home"></i><span>Trang Chủ</span></a>
-        <a href="#calendar"><i class="fas fa-calendar"></i><span>Lịch Học</span></a>
-        <a href="#submit"><i class="fas fa-upload"></i><span>Nộp Bài</span></a>
-        <a href="#game"><i class="fas fa-gamepad"></i><span>Giải Trí</span></a>
-        <a href="#feedback"><i class="fas fa-comment"></i><span>Phản Hồi</span></a>
-        <a href="#resources"><i class="fas fa-book"></i><span>Tài Liệu</span></a>
-        <a href="#details"><i class="fas fa-info-circle"></i><span>Chi Tiết</span></a>
+    <div class="header">
+        <h2>XỨ ĐOÀN CÁC THÁNH TỬ ĐẠO VIỆT NAM</h2>
+        <p>Cổng Học Viên Lập Trình & Điểm Thành Viên - Giáo Xứ Chánh Tòa Mỹ Tho</p>
+    </div>
+
+    <div class="navbar" id="navbar">
+        <a href="#home" class="main-menu active"><i class="fas fa-home"></i><span>Trang Chủ</span></a>
+        <a href="#calendar" class="main-menu"><i class="fas fa-calendar"></i><span>Lịch Học</span></a>
+        <a href="#resources" class="main-menu"><i class="fas fa-book"></i><span>Tài Liệu</span></a>
+        <a href="#more" class="main-menu"><i class="fas fa-window-maximize"></i><span>Xem Thêm</span></a>
+        <a href="#back" class="more-menu" style="display: none;"><i class="fas fa-arrow-left"></i><span>Trở Lại</span></a>
+        <a href="#game" class="more-menu" style="display: none;"><i class="fas fa-gamepad"></i><span>Giải Trí</span></a>
+        <a href="#feedback" class="more-menu" style="display: none;"><i class="fas fa-comment"></i><span>Phản Hồi</span></a>
+        <a href="#details" class="more-menu" style="display: none;"><i class="fas fa-info-circle"></i><span>Chi Tiết</span></a>
+        <a href="#guide" class="more-menu" style="display: none;"><i class="fas fa-question-circle"></i><span>Hướng Dẫn</span></a>
+        <a href="#lookup" class="more-menu" style="display: none;"><i class="fas fa-search"></i><span>Tra Cứu Điểm</span></a>
+        <a href="#redeem" class="more-menu" style="display: none;"><i class="fas fa-gift"></i><span>Đổi Quà</span></a>
+        <a href="#submit" class="desktop-menu" style="display: none;"><i class="fas fa-upload"></i><span>Nộp Bài</span></a>
     </div>
 
     <div class="container">
@@ -388,20 +533,12 @@
             <div class="prayer-widget">
                 <p id="dailyPrayer">“Kẻ nào bền chí đến cùng, kẻ ấy sẽ được cứu độ.” (Mt 24:13)</p>
             </div>
+            <div class="rank-widget">
+                <h4>Bảng Xếp Hạng Động Lực</h4>
+                <ul class="rank-list" id="rankList"></ul>
+            </div>
             <h3>Kết Quả Học Tập</h3>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Tên</th>
-                        <th>Hạng</th>
-                        <th>Môn</th>
-                        <th>Thời Lượng</th>
-                        <th>Hoàn Tất (%)</th>
-                        <th>Điểm</th>
-                    </tr>
-                </thead>
-                <tbody id="subjectsTable"></tbody>
-            </table>
+            <div class="progress-container" id="subjectsProgress"></div>
         </div>
 
         <div id="calendar" class="card">
@@ -416,6 +553,7 @@
                 <button class="btn" onclick="nextMonth()">►</button>
             </div>
             <div class="calendar" id="calendarGrid"></div>
+            <button class="btn mt-4" onclick="downloadCalendar()">Tải Lịch Học (.ics)</button>
             <div id="eventPopup"></div>
         </div>
 
@@ -475,8 +613,98 @@
 
         <div id="details" class="card">
             <h3>Thông Tin Chi Tiết</h3>
-            <div id="detailsContent"></div>
-            <div id="detailsPopup"></div>
+            <div class="details-list" id="detailsContent"></div>
+            <div id="detailsPopup" class="details-list"></div>
+        </div>
+
+        <div id="guide" class="card">
+            <h3>Hướng Dẫn Điểm Thành Viên</h3>
+            <div id="guideContent">
+                <p class="mb-4">Chào mừng bạn đến với <strong>Hệ thống Điểm Thành Viên</strong> của Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho! Hệ thống này được thiết kế để khuyến khích học viên tham gia học tập, hoạt động ngoại khóa và đóng góp tích cực, với cơ hội đổi những phần quà hấp dẫn.</p>
+                
+                <details class="guide-section" open>
+                    <summary><i class="fas fa-star"></i> Cách Tính Điểm Thành Viên</summary>
+                    <p>Điểm thành viên được tính dựa trên các hoạt động sau:</p>
+                    <ul class="list-disc pl-5 mb-4">
+                        <li><strong>Chi tiêu:</strong> Cứ 1000đ chi tiêu (ví dụ: đóng học phí, mua tài liệu) = 1 điểm.</li>
+                        <li><strong>Tham gia lớp học:</strong> Mỗi buổi học hoàn thành = 1 điểm.</li>
+                        <li><strong>Thành quả học tập:</strong>
+                            <ul class="list-circle pl-5">
+                                <li>Đạt trên 60% điểm môn học = 2 điểm.</li>
+                                <li>Đạt trên 80% điểm môn học = 3 điểm.</li>
+                                <li>Đạt trên 95% điểm môn học = 5 điểm.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Hoạt động ngoại khóa:</strong> Mỗi lần tham gia = 2 điểm.</li>
+                    </ul>
+                    <p><strong>Ví dụ:</strong> Bạn Nguyễn Văn A chi tiêu 5000đ (5 điểm), tham gia 10 buổi học (10 điểm), đạt 85% môn Python (3 điểm), và tham gia 3 hoạt động ngoại khóa (6 điểm). Tổng điểm: 5 + 10 + 3 + 6 = 24 điểm.</p>
+                </details>
+
+                <details class="guide-section">
+                    <summary><i class="fas fa-gift"></i> Lợi Ích của Điểm Thành Viên</summary>
+                    <p>Điểm thành viên mang lại các lợi ích sau:</p>
+                    <ul class="list-disc pl-5 mb-4">
+                        <li><strong>Đổi quà:</strong> Sử dụng điểm để đổi các phần quà hấp dẫn như sổ tay, áo thun, hoặc bình nước.</li>
+                        <li><strong>Xếp hạng động lực:</strong> Điểm cao giúp bạn lọt vào Bảng Xếp Hạng Động Lực, được vinh danh trên cổng học viên.</li>
+                        <li><strong>Khuyến khích học tập:</strong> Điểm phản ánh nỗ lực học tập và đóng góp, giúp bạn theo dõi tiến độ cá nhân.</li>
+                    </ul>
+                </details>
+
+                <details class="guide-section">
+                    <summary><i class="fas fa-question"></i> Câu Hỏi Thường Gặp</summary>
+                    <ul class="list-disc pl-5 mb-4">
+                        <li><strong>Điểm được cập nhật bao lâu một lần?</strong> Điểm được cập nhật hàng tuần dựa trên dữ liệu từ ban quản lý.</li>
+                        <li><strong>Tôi có thể tra cứu điểm ở đâu?</strong> Sử dụng mục "Tra Cứu Điểm" trong cổng này, nhập Họ và Tên Thánh cùng Lớp.</li>
+                        <li><strong>Quà đổi có giới hạn không?</strong> Một số quà có số lượng giới hạn, vui lòng kiểm tra mục "Đổi Quà".</li>
+                        <li><strong>Liên hệ hỗ trợ?</strong> Gửi phản hồi qua mục "Phản Hồi" hoặc email notification2411.huynhdutruong@gmail.com.</li>
+                    </ul>
+                </details>
+            </div>
+        </div>
+
+        <div id="lookup" class="card">
+            <h3>Tra Cứu Điểm</h3>
+            <form id="lookupForm">
+                <div class="mb-4">
+                    <label class="block mb-1 text-text">Họ và Tên Thánh:</label>
+                    <input type="text" id="lookupName" class="input" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1 text-text">Lớp:</label>
+                    <select id="lookupSubject" class="input" required></select>
+                </div>
+                <button type="submit" class="btn">Tra Cứu</button>
+            </form>
+            <div id="lookupResult" class="mt-4"></div>
+        </div>
+
+        <div id="redeem" class="card">
+            <h3>Đổi Quà</h3>
+            <div class="gift-grid" id="giftList"></div>
+            <form id="redeemForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST">
+                <div class="mb-4">
+                    <label class="block mb-1 text-text">Họ và Tên Thánh:</label>
+                    <input type="text" name="fullName" id="redeemName" class="input" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1 text-text">Gmail:</label>
+                    <input type="email" name="gmail" id="redeemGmail" class="input" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1 text-text">Lớp:</label>
+                    <select name="subject" id="redeemSubject" class="input" required></select>
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1 text-text">Số Điểm Hiện Tại:</label>
+                    <input type="text" id="redeemPoints" name="points" class="input" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1 text-text">Mã Quà:</label>
+                    <input type="text" name="giftCode" id="giftCode" class="input" required>
+                </div>
+                <input type="hidden" name="submissionTime" id="redeemSubmissionTime">
+                <button type="submit" class="btn">Đổi Quà</button>
+            </form>
         </div>
     </div>
 
@@ -485,7 +713,7 @@
         const isIOS = /iPhone|iPad/.test(navigator.userAgent);
         const isAndroid = /Android/.test(navigator.userAgent);
 
-        // Load feedback content based on device
+        // Feedback content
         if (isMobile) {
             document.getElementById('feedbackContent').innerHTML = `
                 <p>Nhấn vào nút dưới để gửi phản hồi qua Messenger:</p>
@@ -512,14 +740,14 @@
             `;
         }
 
-        // Set game instructions based on device
+        // Game instructions
         if (isIOS && isMobile) {
             document.getElementById('gameInstructions').textContent = 'Chạm màn hình để nhảy!';
         } else if (isAndroid && isMobile) {
             document.getElementById('gameInstructions').textContent = 'Chạm để phá khối!';
         }
 
-        // Resize canvas for game
+        // Resize canvas
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         function resizeCanvas() {
@@ -533,14 +761,28 @@
         }
         window.addEventListener('resize', () => {
             resizeCanvas();
-            if (window.innerWidth <= 1024) {
-                document.querySelector('.navbar a[href="#submit"]').style.display = 'none';
-            } else {
-                document.querySelector('.navbar a[href="#submit"]').style.display = 'inline-flex';
-                document.querySelector('.navbar a[href="#game"]').style.display = 'none';
-            }
+            updateNavbar();
         });
         resizeCanvas();
+
+        // Update navbar
+        function updateNavbar() {
+            const mainMenu = document.querySelectorAll('.main-menu');
+            const moreMenu = document.querySelectorAll('.more-menu');
+            const desktopMenu = document.querySelectorAll('.desktop-menu');
+            if (window.innerWidth <= 1024) {
+                mainMenu.forEach(link => link.style.display = 'flex');
+                moreMenu.forEach(link => link.style.display = 'none');
+                desktopMenu.forEach(link => link.style.display = 'none');
+            } else {
+                mainMenu.forEach(link => link.style.display = 'none');
+                moreMenu.forEach(link => link.style.display = 'flex');
+                desktopMenu.forEach(link => link.style.display = 'flex');
+                document.querySelector('.navbar a[href="#home"]').style.display = 'flex';
+                document.querySelector('.navbar a[href="#calendar"]').style.display = 'flex';
+                document.querySelector('.navbar a[href="#resources"]').style.display = 'flex';
+            }
+        }
 
         // Load daily prayer
         async function loadDailyPrayer() {
@@ -557,15 +799,19 @@
         }
 
         // Load users data
+        let usersData = [];
         async function loadUsersData() {
             try {
                 const response = await fetch('data/users.json');
                 if (!response.ok) throw new Error('Failed to load users.json');
-                const users = await response.json();
-                populateSubjectsTable(users);
+                usersData = await response.json();
+                populateProgress(usersData);
+                populateRankList(usersData);
+                populateSubjectOptions();
             } catch (error) {
                 console.error('Error loading users:', error);
-                document.getElementById('subjectsTable').innerHTML = '<tr><td colspan="6">Không thể tải dữ liệu.</td></tr>';
+                document.getElementById('subjectsProgress').innerHTML = '<p>Không thể tải dữ liệu.</p>';
+                document.getElementById('lookupResult').innerHTML = '<p>Không thể tải dữ liệu.</p>';
             }
         }
 
@@ -582,20 +828,6 @@
                 document.getElementById('calendarGrid').innerHTML = '<div class="col-span-7 text-center">Không thể tải lịch.</div>';
             }
         }
-
-        // Calendar search
-        document.getElementById('calendarSearch')?.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            const results = calendarData.filter(event =>
-                event.subject.toLowerCase().includes(query) ||
-                event.session.toLowerCase().includes(query)
-            );
-            const resultsDiv = document.getElementById('searchResults');
-            resultsDiv.innerHTML = results.length ? results.map(event => `
-                <p><strong>${event.date}</strong>: ${event.subject} (${event.session}, ${event.startTime} - ${event.endTime})
-                ${event.videoLink ? `<a href="${event.videoLink}" target="_blank" class="text-blue-400">Xem Video</a>` : ''}</p>
-            `).join('') : '<p>Không tìm thấy.</p>';
-        });
 
         // Load resources
         async function loadResources() {
@@ -616,6 +848,75 @@
             }
         }
 
+        // Load gifts data
+        async function loadGifts() {
+            try {
+                const response = await fetch('data/gifts.json');
+                if (!response.ok) throw new Error('Failed to load gifts.json');
+                const gifts = await response.json();
+                const giftList = document.getElementById('giftList');
+                giftList.innerHTML = gifts.map(gift => `
+                    <div class="gift-item">
+                        <img src="${gift.image}" alt="${gift.name}">
+                        <p>${gift.name} (Mã: ${gift.code})</p>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading gifts:', error);
+                document.getElementById('giftList').innerHTML = '<p>Không thể tải danh sách quà.</p>';
+            }
+        }
+
+        // Populate subject options
+        function populateSubjectOptions() {
+            const subjects = [...new Set(usersData.members.flatMap(member => member.subjects.map(s => s.name)))];
+            const lookupSubject = document.getElementById('lookupSubject');
+            const redeemSubject = document.getElementById('redeemSubject');
+            subjects.forEach(subject => {
+                const option = document.createElement('option');
+                option.value = subject;
+                option.textContent = subject;
+                lookupSubject.appendChild(option.cloneNode(true));
+                redeemSubject.appendChild(option);
+            });
+        }
+
+        // Calendar search
+        document.getElementById('calendarSearch')?.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const results = calendarData.filter(event =>
+                event.subject.toLowerCase().includes(query) ||
+                event.session.toLowerCase().includes(query)
+            );
+            const resultsDiv = document.getElementById('searchResults');
+            resultsDiv.innerHTML = results.length ? results.map(event => `
+                <p><strong>${event.date}</strong>: ${event.subject} (${event.session}, ${event.startTime} - ${event.endTime})
+                ${event.videoLink ? `<a href="${event.videoLink}" target="_blank" class="text-blue-400">Xem Video</a>` : ''}</p>
+            `).join('') : '<p>Không tìm thấy.</p>';
+        });
+
+        // Download calendar
+        function downloadCalendar() {
+            let icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Xứ Đoàn//Lịch Học//VI\n`;
+            calendarData.forEach(event => {
+                const start = new Date(event.date + ' ' + event.startTime).toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+                const end = new Date(event.date + ' ' + event.endTime).toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+                icsContent += `
+BEGIN:VEVENT
+DTSTART:${start}
+DTEND:${end}
+SUMMARY:${event.subject} - ${event.session}
+DESCRIPTION:${event.videoLink ? `Video: ${event.videoLink}` : ''}
+END:VEVENT\n`;
+            });
+            icsContent += `END:VCALENDAR`;
+            const blob = new Blob([icsContent], { type: 'text/calendar' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'lich_hoc.ics';
+            link.click();
+        }
+
         // Membership rank logic
         function getMembershipRank(totalScore) {
             if (totalScore < 50) return '<i class="fas fa-user rank-icon rank-thanhvien"></i>';
@@ -626,26 +927,52 @@
             return '<i class="fas fa-crown rank-icon rank-vvip"></i>';
         }
 
-        // Populate subjects table
-        function populateSubjectsTable(users) {
-            const subjectsTable = document.getElementById('subjectsTable');
-            subjectsTable.innerHTML = '';
+        // Calculate points
+        function calculatePoints(member) {
+            let points = Math.floor(member.spending / 1000); // 1000đ = 1 point
+            points += member.sessions || 0; // 1 session = 1 point
+            member.subjects.forEach(subject => {
+                if (subject.completion > 95) points += 5;
+                else if (subject.completion > 80) points += 3;
+                else if (subject.completion > 60) points += 2;
+            });
+            points += (member.activities || 0) * 2; // 2 points per activity
+            return points;
+        }
+
+        // Populate progress bars
+        function populateProgress(users) {
+            const subjectsProgress = document.getElementById('subjectsProgress');
+            subjectsProgress.innerHTML = '';
             users.members.forEach(member => {
-                const totalScore = member.subjects.reduce((sum, subject) => sum + subject.score, 0);
-                const rank = getMembershipRank(totalScore);
+                const points = calculatePoints(member);
                 member.subjects.forEach(subject => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${member.fullName}</td>
-                        <td>${rank}</td>
-                        <td>${subject.name}</td>
-                        <td>${subject.duration}</td>
-                        <td>${subject.completion}%</td>
-                        <td>${subject.score}</td>
+                    const normalizedScore = Math.min(subject.score, 100); // Normalize to 100
+                    const div = document.createElement('div');
+                    div.className = 'progress-item';
+                    div.innerHTML = `
+                        <p>${member.fullName} - ${subject.name} (Hạng: ${getMembershipRank(points)})</p>
+                        <p>Thời lượng: ${subject.duration} | Điểm: ${normalizedScore}/100 | Hoàn tất: ${subject.completion}%</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width: ${subject.completion}%"></div></div>
                     `;
-                    subjectsTable.appendChild(row);
+                    subjectsProgress.appendChild(div);
                 });
             });
+        }
+
+        // Populate rank list
+        function populateRankList(users) {
+            const rankList = document.getElementById('rankList');
+            const sortedMembers = users.members
+                .map(member => ({
+                    fullName: member.fullName,
+                    points: calculatePoints(member)
+                }))
+                .sort((a, b) => b.points - a.points)
+                .slice(0, 5);
+            rankList.innerHTML = sortedMembers.map((member, index) => `
+                <li><span>${index + 1}. ${member.fullName}</span><span>${member.points} điểm</span></li>
+            `).join('');
         }
 
         // Render calendar
@@ -723,7 +1050,59 @@
             renderCalendar(calendarData);
         }
 
-        // Form submission handling
+        // Lookup form submission
+        document.getElementById('lookupForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('lookupName').value.trim();
+            const subject = document.getElementById('lookupSubject').value;
+            const member = usersData.members.find(m => m.fullName.toLowerCase() === name.toLowerCase() && m.subjects.some(s => s.name === subject));
+            const resultDiv = document.getElementById('lookupResult');
+            if (member) {
+                const points = calculatePoints(member);
+                resultDiv.innerHTML = `
+                    <p><strong>Họ và Tên:</strong> ${member.fullName}</p>
+                    <p><strong>Số Điểm:</strong> ${points}</p>
+                `;
+            } else {
+                resultDiv.innerHTML = '<p>Không tìm thấy học viên hoặc môn học.</p>';
+            }
+        });
+
+        // Redeem form points update
+        function updateRedeemPoints() {
+            const name = document.getElementById('redeemName').value.trim();
+            const subject = document.getElementById('redeemSubject').value;
+            const pointsField = document.getElementById('redeemPoints');
+            const member = usersData.members.find(m => m.fullName.toLowerCase() === name.toLowerCase() && m.subjects.some(s => s.name === subject));
+            if (member) {
+                const points = calculatePoints(member);
+                pointsField.value = points;
+            } else {
+                pointsField.value = '';
+            }
+        }
+
+        document.getElementById('redeemName').addEventListener('input', updateRedeemPoints);
+        document.getElementById('redeemSubject').addEventListener('change', updateRedeemPoints);
+
+        // Redeem form submission
+        document.getElementById('redeemForm').addEventListener('submit', (e) => {
+            document.getElementById('redeemSubmissionTime').value = new Date().toLocaleString('vi-VN');
+            setTimeout(() => {
+                document.getElementById('successOverlay').style.display = 'block';
+                document.getElementById('successPopup').style.display = 'block';
+            }, 500); // Delay to simulate form submission
+        });
+
+        // Close success popup
+        function closeSuccessPopup() {
+            document.getElementById('successOverlay').style.display = 'none';
+            document.getElementById('successPopup').style.display = 'none';
+            document.getElementById('redeemForm').reset();
+            document.getElementById('redeemPoints').value = '';
+        }
+
+        // Form submission
         document.getElementById('codeForm').addEventListener('submit', (e) => {
             const fileInput = document.getElementById('submissionFile');
             if (fileInput.files.length > 0) {
@@ -783,7 +1162,6 @@
 
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                    // Update dino
                     dino.dy += dino.gravity;
                     dino.y += dino.dy;
                     if (dino.y > canvas.height - dino.height) {
@@ -793,7 +1171,6 @@
                     }
                     drawDino();
 
-                    // Spawn obstacles
                     if (frameCount % 60 === 0) {
                         spawnObstacle();
                     }
@@ -803,7 +1180,6 @@
                     obstacles = obstacles.filter(obstacle => obstacle.x + obstacle.width > 0);
                     drawObstacles();
 
-                    // Collision detection
                     for (let obstacle of obstacles) {
                         if (
                             dino.x < obstacle.x + obstacle.width &&
@@ -932,7 +1308,7 @@
             }
         }
 
-        // Details section logic
+        // Details section
         function formatTime(seconds) {
             const hrs = Math.floor(seconds / 3600);
             const mins = Math.floor((seconds % 3600) / 60);
@@ -951,20 +1327,22 @@
             const deviceInfo = navigator.userAgent;
             const platform = navigator.platform || 'Không xác định';
 
-            document.getElementById('detailsContent').innerHTML = `
-                <p><strong>Công thông tin:</strong> Xứ Đoàn Các Thánh Tử Đạo Việt Nam</p>
-                <p><strong>Giáo Xứ:</strong> Chánh Tòa Mỹ Tho</p>
-                <p><strong>Phiên bản thiết bị:</strong> ${deviceInfo}</p>
-                <p><strong>Thời gian dùng:</strong> ${formatTime(sessionTime)} (Cập nhật: ${currentDateTime})</p>
-                <p><strong>Vị trí thiết bị:</strong> ${platform}</p>
-                <p><strong>Được thiết kế bởi:</strong> Ban Truyền thông và Ban Kỹ thuật</p>
+            const detailsContent = `
+                <p><strong>Cổng thông tin:</strong> <span>Xứ Đoàn Các Thánh Tử Đạo Việt Nam</span></p>
+                <p><strong>Giáo Xứ:</strong> <span>Chánh Tòa Mỹ Tho</span></p>
+                <p><strong>Phiên bản thiết bị:</strong> <span>${deviceInfo}</span></p>
+                <p><strong>Thời gian dùng:</strong> <span>${formatTime(sessionTime)} (Cập nhật: ${currentDateTime})</span></p>
+                <p><strong>Vị trí thiết bị:</strong> <span>${platform}</span></p>
+                <p><strong>Được thiết kế bởi:</strong> <span>Ban Truyền thông và Ban Kỹ thuật</span></p>
             `;
+            document.getElementById('detailsContent').innerHTML = detailsContent;
+            document.getElementById('detailsPopup').innerHTML = detailsContent;
         }
 
-        setInterval(updateDetails, 60000); // Update every minute
+        setInterval(updateDetails, 60000);
 
         // Section navigation
-        const sections = ['home', 'calendar', 'submit', 'game', 'feedback', 'resources', 'details'];
+        const sections = ['home', 'calendar', 'submit', 'game', 'feedback', 'resources', 'details', 'guide', 'lookup', 'redeem'];
         function showSection(sectionId) {
             sections.forEach(id => {
                 const section = document.getElementById(id);
@@ -981,21 +1359,20 @@
 
             if (sectionId === 'details') {
                 updateDetails();
-                document.getElementById('detailsPopup').style.display = 'block';
+                const detailsSection = document.getElementById('details');
                 let touchTimeout;
-                document.getElementById('details').addEventListener('click', () => {
+                const showPopup = () => {
                     document.getElementById('detailsPopup').style.display = 'block';
+                };
+                detailsSection.addEventListener('click', showPopup);
+                detailsSection.addEventListener('touchstart', () => {
+                    touchTimeout = setTimeout(showPopup, 500);
                 });
-                document.getElementById('details').addEventListener('touchstart', () => {
-                    touchTimeout = setTimeout(() => {
-                        document.getElementById('detailsPopup').style.display = 'block';
-                    }, 500);
-                });
-                document.getElementById('details').addEventListener('touchend', () => {
+                detailsSection.addEventListener('touchend', () => {
                     clearTimeout(touchTimeout);
                     document.getElementById('detailsPopup').style.display = 'none';
                 });
-                document.getElementById('details').addEventListener('touchcancel', () => {
+                detailsSection.addEventListener('touchcancel', () => {
                     clearTimeout(touchTimeout);
                     document.getElementById('detailsPopup').style.display = 'none';
                 });
@@ -1004,14 +1381,32 @@
             }
         }
 
+        // Navbar toggle
+        function toggleMoreMenu(showMore) {
+            const mainMenu = document.querySelectorAll('.main-menu');
+            const moreMenu = document.querySelectorAll('.more-menu');
+            if (showMore) {
+                mainMenu.forEach(link => link.style.display = 'none');
+                moreMenu.forEach(link => link.style.display = 'flex');
+            } else {
+                mainMenu.forEach(link => link.style.display = 'flex');
+                moreMenu.forEach(link => link.style.display = 'none');
+            }
+        }
+
         document.querySelectorAll('.navbar a').forEach(link => {
             link.addEventListener('click', e => {
                 e.preventDefault();
-                const sectionId = link.getAttribute('href').substring(1);
-                if (sectionId === 'feedback' && isMobile) {
+                const href = link.getAttribute('href').substring(1);
+                if (href === 'more' && isMobile) {
+                    toggleMoreMenu(true);
+                } else if (href === 'back' && isMobile) {
+                    toggleMoreMenu(false);
+                    showSection('home');
+                } else if (href === 'feedback' && isMobile) {
                     window.open('https://m.me/tnttchanhtoamytho', '_blank');
                 } else {
-                    showSection(sectionId);
+                    showSection(href);
                 }
             });
         });
@@ -1022,7 +1417,9 @@
             loadCalendarData();
             loadDailyPrayer();
             loadResources();
+            loadGifts();
             showSection('home');
+            updateNavbar();
             if (isMobile) {
                 document.getElementById('highScore').textContent = localStorage.getItem('highScore') || 0;
             }
