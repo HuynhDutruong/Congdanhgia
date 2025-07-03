@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -5,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <meta name="description" content="Hệ thống Ban Truyền Thông - Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho">
     <meta name="keywords" content="Ban Truyền Thông, Xứ Đoàn, Giáo Xứ Chánh Tòa Mỹ Tho, Điểm thành viên, Lịch">
+
+    <meta name="theme-color" content="#cc3048">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon/icon-192x192.png">
     <title>Ban Truyền Thông - Xứ Đoàn Các Thánh Tử Đạo Việt Nam</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -369,8 +376,6 @@
         }
         .guide-section summary {
             font-family: 'JetBrains Mono', monospace;
-           meter {
-            font-family: 'JetBrains Mono', monospace;
             font-weight: 500;
             color: var(--accent);
             cursor: pointer;
@@ -411,10 +416,10 @@
                 padding: 0.75rem;
             }
             .header h2 {
-                font-size: 1rem;
+                font-size: 1.25rem;
             }
             .welcome-message {
-                font-size: 0.8rem;
+                font-size: 1.25rem;
                 margin-bottom: 0.5rem;
             }
             .header p {
@@ -486,7 +491,7 @@
                 margin-bottom: 1rem;
             }
             .gift-cart ul li {
-                font-size: 0.5rem;
+                font-size: 0.75rem;
                 padding: 0.5rem 0;
             }
         }
@@ -977,6 +982,19 @@
             showSection(sectionId);
         }
 
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            });
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             loadMediaData();
@@ -987,3 +1005,4 @@
     </script>
 </body>
 </html>
+```
