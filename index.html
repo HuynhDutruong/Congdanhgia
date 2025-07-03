@@ -258,64 +258,54 @@
     </div>
 
     <script>
-        const isIOS = /iPhone|iPad/.test(navigator.userAgent);
+        const isIOS = navigator.userAgent.includes('iPhone') || navigator.userAgent.includes('iPad');
         if (isIOS) {
             document.body.classList.add('ios');
         }
-        
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "xudoanmediatech.firebaseapp.com",
-            databaseURL: "https://xudoanmediatech-default-rtdb.firebaseio.com",
-            projectId: "xudoanmediatech",
-            storageBucket: "xudoanmediatech.appspot.com",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-        const auth = firebase.auth();
-        
+
         const showNotification = (message, type) => {
-            const notificationMessage = document.getElementById('notificationMessage');
-            notificationMessage.textContent = message;
-            notificationMessage.className = `notification ${type}`;
-            document.getElementById('notificationOverlay').style.display = 'block';
-            document.getElementById('notificationPopup').style.display = 'block';
-            setTimeout(closeNotification, 3000);
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
         };
-        
-        function closeNotification() {
-            document.getElementById('notificationOverlay').style.display = 'none';
-            document.getElementById('notificationPopup').style.display = 'none';
-        }
-        
+
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const username = document.getElementById('username').value.trim();
+            const username = document.getElementById('username').value.trim().toLowerCase();
             const password = document.getElementById('password').value;
             const currentYear = new Date().getFullYear().toString();
-        
-            if (!username || !password) {
-                showNotification('Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu.', 'error');
+
+            const users = {
+                'horeb': 'horeb.html',
+                'tabor': 'tabor.html',
+                'admin': 'admin.html',
+                'scode': 'StudyCode/scode.html'
+            };
+
+            if (users[username] && password === currentYear) {
+                sessionStorage.setItem('loggedInUser', username);
+                window.location.href = users[username];
                 return;
             }
-        
+
             try {
-                const adminsRef = database.ref('admins');
-                const snapshot = await adminsRef.once('value');
-                const admins = snapshot.val() || [];
-                const admin = admins.find(a => a.name.toLowerCase() === username.toLowerCase());
-        
-                if (admin && password === currentYear) {
-                    await auth.signInWithEmailAndPassword(`${username.toLowerCase()}@xudoan.com`, password);
-                    sessionStorage.setItem('loggedInAdmin', admin.name);
-                    window.location.href = 'manage.html';
+                const response = await fetch('StudyCode/data/media.json');
+                if (!response.ok) throw new Error('Không thể tải danh sách thành viên.');
+                const data = await response.json();
+                const member = data.members.find(m => m.fullName.toLowerCase() === username);
+                
+                if (member && password === currentYear) {
+                    sessionStorage.setItem('loggedInUser', member.fullName);
+                    window.location.href = 'StudyCode/media.html';
                 } else {
                     showNotification('Tên đăng nhập hoặc mật khẩu không đúng!', 'error');
                 }
             } catch (error) {
-                showNotification('Lỗi khi kiểm tra đăng nhập: ' + error.message, 'error');
+                showNotification('Lỗi khi kiểm tra đăng nhập. Vui lòng thử lại.', 'error');
                 console.error('Error:', error);
             }
         });
