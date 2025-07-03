@@ -213,45 +213,21 @@
             margin-right: 0.5rem;
         }
 
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 0.1rem;
-            max-height: 300px;
-            overflow-y: auto;
-            padding: 1rem;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 0.4rem;
-        }
-        .calendar-day {
-            background: #1E1E1E;
-            border: 1px solid var(--border-color);
-            border-radius: 0.3rem;
-            padding: 0.75rem;
-            text-align: center;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-        .calendar-day.highlight {
-            background: #cc3048;
-            color: var(--text);
-        }
-        .calendar-day p {
-            margin: 0;
-            font-size: 0.875rem;
-        }
-
-        .month-header {
-            grid-column: span 7;
-            background: var(--primary-dark);
-            color: var(--text);
-            padding: 0.75rem;
-            text-align: center;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
+        .calendar-embed {
+            position: relative;
+            padding-bottom: 75%;
+            height: 0;
+            overflow: hidden;
             border-radius: 0.5rem;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+        }
+        .calendar-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
 
         .gift-grid {
@@ -393,6 +369,8 @@
         }
         .guide-section summary {
             font-family: 'JetBrains Mono', monospace;
+           meter {
+            font-family: 'JetBrains Mono', monospace;
             font-weight: 500;
             color: var(--accent);
             cursor: pointer;
@@ -497,15 +475,8 @@
             .rank-list {
                 max-height: 300px;
             }
-            .event-details {
-                background: #1E1E1E;
-                border: 1px solid var(--border-color);
-                border-radius: 0.5rem;
-                padding: 1rem;
-                margin-top: 1rem;
-            }
-            .event-details p {
-                font-size: 0.75rem;
+            .calendar-embed {
+                padding-bottom: 100%;
             }
             .gift-cart {
                 background: #1E1E1E;
@@ -547,13 +518,6 @@
         </div>
     </div>
 
-    <div class="popup-overlay" id="eventOverlay">
-        <div class="popup" id="eventPopup">
-            <div id="eventDetails"></div>
-            <button class="btn mt-4" onclick="closeEventPopup()">Thoát</button>
-        </div>
-    </div>
-
     <div class="header">
         <div class="header-container">
             <div class="header-content">
@@ -589,7 +553,9 @@
 
         <div id="calendar" class="card">
             <h3>Lịch</h3>
-            <div class="calendar-grid" id="calendarGrid"></div>
+            <div class="calendar-embed">
+                <iframe src="https://calendar.google.com/calendar/embed?src=your_calendar_id%40group.calendar.google.com&ctz=Asia%2FHo_Chi_Minh" style="border: 0" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
+            </div>
         </div>
 
         <div id="redeem" class="card">
@@ -662,9 +628,9 @@
                         <li><strong>Điểm được cập nhật bao lâu một lần?</strong> Điểm được cập nhật hàng tuần dựa trên dữ liệu từ ban quản lý.</li>
                         <li><strong>Quà đổi có giới hạn không?</strong> Một số quà có số lượng giới hạn, vui lòng kiểm tra mục "Đổi Quà".</li>
                         <li><strong>Liên hệ hỗ trợ?</strong> Gửi phản hồi qua mục "Phản Hồi" hoặc email notification2411.huynhdutruong@gmail.com.</li>
-                        <li><strong>Cách tính điểm như thế nào?</strong>Điểm do các thành viên quản lí, phụ trách kiểm tra, xem xét và trao quyết định. Đối với riêng Ban Truyền Thông và Ban Kỹ Thuật, mỗi bài viết sẽ được khuyến khích (3 điểm)- các bài viết được ưa thích sẽ được khuyến khích 5 điểm thưởng, tham gia hội họp và sinh hoạt theo như quy chế và nội quy của phong trào thiếu nhi Thánh Thể (1 điểm), đối với các hoạt động tự tổ chức, tham gia hỗ trợ tổ chức sẽ được xem xét để quyết định bởi quản lí ban. </li>
+                        <li><strong>Cách tính điểm như thế nào?</strong> Điểm do các thành viên quản lí, phụ trách kiểm tra, xem xét và trao quyết định. Đối với riêng Ban Truyền Thông và Ban Kỹ Thuật, mỗi bài viết sẽ được khuyến khích (3 điểm)- các bài viết được ưa thích sẽ được khuyến khích 5 điểm thưởng, tham gia hội họp và sinh hoạt theo như quy chế và nội quy của phong trào thiếu nhi Thánh Thể (1 điểm), đối với các hoạt động tự tổ chức, tham gia hỗ trợ tổ chức sẽ được xem xét để quyết định bởi quản lí ban. </li>
                     </ul>
-                </details out>
+                </details>
             </div>
         </div>
     </div>
@@ -714,20 +680,6 @@
                 console.error('Error loading media data:', error);
                 document.getElementById('memberInfo').innerHTML = '<p class="text-[var(--error)]">Không thể tải thông tin thành viên.</p>';
                 document.getElementById('rankList').innerHTML = '<p class="text-[var(--error)]">Không thể tải bảng xếp hạng.</p>';
-            }
-        }
-
-        // Load calendar data
-        let calendarData = [];
-        async function loadCalendarData() {
-            try {
-                const response = await fetch('data/CatholicCalendar.json');
-                if (!response.ok) throw new Error('Không thể tải CatholicCalendar.json');
-                calendarData = await response.json();
-                populateCalendar();
-            } catch (error) {
-                console.error('Error loading calendar:', error);
-                populateCalendar();
             }
         }
 
@@ -804,59 +756,6 @@
 
         function filterRankList() {
             populateRankList();
-        }
-
-        // Populate calendar
-        function populateCalendar() {
-            const calendarGrid = document.getElementById('calendarGrid');
-            const currentYear = new Date().getFullYear();
-            const months = [
-                "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6",
-                "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"
-            ];
-            const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-            if ((currentYear % 4 === 0 && currentYear % 100 !== 0) || currentYear % 400 === 0) daysInMonth[1] = 29;
-
-            let html = '';
-            for (let month = 0; month < 12; month++) {
-                html += `<div class="month-header">${months[month]} ${currentYear}</div>`;
-                for (let day = 1; day <= daysInMonth[month]; day++) {
-                    const dateStr = `${currentYear}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                    const isEventDay = calendarData.some(event => event.date === dateStr);
-                    html += `
-                        <div class="calendar-day ${isEventDay && isMobile ? 'highlight' : ''}" data-date="${dateStr}" onclick="${isMobile && isEventDay ? `showEventDetails('${dateStr}')` : ''}">
-                            <p>${day}</p>
-                        </div>
-                    `;
-                }
-            }
-            calendarGrid.innerHTML = html;
-        }
-
-        // Show event details (Mobile only)
-        function showEventDetails(date) {
-            if (!isMobile) return;
-            const eventDetails = document.getElementById('eventDetails');
-            const events = calendarData.filter(event => event.date === date);
-            if (events.length > 0) {
-                eventDetails.innerHTML = events.map(event => `
-                    <div class="event-details">
-                        <p><strong>Sự kiện:</strong> ${event.name}</p>
-                        <p><strong>Thời gian:</strong> ${event.time}</p>
-                        <p><strong>Địa điểm:</strong> ${event.location}</p>
-                        <p><strong>Mô tả:</strong> ${event.description}</p>
-                    </div>
-                `).join('');
-            } else {
-                eventDetails.innerHTML = '<p>Không có chi tiết sự kiện.</p>';
-            }
-            document.getElementById('eventOverlay').style.display = 'block';
-            document.getElementById('eventPopup').style.display = 'block';
-        }
-
-        function closeEventPopup() {
-            document.getElementById('eventOverlay').style.display = 'none';
-            document.getElementById('eventPopup').style.display = 'none';
         }
 
         // Populate redeem form
@@ -1081,7 +980,6 @@
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             loadMediaData();
-            loadCalendarData();
             loadGifts();
             setupNavigation();
             showSection('home');
