@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="description" content="Hệ thống Quản lý - Ban Truyền Thông - Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho">
+    <meta name="keywords" content="Quản lý, Ban Truyền Thông, Xứ Đoàn, Giáo Xứ Chánh Tòa Mỹ Tho, Điểm danh, QR Code">
+    <title>Quản lý - Ban Truyền Thông</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js"></script>
+    <style>
+        :root {
+            --primary: #cc3048;
+            --primary-dark: #b7142a;
+            --accent: #FFD700;
+            --dark-bg: #1A1A1A;
+            --text: #E0E0E0;
+            --error: #EF4444;
+            --card-bg: #252526;
+            --border-color: #3C3C3C;
+            --success-color: #10B981;
+            --warning-color: #FBBF24;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --transition: all 0.15s ease-in-out;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #2D2D2D 0%, #1A1A1A 100%);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        body.ios {
+            font-family: -apple-system, 'SF Pro', 'Roboto', sans-serif;
+        }
+
+        .header {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--text);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 1rem;
+        }
+        .header h2 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--text);
+        }
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-top: 0.25rem;
+        }
+
+        .container {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            overflow-y: auto;
+            min-height: calc(100dvh - 120px);
+            padding-bottom: 60px;
+        }
+
+        .navbar {
+            background: var(--dark-bg);
+            padding: 0.75rem;
+            display: flex;
+            justify-content: space-around;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+            height: 60px;
+        }
+        .navbar a {
+            color: var(--text);
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            text-align: center;
+            border-radius: 0.5rem;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+        .navbar a i {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+        .navbar a:hover {
+            background: var(--primary);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .navbar a.active {
+            background: var(--primary);
+            color: var(--accent);
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .card.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .card h3 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.75rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .welcome-message {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        th {
+            background: var(--primary-dark);
+            color: var(--text);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        td input {
+            width: 100%;
+            background: #1E1E1E;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            color: var(--text);
+        }
+        td input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .video-player {
+            background: #1E1E1E;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .video-controls {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+        .progress-container {
+            width: 100%;
+            background: #2A2A2A;
+            border-radius: 0.5rem;
+            height: 8px;
+            margin: 0.5rem 0;
+            position: relative;
+        }
+        .progress-bar {
+            background: var(--accent);
+            height: 100%;
+            border-radius: 0.5rem;
+            width: 0;
+        }
+        .time-display {
+            font-size: 0.875rem;
+            text-align: center;
+        }
+
+        .qr-scanner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        #qrVideo {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 0.5rem;
+        }
+        #qrResult {
+            background: #1E1E1E;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            width: 100%;
+            max-width: 400px;
+            min-height: 100px;
+            font-size: 0.875rem;
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(26, 26, 26, 0.95);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-md);
+            max-width: 90%;
+            width: 320px;
+            font-size: 0.875rem;
+            z-index: 1001;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            display: none;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: var(--text);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        .btn:disabled {
+            background: #3C3C3C;
+            cursor: not-allowed;
+        }
+        .btn:not(:disabled):hover {
+            background: var(--primary-dark);
+            color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .btn:active {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn:active::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.3s linear;
+        }
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        .input, select.input {
+            background: #1E1E1E;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            color: var(--text);
+            width: 100%;
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.875rem;
+        }
+        .input:focus, select.input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.3);
+        }
+
+        @media (max-width: 1024px) {
+            :root {
+                --primary: #e63950;
+                --accent: #FFD54F;
+            }
+            .header {
+                padding: 0.75rem;
+            }
+            .header h2 {
+                font-size: 1.25rem;
+            }
+            .welcome-message {
+                font-size: 1.25rem;
+                margin-bottom: 0.5rem;
+            }
+            .header p {
+                font-size: 0.875rem;
+            }
+            .container {
+                padding: 1rem;
+                min-height: calc(100dvh - 100px);
+                padding-bottom: 50px;
+            }
+            .navbar {
+                height: 50px;
+                padding: 0.5rem;
+            }
+            .navbar a {
+                font-size: 0.75rem;
+            }
+            .navbar a i {
+                font-size: 1rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+            body.ios .navbar, body.ios .card {
+                background: rgba(26, 26, 26, 0.95);
+                backdrop-filter: blur(10px);
+            }
+            body.ios .btn:active {
+                transform: scale(0.95);
+                box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .navbar a:hover {
+                background: linear-gradient(45deg, var(--primary), var(--accent));
+            }
+            .btn:not(:disabled):hover {
+                background: linear-gradient(45deg, var(--primary), var(--accent));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="popup-overlay" id="successOverlay">
+        <div class="popup" id="successPopup">
+            <p id="successMessage"></p>
+            <button class="btn mt-4" onclick="closeSuccessPopup()">Thoát</button>
+        </div>
+    </div>
+
+    <div class="header">
+        <div class="header-container">
+            <div class="header-content">
+                <h2>QUẢN LÝ - MEDIA-TECH</h2>
+                <p>XỨ ĐOÀN CÁC THÁNH TỬ ĐẠO VIỆT NAM</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="navbar" id="navbar">
+        <a href="#home" class="active"><i class="fas fa-home"></i><span>Trang Chủ</span></a>
+        <a href="#songs"><i class="fas fa-music"></i><span>Bài Hát</span></a>
+        <a href="#attendance"><i class="fas fa-users"></i><span>Sĩ Số</span></a>
+        <a href="#qr"><i class="fas fa-qrcode"></i><span>Quét QR</span></a>
+    </div>
+
+    <div class="container">
+        <div id="home" class="card active">
+            <h3 class="welcome-message" id="welcomeMessage"></h3>
+            <select id="classFilter" class="input mb-4" onchange="filterMemberList()">
+                <option value="">Tất cả lớp</option>
+            </select>
+            <div class="table-container">
+                <table id="memberTable">
+                    <thead>
+                        <tr>
+                            <th>Họ và Tên Thánh</th>
+                            <th>Lớp</th>
+                            <th>Điểm</th>
+                            <th>Chi Tiêu</th>
+                            <th>Buổi Học</th>
+                            <th>Hoạt Động</th>
+                            <th>Điểm Học Tập</th>
+                            <th>Hành Động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="memberList"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="songs" class="card">
+            <h3>Quản Lý Bài Hát</h3>
+            <div class="video-player">
+                <h4>Thiếu Nhi Tân Hành Ca</h4>
+                <iframe id="song1" width="100%" height="315" src="https://www.youtube.com/embed/WuRKSxGToUs?si=tPC5G7lXBjn6coSa&enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar1"></div>
+                </div>
+                <div class="time-display" id="timeDisplay1">0:00 / 0:00</div>
+                <div class="video-controls">
+                    <button class="btn" onclick="playVideo('song1')"><i class="fas fa-play"></i></button>
+                    <button class="btn" onclick="pauseVideo('song1')"><i class="fas fa-pause"></i></button>
+                    <button class="btn" onclick="rewindVideo('song1', -15)"><i class="fas fa-backward"></i> -15s</button>
+                    <button class="btn" onclick="forwardVideo('song1', 15)"><i class="fas fa-forward"></i> +15s</button>
+                    <button class="btn" onclick="restartVideo('song1')"><i class="fas fa-redo"></i></button>
+                </div>
+            </div>
+            <div class="video-player">
+                <h4>Bài Hát Sinh Hoạt</h4>
+                <iframe id="song2" width="100%" height="315" src="https://www.youtube.com/embed/ZYfWCEvQi-o?si=ufEIJPsCd8SHgu0l&enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar2"></div>
+                </div>
+                <div class="time-display" id="timeDisplay2">0:00 / 0:00</div>
+                <div class="video-controls">
+                    <button class="btn" onclick="playVideo('song2')"><i class="fas fa-play"></i></button>
+                    <button class="btn" onclick="pauseVideo('song2')"><i class="fas fa-pause"></i></button>
+                    <button class="btn" onclick="rewindVideo('song2', -15)"><i class="fas fa-backward"></i> -15s</button>
+                    <button class="btn" onclick="forwardVideo('song2', 15)"><i class="fas fa-forward"></i> +15s</button>
+                    <button class="btn" onclick="restartVideo('song2')"><i class="fas fa-redo"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div id="attendance" class="card">
+            <h3>Quản Lý Sĩ Số</h3>
+            <form id="attendanceForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST">
+                <div class="mb-4">
+                    <label class="block mb-1 text-text">Ngày Điểm Danh:</label>
+                    <input type="text" id="attendanceDate" name="date" class="input" placeholder="DD/MM/YYYY" required>
+                </div>
+                <div class="table-container">
+                    <table id="attendanceTable">
+                        <thead>
+                            <tr>
+                                <th>Số Thứ Tự</th>
+                                <th>Lớp</th>
+                                <th>Sĩ Số</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendanceList"></tbody>
+                    </table>
+                </div>
+                <button type="submit" id="submitAttendanceBtn" class="btn mt-4" disabled>Nộp</button>
+            </form>
+        </div>
+
+        <div id="qr" class="card">
+            <h3>Quét Mã QR</h3>
+            <div class="qr-scanner">
+                <video id="qrVideo"></video>
+                <button class="btn" onclick="startQRScanner()">Bắt Đầu Quét</button>
+                <button class="btn" onclick="stopQRScanner()">Dừng Quét</button>
+                <div id="qrResult">Nội dung mã QR sẽ hiển thị ở đây</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const isMobile = window.innerWidth <= 1024;
+        const isIOS = /iPhone|iPad/.test(navigator.userAgent);
+
+        if (isIOS) {
+            document.body.classList.add('ios');
+        }
+
+        // Kiểm tra đăng nhập
+        const loggedInAdmin = sessionStorage.getItem('loggedInAdmin');
+        if (!loggedInAdmin) {
+            window.location.href = 'login.html';
+        }
+
+        // Load admin data
+        let adminData = [];
+        async function loadAdminData() {
+            try {
+                const response = await fetch('data/admin.json');
+                if (!response.ok) throw new Error('Không thể tải admin.json');
+                adminData = await response.json();
+                const admin = adminData.find(a => a.name.toLowerCase() === loggedInAdmin.toLowerCase());
+                document.getElementById('welcomeMessage').textContent = admin ? `Chào mừng Admin ${admin.name}!` : 'Chào mừng Admin!';
+            } catch (error) {
+                console.error('Error loading admin data:', error);
+                document.getElementById('welcomeMessage').textContent = 'Chào mừng Admin!';
+            }
+        }
+
+        // Load member data
+        let mediaData = [];
+        let usersData = [];
+        async function loadMemberData() {
+            try {
+                const mediaResponse = await fetch('data/media.json');
+                if (!mediaResponse.ok) throw new Error('Không thể tải media.json');
+                mediaData = await mediaResponse.json();
+
+                const usersResponse = await fetch('data/users.json');
+                if (!usersResponse.ok) throw new Error('Không thể tải users.json');
+                usersData = await usersResponse.json();
+
+                populateClassFilter();
+                populateMemberList();
+                populateAttendanceTable();
+            } catch (error) {
+                console.error('Error loading member data:', error);
+                document.getElementById('memberList').innerHTML = '<tr><td colspan="8" class="text-[var(--error)]">Không thể tải danh sách thành viên.</td></tr>';
+            }
+        }
+
+        // Populate class filter
+        function populateClassFilter() {
+            const classFilter = document.getElementById('classFilter');
+            const classes = [...new Set([
+                ...mediaData.members.map(m => m.class),
+                ...usersData.members.map(m => m.subjects[0]?.name || 'Không xác định')
+            ])];
+            classFilter.innerHTML = '<option value="">Tất cả lớp</option>' + classes.map(c => `<option value="${c}">${c}</option>`).join('');
+        }
+
+        // Populate member list
+        function populateMemberList() {
+            const classFilter = document.getElementById('classFilter').value;
+            const memberList = document.getElementById('memberList');
+            const combinedMembers = mediaData.members.map(mediaMember => {
+                const userMember = usersData.members.find(u => u.fullName === mediaMember.fullName.split(' ').slice(1).join(' ')) || {};
+                return {
+                    fullName: mediaMember.fullName,
+                    class: mediaMember.class || userMember.subjects?.[0]?.name || 'Không xác định',
+                    memberpoint: mediaMember.memberpoint || 0,
+                    spending: userMember.spending || 0,
+                    sessions: userMember.sessions || 0,
+                    activities: userMember.activities || 0,
+                    learningScore: userMember.LearningScore || 0
+                };
+            });
+            const filteredMembers = classFilter ? combinedMembers.filter(m => m.class === classFilter) : combinedMembers;
+            memberList.innerHTML = filteredMembers.map((member, index) => `
+                <tr>
+                    <td>${member.fullName}</td>
+                    <td>${member.class}</td>
+                    <td>${member.memberpoint}</td>
+                    <td>${member.spending}</td>
+                    <td>${member.sessions}</td>
+                    <td>${member.activities}</td>
+                    <td>${member.learningScore}</td>
+                    <td><button class="btn" onclick="editMember('${member.fullName}')">Sửa</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function filterMemberList() {
+            populateMemberList();
+        }
+
+        // Edit member
+        function editMember(fullName) {
+            const member = mediaData.members.find(m => m.fullName === fullName);
+            const userMember = usersData.members.find(u => u.fullName === fullName.split(' ').slice(1).join(' '));
+            if (!member) return;
+            const newPoints = prompt(`Nhập điểm mới cho ${fullName}:`, member.memberpoint);
+            const newSpending = prompt(`Nhập chi tiêu mới cho ${fullName}:`, userMember?.spending || 0);
+            const newSessions = prompt(`Nhập số buổi học mới cho ${fullName}:`, userMember?.sessions || 0);
+            const newActivities = prompt(`Nhập số hoạt động mới cho ${fullName}:`, userMember?.activities || 0);
+            const newLearningScore = prompt(`Nhập điểm học tập mới cho ${fullName}:`, userMember?.LearningScore || 0);
+
+            if (newPoints !== null) member.memberpoint = parseInt(newPoints) || 0;
+            if (userMember && newSpending !== null) userMember.spending = parseInt(newSpending) || 0;
+            if (userMember && newSessions !== null) userMember.sessions = parseInt(newSessions) || 0;
+            if (userMember && newActivities !== null) userMember.activities = parseInt(newActivities) || 0;
+            if (userMember && newLearningScore !== null) userMember.LearningScore = parseInt(newLearningScore) || 0;
+
+            saveMemberData();
+            populateMemberList();
+        }
+
+        // Save member data (simulated)
+        function saveMemberData() {
+            console.log('Saving media.json:', JSON.stringify(mediaData, null, 2));
+            console.log('Saving users.json:', JSON.stringify(usersData, null, 2));
+            // In a real application, send these to a server endpoint
+        }
+
+        // Populate attendance table
+        const classes = [
+            'Khai Tâm 1', 'Khai Tâm 2', 'Rước Lễ 1A', 'Rước Lễ 1B', 'Rước Lễ 2A', 'Rước Lễ 2B',
+            'Thêm Sức 1A', 'Thêm Sức 1B', 'Thêm Sức 2A', 'Thêm Sức 2B', 'Bao Đồng 1', 'Bao Đồng 2'
+        ];
+        function populateAttendanceTable() {
+            const attendanceList = document.getElementById('attendanceList');
+            attendanceList.innerHTML = classes.map((cls, index) => `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${cls}</td>
+                    <td><input type="number" name="attendance_${cls}" class="input" min="0" required></td>
+                </tr>
+            `).join('');
+            checkAttendanceForm();
+        }
+
+        // Check attendance form
+        function checkAttendanceForm() {
+            const inputs = document.querySelectorAll('#attendanceTable input');
+            const submitBtn = document.getElementById('submitAttendanceBtn');
+            const allFilled = Array.from(inputs).every(input => input.value.trim() !== '');
+            submitBtn.disabled = !allFilled;
+        }
+
+        // Attendance form submission
+        document.getElementById('attendanceForm')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const date = document.getElementById('attendanceDate').value;
+            if (!/^\d{2}\/\d{2}\/\d{4}$/.test(date)) {
+                document.getElementById('successMessage').textContent = 'Vui lòng nhập ngày theo định dạng DD/MM/YYYY.';
+                document.getElementById('successMessage').style.color = 'var(--error)';
+                showSuccessPopup();
+                return;
+            }
+            document.getElementById('successMessage').textContent = 'Dữ liệu sĩ số đã được gửi, vui lòng kiểm tra Gmail.';
+            document.getElementById('successMessage').style.color = 'var(--success-color)';
+            showSuccessPopup();
+            e.target.submit();
+        });
+
+        document.getElementById('attendanceTable')?.addEventListener('input', checkAttendanceForm);
+
+        // YouTube player
+        let players = {};
+        function onYouTubeIframeAPIReady() {
+            players['song1'] = new YT.Player('song1', {
+                events: {
+                    'onStateChange': onPlayerStateChange('song1'),
+                    'onReady': onPlayerReady('song1')
+                }
+            });
+            players['song2'] = new YT.Player('song2', {
+                events: {
+                    'onStateChange': onPlayerStateChange('song2'),
+                    'onReady': onPlayerReady('song2')
+                }
+            });
+        }
+
+        function onPlayerReady(id) {
+            return function(event) {
+                updateProgress(id);
+            };
+        }
+
+        function onPlayerStateChange(id) {
+            return function(event) {
+                if (event.data === YT.PlayerState.PLAYING) {
+                    updateProgress(id);
+                }
+            };
+        }
+
+        function playVideo(id) {
+            players[id]?.playVideo();
+        }
+
+        function pauseVideo(id) {
+            players[id]?.pauseVideo();
+        }
+
+        function rewindVideo(id, seconds) {
+            const player = players[id];
+            if (player) player.seekTo(Math.max(0, player.getCurrentTime() + seconds), true);
+        }
+
+        function forwardVideo(id, seconds) {
+            const player = players[id];
+            if (player) player.seekTo(player.getCurrentTime() + seconds, true);
+        }
+
+        function restartVideo(id) {
+            const player = players[id];
+            if (player) player.seekTo(0, true);
+        }
+
+        function updateProgress(id) {
+            const player = players[id];
+            if (!player) return;
+            const progressBar = document.getElementById(`progressBar${id.slice(-1)}`);
+            const timeDisplay = document.getElementById(`timeDisplay${id.slice(-1)}`);
+            const duration = player.getDuration();
+            const update = () => {
+                if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+                    const currentTime = player.getCurrentTime();
+                    const progress = (currentTime / duration) * 100;
+                    progressBar.style.width = `${progress}%`;
+                    timeDisplay.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
+                    requestAnimationFrame(update);
+                }
+            };
+            requestAnimationFrame(update);
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            seconds = Math.floor(seconds % 60);
+            return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+
+        // QR Scanner
+        let stream = null;
+        async function startQRScanner() {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+                const video = document.getElementById('qrVideo');
+                video.srcObject = stream;
+                video.play();
+                scanQRCode();
+            } catch (error) {
+                document.getElementById('qrResult').textContent = 'Không thể truy cập camera: ' + error.message;
+                document.getElementById('qrResult').style.color = 'var(--error)';
+            }
+        }
+
+        function stopQRScanner() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+                document.getElementById('qrVideo').srcObject = null;
+                document.getElementById('qrResult').textContent = 'Nội dung mã QR sẽ hiển thị ở đây';
+                document.getElementById('qrResult').style.color = 'var(--text)';
+            }
+        }
+
+        function scanQRCode() {
+            const video = document.getElementById('qrVideo');
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            const qrResult = document.getElementById('qrResult');
+
+            function tick() {
+                if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                    canvas.height = video.videoHeight;
+                    canvas.width = video.videoWidth;
+                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                    const code = jsQR(imageData.data, imageData.width, imageData.height, {
+                        inversionAttempts: 'dontInvert'
+                    });
+                    if (code) {
+                        qrResult.textContent = code.data;
+                        qrResult.style.color = 'var(--success-color)';
+                        stopQRScanner();
+                        return;
+                    }
+                }
+                requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        }
+
+        function showSuccessPopup() {
+            document.getElementById('successOverlay').style.display = 'block';
+            document.getElementById('successPopup').style.display = 'block';
+            setTimeout(closeSuccessPopup, 2000);
+        }
+
+        function closeSuccessPopup() {
+            document.getElementById('successOverlay').style.display = 'none';
+            document.getElementById('successPopup').style.display = 'none';
+            showSection('home');
+        }
+
+        // Section navigation
+        const sections = ['home', 'songs', 'attendance', 'qr'];
+        function showSection(sectionId) {
+            sections.forEach(id => {
+                const section = document.getElementById(id);
+                if (section) section.classList.remove('active');
+            });
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) targetSection.classList.add('active');
+            document.querySelectorAll('.navbar a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === sectionId) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Attach navigation events
+        function setupNavigation() {
+            document.querySelectorAll('.navbar a').forEach(link => {
+                link.removeEventListener('click', handleNavClick);
+                link.addEventListener('click', handleNavClick);
+            });
+        }
+
+        function handleNavClick(e) {
+            e.preventDefault();
+            const sectionId = e.currentTarget.getAttribute('href').substring(1);
+            showSection(sectionId);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAdminData();
+            loadMemberData();
+            setupNavigation();
+            showSection('home');
+            const tag = document.createElement('script');
+            tag.src = 'https://www.youtube.com/iframe_api';
+            document.body.appendChild(tag);
+        });
+    </script>
+</body>
+</html>
