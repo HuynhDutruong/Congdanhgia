@@ -2,12 +2,83 @@
   "members": [
     {
       "fullName": "Maria Đào Ngọc Nhã Trân",
-      "class": "Ban Truyền Thông",
+      "class": "Ban Vệ Sinh - Y Tế",
       "memberpoint": 14,
       "monthlyPoints": [
         {"month": "2025-07", "points": 14},
         {"month": "2025-06", "points": 0}
       ]
+    },
+
+    {
+      "fullName": "Isave Nguyễn Hoàng Mai Vy",
+      "class": "Ban Vệ Sinh - Y Tế",
+      "memberpoint": 3,
+      "monthlyPoints": [
+        {"month": "2025-07", "points": 3},
+        {"month": "2025-06", "points": 0}
+      ]
+    },
+
+    {
+      "fullName": "Catarina Bùi Ngọc Ánh Quyên",
+      "class": "Ban Vệ Sinh - Y Tế",
+      "memberpoint": 3,
+      "monthlyPoints": [
+        {"month": "2025-07", "points": 3},
+        {"month": "2025-06", "points": 0}
+      ]
+    },
+
+    {
+      "fullName": "Phêrô Nguyễn Huỳnh Hiền Minh",
+      "class": "Ban Vệ Sinh - Y Tế",
+      "memberpoint": 0,
+      "monthlyPoints": [
+        {"month": "2025-07", "points": 0},
+        {"month": "2025-06", "points": 0}
+      ]
+    },
+
+    {
+      "fullName": "Maria Trịnh Bảo Yến",
+      "class": "Ban Vệ Sinh - Y Tế",
+      "memberpoint": 3,
+      "monthlyPoints": [
+        {"month": "2025-07", "points": 3},
+        {"month": "2025-06", "points": 0}
+      ]
+    },
+
+    {
+      "fullName": "Matthêu Trần Gia Bảo",
+      "class": "Ban Vệ Sinh - Y Tế",
+      "memberpoint": 0,
+      "monthlyPoints": [
+        {"month": "2025-07", "points": 0},
+        {"month": "2025-06", "points": 0}
+      ]
+    },
+
+    {
+      "fullName": "Phanxico Xavie Nguyễn Ngọc Tuấn",
+      "class": "Ban Vệ Sinh - Y Tế",
+      "memberpoint": 0,
+      "monthlyPoints": [
+        {"month": "2025-07", "points": 0},
+        {"month": "2025-06", "points": 0}
+      ]
+    },
+
+    {
+      "fullName": "Phêrô Phạm Phi Hổ",
+      "class": "Ban Vệ Sinh - Y Tế",
+      "memberpoint": 0,
+      "monthlyPoints": [
+        {"month": "2025-07", "points": 0},
+        {"month": "2025-06", "points": 0}
+      ]
     }
+    
   ]
 }
