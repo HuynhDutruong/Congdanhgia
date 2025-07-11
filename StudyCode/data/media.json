@@ -10,6 +10,36 @@
         {"month": "2025-06", "points": 0}
       ]
     },
+
+    {
+      "fullName": "Phêrô Nguyễn Hoàng Trọng Nhân",
+      "class": "Ban Truyền Thông",
+      "memberpoint": 3,
+      "monthlyPoints": [
+        {"month": "2025-07", "points": 3},
+        {"month": "2025-06", "points": 0}
+      ]
+    },
+
+    {
+      "fullName": "Giuse Phan Lê Quốc Bảo",
+      "class": "Ban Truyền Thông",
+      "memberpoint": 0,
+      "monthlyPoints": [
+        {"month": "2025-07", "points": 0},
+        {"month": "2025-06", "points": 0}
+      ]
+    },
+
+    {
+      "fullName": "Phaolô Trần Hoàng Phúc",
+      "class": "Ban Truyền Thông",
+      "memberpoint": 3,
+      "monthlyPoints": [
+        {"month": "2025-07", "points": 3},
+        {"month": "2025-06", "points": 0}
+      ]
+    },
     
     {
       "fullName": "Giuse Lê Hoàng Thiên Lộc",
