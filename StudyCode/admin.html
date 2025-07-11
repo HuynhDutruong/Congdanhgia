@@ -450,9 +450,9 @@
     </div>
 
     <div class="navbar" id="navbar">
-        <a href="#home" class="active" data-tooltip="Trang Chủ"><i class="fas fa-home"></i><span>Trang Chủ</span></a>
-        <a href="#management" data-tooltip="Quản Lý Thành Viên"><i class="fas fa-users"></i><span>Quản Lý</span></a>
-        <a href="#notes" data-tooltip="Ghi Chú"><i class="fas fa-sticky-note"></i><span>Ghi Chú</span></a>
+        <a href="#home" class="active" data-tooltip="Trang Chủ"><i class="fas fa-home"></i><span></span></a>
+        <a href="#management" data-tooltip="Quản Lý Thành Viên"><i class="fas fa-users"></i><span></span></a>
+        <a href="#notes" data-tooltip="Ghi Chú"><i class="fas fa-sticky-note"></i><span></span></a>
     </div>
 
     <div class="container">
@@ -493,7 +493,7 @@
                     <option value="all">Tất cả</option>
                     <option value="enviroment">Ban Vệ Sinh - Y Tế</option>
                     <option value="media">Ban Truyền Thông</option>
-                    <option value="active">Ban Hoạt Náo</option>
+                    <option value="active">Ban Sinh Hoạt</option>
                     <option value="bantruc">Ban Trực</option>
                 </select>
             </div>
@@ -505,8 +505,8 @@
                 <thead>
                     <tr>
                         <th>Họ và Tên Thánh</th>
-                        <th>Lớp</th>
-                        <th>Hạng thành viên</th>
+                        <th>Ban</th>
+                        <th>Hạng Thành viên</th>
                         <th>Điểm</th>
                         <th>Hạng</th>
                     </tr>
@@ -572,8 +572,8 @@
 
         // Fallback data if JSON loading fails
         const fallbackMembers = [
-            { fullName: "Nguyễn Văn A", class: "Lớp 1", role: "Thành viên", memberpoint: 100, group: "Ban Truyền Thông", addedDate: "2025-07-01" },
-            { fullName: "Trần Thị B", class: "Lớp 2", role: "Thành viên", memberpoint: 200, group: "Ban Vệ Sinh - Y Tế", addedDate: "2025-07-02" }
+            { fullName: "Nguyễn Văn A", class: "Ban Truyền Thông", role: "Thành viên", memberpoint: 100, addedDate: "2025-07-01" },
+            { fullName: "Trần Thị B", class: "Ban Vệ Sinh - Y Tế", role: "Thành viên", memberpoint: 200, addedDate: "2025-07-02" }
         ];
 
         // Load JSON data
@@ -604,7 +604,7 @@
                         ...member,
                         group: group === 'enviroment' ? 'Ban Vệ Sinh - Y Tế' : 
                                group === 'media' ? 'Ban Truyền Thông' : 
-                               group === 'active' ? 'Ban Hoạt Náo' : 'Ban Trực'
+                               group === 'active' ? 'Ban Sinh Hoạt' : 'Ban Trực'
                     })));
                     console.log(`Tải thành công ${file}: ${data.members.length} thành viên`);
                 }
@@ -652,7 +652,7 @@
         function populateStats() {
             const totalMembers = allMembers.length;
             const averagePoints = allMembers.length > 0 
-                ? (allMembers.reduce((sum, member) => sum + (member.memberpoint || 0), 0) / allMembers.length).toFixed(1)
+                ? (allMembers.reduce((sum, member) => sum + (Number(member.memberpoint) || 0), 0) / allMembers.length).toFixed(1)
                 : 0;
             const groupCounts = allMembers.reduce((acc, member) => {
                 acc[member.group] = (acc[member.group] || 0) + 1;
@@ -671,10 +671,10 @@
         function renderPointsChart() {
             const ctx = document.getElementById('pointsChart').getContext('2d');
             const topMembers = allMembers
-                .sort((a, b) => (b.memberpoint || 0) - (a.memberpoint || 0))
+                .sort((a, b) => (Number(b.memberpoint) || 0) - (Number(a.memberpoint) || 0))
                 .slice(0, 10);
             const labels = topMembers.map(member => member.fullName);
-            const data = topMembers.map(member => member.memberpoint || 0);
+            const data = topMembers.map(member => Number(member.memberpoint) || 0);
 
             if (pointsChart) pointsChart.destroy();
             pointsChart = new Chart(ctx, {
@@ -716,12 +716,12 @@
         function populateTopMembers() {
             const topMembersList = document.getElementById('topMembers');
             const sortedMembers = allMembers
-                .sort((a, b) => (b.memberpoint || 0) - (a.memberpoint || 0))
+                .sort((a, b) => (Number(b.memberpoint) || 0) - (Number(a.memberpoint) || 0))
                 .slice(0, 10);
             topMembersList.innerHTML = sortedMembers.map((member, index) => `
                 <li>
                     <span><i class="fas fa-trophy" style="color: ${index === 0 ? 'gold' : index === 1 ? 'silver' : '#cd7f32'};"></i> ${member.fullName} (${member.group})</span>
-                    <span>${member.memberpoint || 0} điểm</span>
+                    <span>${Number(member.memberpoint) || 0} điểm</span>
                 </li>
             `).join('');
         }
@@ -752,7 +752,8 @@
                 'VVip': 0
             };
             allMembers.forEach(member => {
-                const rank = getMembershipRank(member.memberpoint || 0).match(/>([^<]+)</)[1];
+                const rankMatch = getMembershipRank(Number(member.memberpoint) || 0).match(/>([^<]+)</);
+                const rank = rankMatch ? rankMatch[1] : 'Thành Viên';
                 ranks[rank]++;
             });
             rankStats.innerHTML = Object.entries(ranks)
@@ -767,6 +768,7 @@
 
         // Get membership rank
         function getMembershipRank(memberScore) {
+            if (!Number.isFinite(memberScore)) return '<i class="fas fa-user rank-icon"></i> Thành Viên';
             if (memberScore < 50) return '<i class="fas fa-user rank-icon"></i> Thành Viên';
             if (memberScore < 100) return '<i class="fas fa-star rank-icon"></i> VIP';
             if (memberScore < 201) return '<i class="fas fa-medal rank-icon" style="color: silver;"></i> Bạc';
@@ -787,7 +789,7 @@
                 filteredMembers = filteredMembers.filter(member => 
                     member.group === (groupFilter === 'enviroment' ? 'Ban Vệ Sinh - Y Tế' : 
                                      groupFilter === 'media' ? 'Ban Truyền Thông' : 
-                                     groupFilter === 'active' ? 'Ban Hoạt Náo' : 'Ban Trực')
+                                     groupFilter === 'active' ? 'Ban Sinh Hoạt' : 'Ban Trực')
                 );
             }
 
@@ -801,10 +803,10 @@
             memberTableBody.innerHTML = filteredMembers.length > 0 ? filteredMembers.map(member => `
                 <tr>
                     <td>${member.fullName}</td>
-                    <td>${member.class || 'N/A'}</td>
+                    <td>${member.group}</td>
                     <td>${member.role || 'Thành viên'}</td>
-                    <td>${member.memberpoint || 0}</td>
-                    <td>${getMembershipRank(member.memberpoint || 0)}</td>
+                    <td>${Number(member.memberpoint) || 0}</td>
+                    <td>${getMembershipRank(Number(member.memberpoint) || 0)}</td>
                 </tr>
             `).join('') : '<tr><td colspan="5" class="text-center">Không tìm thấy thành viên.</td></tr>';
 
@@ -812,10 +814,10 @@
             memberCards.innerHTML = filteredMembers.length > 0 ? filteredMembers.map(member => `
                 <div class="member-card">
                     <p><strong>Họ và Tên:</strong> ${member.fullName}</p>
-                    <p><strong>Lớp:</strong> ${member.class || 'N/A'}</p>
+                    <p><strong>Ban:</strong> ${member.group}</p>
                     <p><strong>Vai trò:</strong> ${member.role || 'Thành viên'}</p>
-                    <p><strong>Điểm:</strong> ${member.memberpoint || 0}</p>
-                    <p><strong>Hạng:</strong> ${getMembershipRank(member.memberpoint || 0)}</p>
+                    <p><strong>Điểm:</strong> ${Number(member.memberpoint) || 0}</p>
+                    <p><strong>Hạng:</strong> ${getMembershipRank(Number(member.memberpoint) || 0)}</p>
                 </div>
             `).join('') : '<p class="text-center">Không tìm thấy thành viên.</p>';
         }
