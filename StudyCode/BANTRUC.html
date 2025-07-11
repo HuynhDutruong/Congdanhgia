@@ -397,45 +397,41 @@
             padding-left: 1.5rem;
         }
 
-        .notes-editor {
-            background: #FFF;
+        .notes-form {
+            background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 0.5rem;
-            padding: 1rem;
-            min-height: 400px;
+            padding: 1.5rem;
             box-shadow: var(--shadow);
-            position: relative;
-            background-image: linear-gradient(#E0E0E0 1px, transparent 1px);
-            background-size: 100% 1.5rem;
-            line-height: 1.5rem;
         }
-        .notes-editor textarea {
-            background: transparent;
-            border: none;
-            font-family: 'Roboto', sans-serif;
-            font-size: 1rem;
-            line-height: 1.5rem;
-            color: #000;
+        .notes-form textarea {
+            background: #1E1E1E;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            color: var(--text);
             width: 100%;
-            height: 200px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.875rem;
             resize: vertical;
+            height: 150px;
         }
-        .notes-editor textarea:focus {
+        .notes-form textarea:focus {
             outline: none;
-            border: none;
-            box-shadow: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.3);
         }
-        .notes-editor .input-group {
+        .notes-form .input-group {
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
-        .notes-editor .input-group i {
+        .notes-form .input-group i {
             cursor: pointer;
             color: var(--primary);
             font-size: 1.25rem;
         }
-        .notes-editor .input-group i:hover {
+        .notes-form .input-group i:hover {
             color: var(--accent);
         }
 
@@ -502,16 +498,13 @@
             .card {
                 padding: 1.5rem;
             }
-            .notes-editor {
-                min-height: 300px;
-            }
-            .notes-editor textarea {
-                height: 150px;
+            .notes-form textarea {
+                height: 100px;
             }
             #monthlyPointsChart {
                 height: 200px;
             }
-            body.ios .navbar, body.ios .card, body.ios .guide-section, body.ios .notes-editor {
+            body.ios .navbar, body.ios .card, body.ios .guide-section, body.ios .notes-form {
                 background: rgba(26, 26, 26, 0.95);
                 backdrop-filter: blur(10px);
             }
@@ -648,38 +641,36 @@
 
         <div id="notes" class="card">
             <h3>Ghi Chú</h3>
-            <form id="noteForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST">
-                <div class="notes-editor">
-                    <div class="mb-4 input-group">
-                        <label class="block mb-1 text-text">Ngày Tháng Năm:</label>
-                        <input type="text" name="date" id="noteDate" class="input" readonly required>
-                        <i class="fas fa-sync-alt" onclick="updateDateTime()"></i>
-                    </div>
-                    <div class="mb-4 input-group">
-                        <label class="block mb-1 text-text">Giờ Phút Giây:</label>
-                        <input type="text" name="time" id="noteTime" class="input" readonly required>
-                        <i class="fas fa-sync-alt" onclick="updateDateTime()"></i>
-                    </div>
-                    <div class="mb-4">
-                        <label class="block mb-1 text-text">Tiêu Đề (tối đa 30 ký tự):</label>
-                        <input type="text" name="title" id="noteTitle" class="input" maxlength="30" required>
-                    </div>
-                    <div class="mb-4">
-                        <label class="block mb-1 text-text">Nội Dung (tối đa 300 ký tự):</label>
-                        <textarea id="noteContent" name="content" class="input" maxlength="300" placeholder="Viết nội dung ghi chú tại đây..."></textarea>
-                    </div>
-                    <div class="mb-4">
-                        <label class="block mb-1 text-text">Trưởng Nộp:</label>
-                        <input type="text" name="submitter" id="noteSubmitter" class="input" readonly required>
-                    </div>
-                    <div class="mb-4">
-                        <label class="flex items-center">
-                            <input type="checkbox" name="verify" id="noteVerify" required>
-                            <span class="ml-2">Xác minh thông tin trên chính xác</span>
-                        </label>
-                    </div>
-                    <button type="submit" id="saveNoteBtn" class="btn">Gửi</button>
+            <form id="noteForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST" class="notes-form">
+                <div class="mb-4 input-group">
+                    <label class="block mb-1 text-text">Ngày Tháng Năm:</label>
+                    <input type="text" name="date" id="noteDate" class="input" readonly required>
+                    <i class="fas fa-sync-alt" onclick="updateDateTime()"></i>
                 </div>
+                <div class="mb-4 input-group">
+                    <label class="block mb-1 text-text">Giờ Phút Giây:</label>
+                    <input type="text" name="time" id="noteTime" class="input" readonly required>
+                    <i class="fas fa-sync-alt" onclick="updateDateTime()"></i>
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1 text-text">Tiêu Đề (tối đa 30 ký tự):</label>
+                    <input type="text" name="title" id="noteTitle" class="input" maxlength="30" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1 text-text">Nội Dung (tối đa 300 ký tự):</label>
+                    <textarea id="noteContent" name="content" class="input" maxlength="300" placeholder="Viết nội dung ghi chú tại đây..."></textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1 text-text">Trưởng Nộp:</label>
+                    <input type="text" name="submitter" id="noteSubmitter" class="input" readonly required>
+                </div>
+                <div class="mb-4">
+                    <label class="flex items-center">
+                        <input type="checkbox" name="verify" id="noteVerify" required>
+                        <span class="ml-2">Xác minh thông tin trên chính xác</span>
+                    </label>
+                </div>
+                <button type="submit" id="saveNoteBtn" class="btn">Gửi</button>
             </form>
             <p class="mt-2 text-[var(--text)]">Ghi chú sẽ được gửi qua email và có thể quản lý tại <a href="https://docs.google.com/document/d/1v9jg84V9zI2JVR9HjlbAwDJCTTqSbpglcONy1UeyDos/edit?usp=sharing" target="_blank" class="text-[var(--accent)]">Google Doc</a>.</p>
         </div>
@@ -695,7 +686,7 @@
                     <ul class="list-disc pl-5 mb-4">
                         <li><strong>Chi tiêu:</strong> Đóng góp hoặc mua tài liệu trong giáo xứ.</li>
                         <li><strong>Tham gia quản lí lớp học:</strong> Tham gia phụ trách, hỗ trợ và quản lí các lớp được phân công, do tuyên uý, quý trưởng điều hành, ban trực phân công.</li>
-                        <li><strong>Thành quả học tập:</strong> Điểm số dựa trên bài tập và kiểm tra thường huấn do phụ trách BAN TRỰC cung cấp.</li>
+                        <li><strong>Thành quả học tập:</strong> Điểm số dựa trên bài tập và kiểm tra thường huấn do phụ trách BAN VỆ SINH - Y TẾ cung cấp.</li>
                         <li><strong>Hoạt động ngoại khóa:</strong> Tham gia các sự kiện của Xứ Đoàn, hỗ trợ các hoạt động ngoại khoá của Xứ Đoàn.</li>
                     </ul>
                     <p><strong>Lưu ý:</strong> Điểm thành viên được cập nhật định kỳ và phản ánh tổng hợp các hoạt động trên.</p>
@@ -754,7 +745,7 @@
         let memberPoints = 0;
         async function loadMediaData() {
             try {
-                const response = await fetch('data/bantruc.json');
+                const response = await fetch('data/enviroment.json');
                 if (!response.ok) throw new Error('Không thể tải active.json');
                 mediaData = await response.json();
                 const member = mediaData.members.find(m => m.fullName.toLowerCase() === loggedInUser.toLowerCase());
