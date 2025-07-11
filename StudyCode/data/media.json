@@ -19,15 +19,7 @@
         {"month": "2025-07", "points": 17},
         {"month": "2025-06", "points": 0}
       ]
-    },
-    {
-      "fullName": "Gioan Baotixita Lê Hoàng Minh",
-      "class": "Ban Truyền Thông",
-      "memberpoint": 10,
-      "monthlyPoints": [
-        {"month": "2025-07", "points": 10},
-        {"month": "2025-06", "points": 0}
-      ]
     }
+    
   ]
 }
