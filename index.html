@@ -331,7 +331,7 @@
                 }
                 if (!member && activeData.members && Array.isArray(activeData.members)) {
                     member = activeData.members.find(m => m.fullName && removeVietnameseTones(m.fullName.toLowerCase()) === normalizedUsername);
-                    if (member) redirectUrl = 'active.html'; // Sửa đường dẫn nếu active.html ở thư mục gốc
+                    if (member) redirectUrl = 'StudyCode/active.html'; 
                 }
                 if (!member && enviromentData.members && Array.isArray(enviromentData.members)) {
                     member = enviromentData.members.find(m => m.fullName && removeVietnameseTones(m.fullName.toLowerCase()) === normalizedUsername);
