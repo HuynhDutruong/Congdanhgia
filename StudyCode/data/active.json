@@ -1,13 +1,13 @@
 {
   "members": [
     {
-      "fullName": "Phêrô Nguyễn Minh Khang",
-      "class": "Ban Sinh Hoạt",
+     "fullName": "Phêrô Nguyễn Minh Khang",
+      "class": "Ban Truyền Thông",
       "memberpoint": 17,
       "monthlyPoints": [
         {"month": "2025-07", "points": 17},
         {"month": "2025-06", "points": 0}
       ]
     }
-      ]
+  ]
 }
