@@ -647,7 +647,9 @@
         // Populate stats
         function populateStats() {
             const totalMembers = allMembers.length;
-            
+            const averagePoints = allMembers.length > 0 
+                ? (allMembers.reduce((sum, member) => sum + (Number(member.memberpoint) || 0), 0) / allMembers.length).toFixed(1)
+                : 0;
             const groupCounts = allMembers.reduce((acc, member) => {
                 acc[member.group] = (acc[member.group] || 0) + 1;
                 return acc;
