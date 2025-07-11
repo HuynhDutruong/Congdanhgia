@@ -686,7 +686,7 @@
                     <ul class="list-disc pl-5 mb-4">
                         <li><strong>Chi tiêu:</strong> Đóng góp hoặc mua tài liệu trong giáo xứ.</li>
                         <li><strong>Tham gia quản lí lớp học:</strong> Tham gia phụ trách, hỗ trợ và quản lí các lớp được phân công, do tuyên uý, quý trưởng điều hành, ban trực phân công.</li>
-                        <li><strong>Thành quả học tập:</strong> Điểm số dựa trên bài tập và kiểm tra thường huấn do phụ trách BAN VỆ SINH - Y TẾ cung cấp.</li>
+                        <li><strong>Thành quả học tập:</strong> Điểm số dựa trên bài tập và kiểm tra thường huấn do phụ trách BAN TRỰC cung cấp.</li>
                         <li><strong>Hoạt động ngoại khóa:</strong> Tham gia các sự kiện của Xứ Đoàn, hỗ trợ các hoạt động ngoại khoá của Xứ Đoàn.</li>
                     </ul>
                     <p><strong>Lưu ý:</strong> Điểm thành viên được cập nhật định kỳ và phản ánh tổng hợp các hoạt động trên.</p>
@@ -745,7 +745,7 @@
         let memberPoints = 0;
         async function loadMediaData() {
             try {
-                const response = await fetch('data/enviroment.json');
+                const response = await fetch('data/bantruc.json');
                 if (!response.ok) throw new Error('Không thể tải active.json');
                 mediaData = await response.json();
                 const member = mediaData.members.find(m => m.fullName.toLowerCase() === loggedInUser.toLowerCase());
