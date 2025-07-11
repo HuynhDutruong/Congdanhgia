@@ -293,17 +293,23 @@
             }
 
             try {
-                const response = await fetch('StudyCode/data/media.json');
-                if (!response.ok) throw new Error('Không thể tải danh sách thành viên.');
-                const data = await response.json();
-                const member = data.members.find(m => m.fullName.toLowerCase() === username);
-                
-                if (member && password === currentYear) {
-                    sessionStorage.setItem('loggedInUser', member.fullName);
-                    window.location.href = 'StudyCode/media.html';
-                } else {
-                    showNotification('Tên đăng nhập hoặc mật khẩu không đúng!', 'error');
+                const [mediaResponse, activeResponse, enviromentResponse] = await Promise.all([
+                    fetch('StudyCode/data/media.json'),
+                    fetch('StudyCode/data/active.json'),
+                    fetch('StudyCode/data/enviroment.json')
+                ]);
+
+                if (!mediaResponse.ok || !activeResponse.ok || !enviromentResponse.ok) {
+                    throw new Error('Không thể tải danh sách thành viên.');
                 }
+
+                const mediaData = await mediaResponse.json();
+                const activeData = await activeResponse.json();
+                const enviromentData = await enviromentResponse.json();
+
+                // Xử lý dữ liệu từ các tệp
+                const member = mediaData.members.find(m => m.fullName.toLowerCase() === username);
+                // Hoặc kết hợp dữ liệu từ các tệp nếu cần
             } catch (error) {
                 showNotification('Lỗi khi kiểm tra đăng nhập. Vui lòng thử lại.', 'error');
                 console.error('Error:', error);
