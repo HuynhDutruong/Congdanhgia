@@ -311,7 +311,7 @@
                 const [mediaResponse, activeResponse, enviromentResponse] = await Promise.all([
                     fetch('StudyCode/data/media.json'),
                     fetch('StudyCode/data/active.json'),
-                    fetch('StudyCode/data/environment.json')
+                    fetch('StudyCode/data/enviroment.json')
                 ]);
 
                 if (!mediaResponse.ok || !activeResponse.ok || !enviromentResponse.ok) {
