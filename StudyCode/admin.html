@@ -465,10 +465,6 @@
                     <p id="totalMembers">0</p>
                 </div>
                 <div class="stat-card">
-                    <h4>Điểm Trung Bình</h4>
-                    <p id="averagePoints">0</p>
-                </div>
-                <div class="stat-card">
                     <h4>Thành Viên Theo Ban</h4>
                     <p id="groupStats">-</p>
                 </div>
@@ -651,9 +647,7 @@
         // Populate stats
         function populateStats() {
             const totalMembers = allMembers.length;
-            const averagePoints = allMembers.length > 0 
-                ? (allMembers.reduce((sum, member) => sum + (Number(member.memberpoint) || 0), 0) / allMembers.length).toFixed(1)
-                : 0;
+            
             const groupCounts = allMembers.reduce((acc, member) => {
                 acc[member.group] = (acc[member.group] || 0) + 1;
                 return acc;
@@ -685,7 +679,7 @@
                         label: 'Điểm số',
                         data: data,
                         backgroundColor: 'rgba(255, 215, 0, 0.6)',
-                        borderColor: 'var(--accent)',
+                        borderColor: '#ebebeb',
                         borderWidth: 1
                     }]
                 },
@@ -695,18 +689,18 @@
                     scales: {
                         y: {
                             beginAtZero: true,
-                            title: { display: true, text: 'Điểm', color: 'var(--text)' },
+                            title: { display: true, text: 'Điểm', color: '#ebebeb' },
                             grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                            ticks: { color: 'var(--text)' }
+                            ticks: { color: '#ebebeb' }
                         },
                         x: {
-                            title: { display: true, text: 'Thành viên', color: 'var(--text)' },
+                            title: { display: true, text: 'Thành viên', color: '#ebebeb' },
                             grid: { display: false },
-                            ticks: { color: 'var(--text)' }
+                            ticks: { color: '#ebebeb' }
                         }
                     },
                     plugins: {
-                        legend: { labels: { color: 'var(--text)' } }
+                        legend: { labels: { color: '#ebebeb' } }
                     }
                 }
             });
