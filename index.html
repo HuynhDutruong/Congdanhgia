@@ -335,7 +335,7 @@
                 }
                 if (!member && enviromentData.members && Array.isArray(enviromentData.members)) {
                     member = enviromentData.members.find(m => m.fullName && removeVietnameseTones(m.fullName.toLowerCase()) === normalizedUsername);
-                    if (member) redirectUrl = 'StudyCode/environment.html';
+                    if (member) redirectUrl = 'StudyCode/enviroment.html';
                 }
 
                 if (member && password === currentYear) {
