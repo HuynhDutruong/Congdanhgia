@@ -2,12 +2,94 @@
   "members": [
     {
      "fullName": "Phêrô Nguyễn Minh Khang",
-      "class": "Ban Truyền Thông",
+      "class": "Ban Sinh Hoạt",
       "memberpoint": 17,
       "monthlyPoints": [
         {"month": "2025-07", "points": 17},
         {"month": "2025-06", "points": 0}
       ]
+    };
+
+    {
+      "fullName": "Gioan Baotixita Lê Hoàng Minh",
+      "class": "Ban Sinh Hoạt",
+      "memberpoint": 10,
+      "monthlyPoints": [
+        {"month": "2025-07", "points": 10},
+        {"month": "2025-06", "points": 0}
+      ]
+    };
+
+    {
+      "fullName": "Cêcilia Đặng Lê Anh",
+      "class": "Ban Sinh Hoạt",
+      "memberpoint": 2,
+      "monthlyPoints": [
+        {"month": "2025-07", "points": 2},
+        {"month": "2025-06", "points": 0}
+      ]
+    };
+
+    {
+      "fullName": "Têrêsa Vũ Trần Thanh Trúc",
+      "class": "Ban Sinh Hoạt",
+      "memberpoint": 2,
+      "monthlyPoints": [
+        {"month": "2025-07", "points": 2},
+        {"month": "2025-06", "points": 0}
+      ]
+    };
+
+    {
+      "fullName": "Anrê Lê Đỗ Hoàng Quân",
+      "class": "Ban Sinh Hoạt",
+      "memberpoint": 2,
+      "monthlyPoints": [
+        {"month": "2025-07", "points": 2},
+        {"month": "2025-06", "points": 0}
+      ]
+    };
+
+    {
+      "fullName": "Maria Lưu Nguyễn Quỳnh Giao",
+      "class": "Ban Sinh Hoạt",
+      "memberpoint": 2,
+      "monthlyPoints": [
+        {"month": "2025-07", "points": 2},
+        {"month": "2025-06", "points": 0}
+      ]
+    };
+
+    {
+      "fullName": "Giuse Huỳnh Thiên Trí",
+      "class": "Ban Sinh Hoạt",
+      "memberpoint": 2,
+      "monthlyPoints": [
+        {"month": "2025-07", "points": 2},
+        {"month": "2025-06", "points": 0}
+      ]
+    };
+
+    {
+      "fullName": "Maria Lưu Nguyễn Quỳnh Giao",
+      "class": "Ban Sinh Hoạt",
+      "memberpoint": 2,
+      "monthlyPoints": [
+        {"month": "2025-07", "points": 2},
+        {"month": "2025-06", "points": 0}
+      ]
+    };
+
+    {
+      "fullName": "Lêô Hồ Trần Phúc Khang",
+      "class": "Ban Sinh Hoạt",
+      "memberpoint": 2,
+      "monthlyPoints": [
+        {"month": "2025-07", "points": 2},
+        {"month": "2025-06", "points": 0}
+      ]
     }
+
+
   ]
 }
