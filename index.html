@@ -253,7 +253,7 @@
                 <label for="password" class="block text-sm font-medium text-[var(--text)]">Mật khẩu</label>
                 <input type="password" id="password" class="input" aria-required="true">
             </div>
-            <button type="submit" class="btn">Đăng Nhập</button>
+            <button type="submit" class="btn" aria-label="Đăng nhập vào hệ thống">Đăng Nhập</button>
         </form>
     </div>
 
@@ -279,6 +279,13 @@
             const password = document.getElementById('password').value;
             const currentYear = new Date().getFullYear().toString();
 
+            // Kiểm tra đầu vào
+            if (!username || !password) {
+                showNotification('Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!', 'error');
+                return;
+            }
+
+            // Kiểm tra người dùng tĩnh
             const users = {
                 'horeb': 'horeb.html',
                 'tabor': 'tabor.html',
@@ -292,6 +299,7 @@
                 return;
             }
 
+            // Kiểm tra người dùng từ các tệp JSON
             try {
                 const [mediaResponse, activeResponse, enviromentResponse] = await Promise.all([
                     fetch('StudyCode/data/media.json'),
@@ -307,9 +315,30 @@
                 const activeData = await activeResponse.json();
                 const enviromentData = await enviromentResponse.json();
 
-                // Xử lý dữ liệu từ các tệp
-                const member = mediaData.members.find(m => m.fullName.toLowerCase() === username);
-                // Hoặc kết hợp dữ liệu từ các tệp nếu cần
+                // Tìm người dùng trong các tệp JSON
+                let member = null;
+                let redirectUrl = '';
+
+                if (mediaData.members && Array.isArray(mediaData.members)) {
+                    member = mediaData.members.find(m => m.fullName && m.fullName.toLowerCase() === username);
+                    if (member) redirectUrl = 'StudyCode/media.html';
+                }
+                if (!member && activeData.members && Array.isArray(activeData.members)) {
+                    member = activeData.members.find(m => m.fullName && m.fullName.toLowerCase() === username);
+                    if (member) redirectUrl = 'StudyCode/active.html';
+                }
+                if (!member && enviromentData.members && Array.isArray(enviromentData.members)) {
+                    member = enviromentData.members.find(m => m.fullName && m.fullName.toLowerCase() === username);
+                    if (member) redirectUrl = 'StudyCode/enviroment.html';
+                }
+
+                // Kiểm tra mật khẩu và chuyển hướng
+                if (member && password === currentYear) {
+                    sessionStorage.setItem('loggedInUser', member.fullName);
+                    window.location.href = redirectUrl;
+                } else {
+                    showNotification('Tên đăng nhập hoặc mật khẩu không đúng!', 'error');
+                }
             } catch (error) {
                 showNotification('Lỗi khi kiểm tra đăng nhập. Vui lòng thử lại.', 'error');
                 console.error('Error:', error);
