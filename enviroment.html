@@ -1,0 +1,1007 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="description" content="Hệ thống Ban Truyền Thông - Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho">
+    <meta name="keywords" content="Ban Truyền Thông, Xứ Đoàn, Giáo Xứ Chánh Tòa Mỹ Tho, Điểm thành viên, Lịch">
+
+    <meta name="theme-color" content="#cc3048">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon/icon-192x192.png">
+    <title>Ban Truyền Thông - Xứ Đoàn Các Thánh Tử Đạo Việt Nam</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary: #cc3048;
+            --primary-dark: #b7142a;
+            --accent: #FFD700;
+            --dark-bg: #1A1A1A;
+            --text: #E0E0E0;
+            --error: #EF4444;
+            --card-bg: #252526;
+            --border-color: #3C3C3C;
+            --success-color: #10B981;
+            --warning-color: #FBBF24;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --transition: all 0.15s ease-in-out;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #2D2D2D 0%, #1A1A1A 100%);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        body.ios {
+            font-family: -apple-system, 'SF Pro', 'Roboto', sans-serif;
+        }
+
+        .header {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--text);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 1rem;
+        }
+        .header h2 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--text);
+        }
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-top: 0.25rem;
+        }
+
+        .container {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            overflow-y: auto;
+            min-height: calc(100dvh - 120px);
+            padding-bottom: 60px;
+        }
+
+        .navbar {
+            background: var(--dark-bg);
+            padding: 0.75rem;
+            display: flex;
+            justify-content: space-around;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+            height: 60px;
+        }
+        .navbar a {
+            color: var(--text);
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            text-align: center;
+            border-radius: 0.5rem;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+        .navbar a i {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+        .navbar a:hover {
+            background: var(--primary);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .navbar a.active {
+            background: var(--primary);
+            color: var(--accent);
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .card.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .card h3 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.75rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .welcome-message {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .member-info {
+            background: rgba(30, 30, 30, 0.95);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .member-info p {
+            margin: 0;
+            font-size: 0.875rem;
+        }
+        .member-info p strong {
+            color: var(--accent);
+        }
+
+        .rank-widget {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .rank-widget h4 {
+            font-family: 'JetBrains Mono', monospace;
+            color: #FFD700;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+        .rank-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .rank-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            font-size: 0.875rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .rank-list li:last-child {
+            border-bottom: none;
+        }
+        .rank-icon {
+            margin-right: 0.5rem;
+        }
+
+        .calendar-embed {
+            position: relative;
+            padding-bottom: 75%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+        }
+        .calendar-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .gift-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .gift-item {
+            background: #1E1E1E;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+        .gift-item.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .gift-item.selected {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+        .gift-item:not(.disabled):hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .gift-item img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .gift-item p {
+            font-size: 0.875rem;
+            color: var(--text);
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(26, 26, 26, 0.95);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-md);
+            max-width: 90%;
+            width: 320px;
+            font-size: 0.875rem;
+            z-index: 1001;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            display: none;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: var(--text);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        .btn:disabled {
+            background: #3C3C3C;
+            cursor: not-allowed;
+        }
+        .btn:not(:disabled):hover {
+            background: var(--primary-dark);
+            color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .btn:active {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn:active::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.3s linear;
+        }
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        .input, select.input {
+            background: #1E1E1E;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            color: var(--text);
+            width: 100%;
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.875rem;
+        }
+        .input:focus, select.input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.3);
+        }
+        .input[readonly] {
+            background: #2A2A2A;
+            cursor: not-allowed;
+        }
+
+        .guide-section {
+            margin-bottom: 1rem;
+            background: #1E1E1E;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+        }
+        .guide-section summary {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            color: var(--accent);
+            cursor: pointer;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        .guide-section summary i {
+            margin-right: 0.5rem;
+            transition: transform 0.2s ease;
+        }
+        .guide-section[open] summary i {
+            transform: rotate(90deg);
+        }
+        .guide-section p, .guide-section ul {
+            margin: 0.5rem 0;
+            font-size: 0.875rem;
+        }
+        .guide-section ul {
+            padding-left: 1.5rem;
+        }
+
+        #monthlyPointsChart {
+            width: 100%;
+            max-height: 300px;
+            background: #252526;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+
+        @media (max-width: 1024px) {
+            :root {
+                --primary: #e63950;
+                --accent: #FFD54F;
+            }
+            .header {
+                padding: 0.75rem;
+            }
+            .header h2 {
+                font-size: 1.25rem;
+            }
+            .welcome-message {
+                font-size: 1.25rem;
+                margin-bottom: 0.5rem;
+            }
+            .header p {
+                font-size: 0.875rem;
+            }
+            .header .logo {
+                width: 80px;
+                height: 80px;
+            }
+            .gift-grid {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+                gap: 0.75rem;
+            }
+            .gift-item {
+                padding: 0.5rem;
+            }
+            .gift-item img {
+                height: 50px;
+                margin-bottom: 0.5rem;
+            }
+            .gift-item p {
+                font-size: 0.65rem;
+            }
+            .container {
+                padding: 1rem;
+                min-height: calc(100dvh - 100px);
+                padding-bottom: 50px;
+            }
+            .navbar {
+                height: 50px;
+                padding: 0.5rem;
+            }
+            .navbar a {
+                font-size: 0.75rem;
+            }
+            .navbar a i {
+                font-size: 1rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+            #monthlyPointsChart {
+                height: 200px;
+            }
+            body.ios .navbar, body.ios .card, body.ios .guide-section {
+                background: rgba(26, 26, 26, 0.95);
+                backdrop-filter: blur(10px);
+            }
+            body.ios .btn:active {
+                transform: scale(0.95);
+                box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+            }
+
+            .rank-widget select {
+                margin-bottom: 1rem;
+                width: 100%;
+            }
+            .rank-list {
+                max-height: 300px;
+            }
+            .calendar-embed {
+                padding-bottom: 100%;
+            }
+            .gift-cart {
+                background: #1E1E1E;
+                border: 1px solid var(--border-color);
+                border-radius: 0.5rem;
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+            .gift-cart ul li {
+                font-size: 0.75rem;
+                padding: 0.5rem 0;
+            }
+        }
+
+        @media (min-width: 641px) and (max-width: 1024px) {
+            .header h2 {
+                font-size: 1.5rem;
+            }
+            .card {
+                padding: 1.75rem;
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .navbar a:hover {
+                background: linear-gradient(45deg, var(--primary), var(--accent));
+            }
+            .btn:not(:disabled):hover {
+                background: linear-gradient(45deg, var(--primary), var(--accent));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="popup-overlay" id="successOverlay">
+        <div class="popup" id="successPopup">
+            <p id="successMessage"></p>
+            <button class="btn mt-4" onclick="closeSuccessPopup()">Thoát</button>
+        </div>
+    </div>
+
+    <div class="header">
+        <div class="header-container">
+            <div class="header-content">
+                <h2>BAN VỆ SINH - Y TẾ</h2>
+                <p>XỨ ĐOÀN CÁC THÁNH TỬ ĐẠO VIỆT NAM</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="navbar" id="navbar">
+        <a href="#home" class="active"><i class="fas fa-home"></i><span></span></a>
+        <a href="#calendar"><i class="fas fa-calendar"></i><span></span></a>
+        <a href="#redeem"><i class="fas fa-gift"></i><span></span></a>
+        <a href="#guide"><i class="fas fa-question-circle"></i><span></span></a>
+    </div>
+
+    <div class="container">
+        <div id="home" class="card active">
+            <h3 class="welcome-message" id="welcomeMessage"></h3>
+            <div class="member-info" id="memberInfo"></div>
+            <div class="rank-widget">
+                <h4>Bảng Xếp Hạng</h4>
+                <select id="classFilter" class="input" onchange="filterRankList()" style="display: none;">
+                    <option value="">Tất cả lớp</option>
+                </select>
+                <ul class="rank-list" id="rankList"></ul>
+            </div>
+            <div>
+                <h4>Sơ Đồ Điểm Tháng</h4>
+                <canvas id="monthlyPointsChart"></canvas>
+            </div>
+        </div>
+
+        <div id="calendar" class="card">
+            <h3>Lịch</h3>
+            <div class="calendar-embed">
+                <iframe src="https://calendar.google.com/calendar/embed?src=your_calendar_id%40group.calendar.google.com&ctz=Asia%2FHo_Chi_Minh" style="border: 0" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
+            </div>
+        </div>
+
+        <div id="redeem" class="card">
+            <div class="pb-12 pt-8">
+                <h3>Đổi Quà</h3>
+                <div class="gift-cart" id="giftCart" style="display: none;">
+                    <h4>Giỏ Quà</h4>
+                    <ul id="cartList"></ul>
+                    <button id="submitCartBtn" class="btn mt-2" onclick="submitCart()">Gửi Yêu Cầu Đổi Quà</button>
+                </div>
+                <div class="gift-grid" id="giftList"></div>
+                <form id="redeemForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST">
+                    <div class="mb-4">
+                        <label class="block mb-1 text-text">Họ và Tên Thánh:</label>
+                        <input type="text" name="fullName" id="redeemName" class="input" required readonly>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block mb-1 text-text">Gmail:</label>
+                        <input type="email" name="gmail" id="redeemGmail" class="input" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block mb-1 text-text">Lớp:</label>
+                        <select name="subject" id="redeemSubject" class="input" required></select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block mb-1 text-text">Số Điểm Thành Viên:</label>
+                        <input type="text" id="redeemPoints" name="points" class="input" readonly>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block mb-1 text-text">Mã Quà:</label>
+                        <input type="text" name="giftCode" id="giftCode" class="input" required>
+                    </div>
+                    <input type="hidden" name="submissionTime" id="redeemSubmissionTime">
+                    <button type="submit" id="redeemSubmitBtn" class="btn">Đổi Quà</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="guide" class="card">
+            <h3>Hướng Dẫn Điểm Thành Viên</h3>
+            <div id="guideContent">
+                <p class="mb-4">Chào mừng bạn đến với <strong>Hệ thống Điểm Thành Viên</strong> của Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho! Hệ thống này được thiết kế để khuyến khích các thành viên tham gia học tập, hoạt động ngoại khóa và đóng góp tích cực, với cơ hội đổi những phần quà hấp dẫn.</p>
+                
+                <details class="guide-section" open>
+                    <summary><i class="fas fa-star"></i> Cách Tính Điểm Thành Viên</summary>
+                    <p>Điểm thành viên được nhập thủ công bởi ban quản lý dựa trên các hoạt động và thành tích của thành viên.</p>
+                    <ul class="list-disc pl-5 mb-4">
+                        <li><strong>Chi tiêu:</strong> Đóng góp hoặc mua tài liệu trong giáo xứ.</li>
+                        <li><strong>Tham gia quản lí lớp học:</strong> Tham gia phụ trách, hỗ trợ và quản lí các lớp được phân công, do tuyên uý, quý trưởng điều hành, ban trực phân công.</li>
+                        <li><strong>Thành quả học tập:</strong> Điểm số dựa trên bài tập và kiểm tra thường huấn do phụ trách BAN VỆ SINH - Y TẾ cung cấp.</li>
+                        <li><strong>Hoạt động ngoại khóa:</strong> Tham gia các sự kiện của Xứ Đoàn, hỗ trợ các hoạt động ngoại khoá của Xứ Đoàn.</li>
+                    </ul>
+                    <p><strong>Lưu ý:</strong> Điểm thành viên được cập nhật định kỳ và phản ánh tổng hợp các hoạt động trên.</p>
+                </details>
+
+                <details class="guide-section">
+                    <summary><i class="fas fa-gift"></i> Lợi Ích của Điểm Thành Viên</summary>
+                    <p>Điểm thành viên mang lại các lợi ích sau:</p>
+                    <ul class="list-disc pl-5 mb-4">
+                        <li><strong>Đổi quà:</strong> Sử dụng điểm để đổi các phần quà do Ban Điều Hành tại Xứ Đoàn hổ trợ quản lí.</li>
+                        <li><strong>Xếp hạng động lực:</strong> Điểm thi đua cao giúp bạn lọt vào Bảng Xếp Hạng Động Lực, được vinh danh trên cổng học viên.</li>
+                        <li><strong>Khuyến khích học tập:</strong> Điểm phản ánh nỗ lực học tập và đóng góp, giúp bạn theo dõi tiến độ cá nhân.</li>
+                        <li><strong>Các loại hạng thành viên:</strong> Có tổng 6 hạng thành viên: Thành Viên (0-49 điểm, biểu tượng người dùng), VIP (50-99 điểm, biểu tượng ngôi sao), Bạc (100-200 điểm, biểu tượng huy chương), Vàng (201-300 điểm, biểu tượng huy chương), Kim Cương (301-500 điểm, biểu tượng viên ngọc), và VVip (501 điểm trở lên, biểu tượng vương miện).</li>
+                    </ul>
+                </details>
+
+                <details class="guide-section">
+                    <summary><i class="fas fa-question"></i> Câu Hỏi Thường Gặp</summary>
+                    <ul class="list-disc pl-5 mb-4">
+                        <li><strong>Điểm được cập nhật bao lâu một lần?</strong> Điểm được cập nhật hàng tuần dựa trên dữ liệu từ ban quản lý.</li>
+                        <li><strong>Quà đổi có giới hạn không?</strong> Một số quà có số lượng giới hạn, vui lòng kiểm tra mục "Đổi Quà".</li>
+                        <li><strong>Liên hệ hỗ trợ?</strong> Gửi phản hồi qua mục "Phản Hồi" hoặc email notification2411.huynhdutruong@gmail.com.</li>
+                        <li><strong>Cách tính điểm như thế nào?</strong> Điểm do các thành viên quản lí, phụ trách kiểm tra, xem xét và trao quyết định. Đối với riêng Ban Truyền Thông và Ban Kỹ Thuật, mỗi bài viết sẽ được khuyến khích (3 điểm)- các bài viết được ưa thích sẽ được khuyến khích 5 điểm thưởng, tham gia hội họp và sinh hoạt theo như quy chế và nội quy của phong trào thiếu nhi Thánh Thể (1 điểm), đối với các hoạt động tự tổ chức, tham gia hỗ trợ tổ chức sẽ được xem xét để quyết định bởi quản lí ban. </li>
+                    </ul>
+                </details>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const isMobile = window.innerWidth <= 1024;
+        const isIOS = /iPhone|iPad/.test(navigator.userAgent);
+
+        if (isIOS) {
+            document.body.classList.add('ios');
+        }
+
+        // Kiểm tra đăng nhập
+        const loggedInUser = sessionStorage.getItem('loggedInUser');
+        if (!loggedInUser) {
+            window.location.href = 'login.html';
+        }
+
+        // Hàm lấy hạng thành viên
+        function getMembershipRank(memberScore) {
+            if (memberScore < 50) return '<i class="fas fa-user rank-icon"></i> Thành Viên';
+            if (memberScore < 100) return '<i class="fas fa-star rank-icon"></i> VIP';
+            if (memberScore < 201) return '<i class="fas fa-medal rank-icon" style="color: silver;"></i> Bạc';
+            if (memberScore < 301) return '<i class="fas fa-medal rank-icon" style="color: gold;"></i> Vàng';
+            if (memberScore < 501) return '<i class="fas fa-gem rank-icon" style="color: #b9f2ff;"></i> Kim Cương';
+            return '<i class="fas fa-crown rank-icon" style="color: #FFD700;"></i> VVip';
+        }
+
+        // Load media data
+        let mediaData = [];
+        let memberPoints = 0;
+        async function loadMediaData() {
+            try {
+                const response = await fetch('data/enviroment.json');
+                if (!response.ok) throw new Error('Không thể tải active.json');
+                mediaData = await response.json();
+                const member = mediaData.members.find(m => m.fullName.toLowerCase() === loggedInUser.toLowerCase());
+                memberPoints = member ? (member.memberpoint || 0) : 0;
+                populateMemberInfo();
+                populateRankList();
+                drawMonthlyPointsChart();
+                populateRedeemForm();
+                if (isMobile) {
+                    populateClassFilter();
+                }
+            } catch (error) {
+                console.error('Error loading media data:', error);
+                document.getElementById('memberInfo').innerHTML = '<p class="text-[var(--error)]">Không thể tải thông tin thành viên.</p>';
+                document.getElementById('rankList').innerHTML = '<p class="text-[var(--error)]">Không thể tải bảng xếp hạng.</p>';
+            }
+        }
+
+        // Load gifts data
+        let giftsData = [];
+        let giftCart = [];
+        async function loadGifts() {
+            try {
+                const response = await fetch('data/gifts.json');
+                if (!response.ok) throw new Error('Không thể tải gifts.json');
+                giftsData = await response.json();
+                const giftList = document.getElementById('giftList');
+                giftList.innerHTML = giftsData.map(gift => `
+                    <div class="gift-item ${gift.points > memberPoints ? 'disabled' : ''}" data-code="${gift.code}" onclick="${isMobile && gift.points <= memberPoints ? `toggleGiftSelection('${gift.code}')` : ''}">
+                        <img src="${gift.image}" alt="${gift.name}">
+                        <p>${gift.name} (Mã: ${gift.code}, ${gift.points} điểm)</p>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading gifts:', error);
+                document.getElementById('giftList').innerHTML = '<p class="text-[var(--error)]">Không thể tải danh sách quà.</p>';
+            }
+        }
+
+        // Populate member info
+        function populateMemberInfo() {
+            const member = mediaData.members.find(m => m.fullName.toLowerCase() === loggedInUser.toLowerCase());
+            const memberInfo = document.getElementById('memberInfo');
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            if (member) {
+                welcomeMessage.textContent = `Xin chào, ${member.fullName}!`;
+                memberInfo.innerHTML = `
+                    <p><strong>Họ và Tên Thánh:</strong> ${member.fullName}</p>
+                    <p><strong>Vai trò:</strong> ${member.role || 'Thành viên'}</p>
+                    <p><strong>Lớp:</strong> ${member.class}</p>
+                    <p><strong>Số điểm:</strong> ${member.memberpoint || 0}</p>
+                    <p><strong>Hạng thành viên:</strong> ${getMembershipRank(member.memberpoint || 0)}</p>
+                `;
+            } else {
+                welcomeMessage.textContent = 'Xin chào!';
+                memberInfo.innerHTML = '<p class="text-[var(--error)]">Không tìm thấy thông tin thành viên.</p>';
+            }
+        }
+
+        // Populate class filter for rank list (Mobile only)
+        function populateClassFilter() {
+            const classFilter = document.getElementById('classFilter');
+            classFilter.style.display = isMobile ? 'block' : 'none';
+            const classes = [...new Set(mediaData.members.map(m => m.class))];
+            classFilter.innerHTML = '<option value="">Tất cả lớp</option>' + classes.map(c => `<option value="${c}">${c}</option>`).join('');
+        }
+
+        // Populate rank list
+        function populateRankList() {
+            const rankList = document.getElementById('rankList');
+            const classFilter = document.getElementById('classFilter').value;
+            let sortedMembers = mediaData.members
+                .map(member => ({
+                    fullName: member.fullName,
+                    points: member.memberpoint || 0,
+                    rank: getMembershipRank(member.memberpoint),
+                    class: member.class
+                }))
+                .filter(member => !classFilter || member.class === classFilter)
+                .sort((a, b) => b.points - a.points);
+            if (!isMobile) sortedMembers = sortedMembers.slice(0, 3);
+            rankList.innerHTML = sortedMembers.map((member, index) => `
+                <li>
+                    <span><i class="fas fa-trophy" style="color: ${index === 0 ? 'gold' : index === 1 ? 'silver' : '#cd7f32'};"></i> ${member.fullName} (${member.rank})</span>
+                    <span>${member.points} điểm</span>
+                </li>
+            `).join('');
+        }
+
+        function filterRankList() {
+            populateRankList();
+        }
+
+        // Populate redeem form
+        function populateRedeemForm() {
+            const member = mediaData.members.find(m => m.fullName.toLowerCase() === loggedInUser.toLowerCase());
+            const redeemName = document.getElementById('redeemName');
+            const redeemSubject = document.getElementById('redeemSubject');
+            const redeemPoints = document.getElementById('redeemPoints');
+            if (member) {
+                redeemName.value = member.fullName;
+                redeemSubject.innerHTML = `<option value="${member.class}">${member.class}</option>`;
+                redeemPoints.value = member.memberpoint || 0;
+            } else {
+                redeemName.value = '';
+                redeemSubject.innerHTML = '<option value="">Không tìm thấy lớp</option>';
+                redeemPoints.value = 0;
+            }
+        }
+
+        // Gift cart functionality (Mobile only)
+        function toggleGiftSelection(giftCode) {
+            if (!isMobile) return;
+            const gift = giftsData.find(g => g.code === giftCode);
+            if (!gift || gift.points > memberPoints) return;
+            if (!giftCart.find(g => g.code === giftCode)) {
+                giftCart.push(gift);
+                document.querySelector(`.gift-item[data-code="${giftCode}"]`).classList.add('selected');
+            } else {
+                giftCart = giftCart.filter(g => g.code !== giftCode);
+                document.querySelector(`.gift-item[data-code="${giftCode}"]`).classList.remove('selected');
+            }
+            updateGiftCart();
+        }
+
+        function updateGiftCart() {
+            const giftCartElement = document.getElementById('giftCart');
+            const cartList = document.getElementById('cartList');
+            giftCartElement.style.display = isMobile && giftCart.length > 0 ? 'block' : 'none';
+            cartList.innerHTML = giftCart.map(gift => `
+                <li>${gift.name} (Mã: ${gift.code}, ${gift.points} điểm) <button onclick="toggleGiftSelection('${gift.code}')">Xóa</button></li>
+            `).join('');
+        }
+
+        // Anti-spam mechanism
+        let isSubmitting = false;
+        function disableSubmitButtons() {
+            isSubmitting = true;
+            const submitCartBtn = document.getElementById('submitCartBtn');
+            const redeemSubmitBtn = document.getElementById('redeemSubmitBtn');
+            if (submitCartBtn) submitCartBtn.disabled = true;
+            if (redeemSubmitBtn) redeemSubmitBtn.disabled = true;
+            setTimeout(() => {
+                isSubmitting = false;
+                if (submitCartBtn) submitCartBtn.disabled = false;
+                if (redeemSubmitBtn) redeemSubmitBtn.disabled = false;
+            }, 5000);
+        }
+
+        function submitCart() {
+            if (!isMobile || giftCart.length === 0 || isSubmitting) return;
+            const member = mediaData.members.find(m => m.fullName.toLowerCase() === loggedInUser.toLowerCase());
+            const totalPoints = giftCart.reduce((sum, gift) => sum + gift.points, 0);
+            const successMessage = document.getElementById('successMessage');
+
+            if (!member) {
+                successMessage.textContent = 'Không tìm thấy thành viên.';
+                successMessage.style.color = 'var(--error)';
+                showSuccessPopup();
+                return;
+            }
+
+            if (member.memberpoint < totalPoints) {
+                successMessage.textContent = 'Không đủ điểm để đổi quà này.';
+                successMessage.style.color = 'var(--error)';
+                showSuccessPopup();
+                return;
+            }
+
+            document.getElementById('giftCode').value = giftCart.map(g => g.code).join(', ');
+            document.getElementById('redeemSubmissionTime').value = new Date().toLocaleString('vi-VN');
+            disableSubmitButtons();
+            document.getElementById('redeemForm').submit();
+            successMessage.textContent = 'Yêu cầu đổi quà đã được gửi, vui lòng kiểm tra Gmail.';
+            successMessage.style.color = 'var(--success-color)';
+            showSuccessPopup();
+        }
+
+        // Redeem form submission
+        document.getElementById('redeemForm')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (isSubmitting) return;
+            const name = document.getElementById('redeemName').value.trim();
+            const giftCode = document.getElementById('giftCode').value.trim();
+            const member = mediaData.members.find(m => m.fullName.toLowerCase() === name.toLowerCase());
+            const gift = giftsData.find(g => g.code.toLowerCase() === giftCode.toLowerCase());
+            const successMessage = document.getElementById('successMessage');
+
+            if (!member) {
+                successMessage.textContent = 'Không tìm thấy thành viên.';
+                successMessage.style.color = 'var(--error)';
+                showSuccessPopup();
+                return;
+            }
+
+            if (!isMobile && !gift) {
+                successMessage.textContent = 'Mã quà không hợp lệ.';
+                successMessage.style.color = 'var(--error)';
+                showSuccessPopup();
+                return;
+            }
+
+            if (!isMobile && (member.memberpoint || 0) < gift.points) {
+                successMessage.textContent = 'Không đủ điểm để đổi quà này.';
+                successMessage.style.color = 'var(--error)';
+                showSuccessPopup();
+                return;
+            }
+
+            document.getElementById('redeemSubmissionTime').value = new Date().toLocaleString('vi-VN');
+            successMessage.textContent = 'Yêu cầu đổi quà đã được gửi, vui lòng kiểm tra Gmail.';
+            successMessage.style.color = 'var(--success-color)';
+            disableSubmitButtons();
+            showSuccessPopup();
+            document.getElementById('redeemForm').submit();
+        });
+
+        function showSuccessPopup() {
+            document.getElementById('successOverlay').style.display = 'block';
+            document.getElementById('successPopup').style.display = 'block';
+            setTimeout(() => {
+                closeSuccessPopup();
+                showSection('home');
+            }, 2000);
+        }
+
+        function closeSuccessPopup() {
+            document.getElementById('successOverlay').style.display = 'none';
+            document.getElementById('successPopup').style.display = 'none';
+            document.getElementById('redeemForm').reset();
+            giftCart = [];
+            updateGiftCart();
+            document.querySelectorAll('.gift-item').forEach(item => item.classList.remove('selected'));
+            populateRedeemForm();
+        }
+
+        // Draw monthly points chart
+        function drawMonthlyPointsChart() {
+            const canvas = document.getElementById('monthlyPointsChart');
+            const ctx = canvas.getContext('2d');
+            const colorstyle = '#FFF';
+            const member = mediaData.members.find(m => m.fullName.toLowerCase() === loggedInUser.toLowerCase());
+            if (!member || !member.monthlyPoints) {
+                canvas.parentElement.innerHTML = '<p class="text-[var(--error)]">Không có dữ liệu điểm tháng.</p>';
+                return;
+            }
+
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            const months = member.monthlyPoints.slice(-6).reverse();
+            const maxPoints = Math.max(...months.map(m => m.points), 100);
+            const barWidth = (canvas.width - 40) / months.length / 1.5;
+            const height = canvas.height - 50;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 4; i++) {
+                const y = height - (i * height / 4);
+                ctx.beginPath();
+                ctx.moveTo(30, y);
+                ctx.lineTo(canvas.width - 10, y);
+                ctx.stroke();
+                ctx.fillStyle = colorstyle;
+                ctx.font = '12px Roboto';
+                ctx.fillText(Math.round((i / 4) * maxPoints), 5, y + 5);
+            }
+
+            months.forEach((month, i) => {
+                const barHeight = (month.points / maxPoints) * height;
+                ctx.fillStyle = 'var(--accent)';
+                ctx.fillRect(i * barWidth * 1.5 + 40, height - barHeight + 10, barWidth, barHeight);
+                ctx.fillStyle = 'var(--text)';
+                ctx.font = '12px Roboto';
+                ctx.textAlign = 'center';
+                ctx.fillText(month.month, i * barWidth * 1.5 + 40 + barWidth / 2, height + 30);
+                ctx.fillText(month.points, i * barWidth * 1.5 + 40 + barWidth / 2, height - barHeight + 20);
+            });
+        }
+
+        // Section navigation
+        const sections = ['home', 'calendar', 'redeem', 'guide'];
+        function showSection(sectionId) {
+            sections.forEach(id => {
+                const section = document.getElementById(id);
+                if (section) section.classList.remove('active');
+            });
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) targetSection.classList.add('active');
+            document.querySelectorAll('.navbar a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === sectionId) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Attach navigation events
+        function setupNavigation() {
+            document.querySelectorAll('.navbar a').forEach(link => {
+                link.removeEventListener('click', handleNavClick);
+                link.addEventListener('click', handleNavClick);
+            });
+        }
+
+        function handleNavClick(e) {
+            e.preventDefault();
+            const sectionId = e.currentTarget.getAttribute('href').substring(1);
+            showSection(sectionId);
+        }
+
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadMediaData();
+            loadGifts();
+            setupNavigation();
+            showSection('home');
+        });
+    </script>
+</body>
+</html>
