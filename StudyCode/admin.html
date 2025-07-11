@@ -40,18 +40,19 @@
             font-family: 'Roboto', sans-serif;
             background: linear-gradient(135deg, #2D2D2D 0%, #1A1A1A 100%);
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.5;
             margin: 0;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            font-size: 0.85rem; /* Giảm font size mặc định */
         }
 
         .header {
             background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: var(--text);
-            padding: 1.5rem;
+            padding: 1rem;
             box-shadow: var(--shadow-md);
             position: sticky;
             top: 0;
@@ -65,14 +66,14 @@
 
         .header h2 {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 2rem;
+            font-size: 1.5rem; /* Giảm từ 2rem */
             font-weight: 700;
             margin: 0;
         }
 
         .navbar {
             background: var(--dark-bg);
-            padding: 0.75rem;
+            padding: 0.5rem;
             display: flex;
             justify-content: space-around;
             position: fixed;
@@ -80,15 +81,15 @@
             width: 100%;
             box-shadow: var(--shadow-md);
             z-index: 1000;
-            height: 60px;
+            height: 50px; /* Giảm chiều cao navbar */
         }
 
         .navbar a {
             color: var(--text);
-            padding: 0.5rem;
-            font-size: 0.875rem;
+            padding: 0.4rem;
+            font-size: 0.8rem; /* Giảm từ 0.875rem */
             text-align: center;
-            border-radius: 0.5rem;
+            border-radius: 0.4rem;
             transition: var(--transition);
             display: flex;
             flex-direction: column;
@@ -98,25 +99,19 @@
         }
 
         .navbar a i {
-            font-size: 1.25rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .navbar a:hover {
-            background: var(--primary);
-            color: var(--accent);
-            transform: translateY(-2px);
+            font-size: 1rem; /* Giảm từ 1.25rem */
+            margin-bottom: 0.2rem;
         }
 
         .navbar a:hover::after {
             content: attr(data-tooltip);
             position: absolute;
-            top: -30px;
+            top: -25px;
             background: var(--primary-dark);
             color: var(--text);
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            font-size: 0.75rem;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.2rem;
+            font-size: 0.65rem; /* Giảm từ 0.75rem */
             white-space: nowrap;
             z-index: 1001;
         }
@@ -130,20 +125,19 @@
             flex: 1;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 1.5rem;
+            padding: 1rem;
             overflow-y: auto;
-            min-height: calc(100dvh - 120px);
-            padding-bottom: 60px;
+            min-height: calc(100dvh - 100px);
+            padding-bottom: 50px;
         }
 
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 1rem;
-            padding: 2rem;
+            border-radius: 0.8rem;
+            padding: 1.5rem;
             box-shadow: var(--shadow);
-            margin-top: 1.5rem;
-            margin-bottom: 1.5rem;
+            margin: 1rem 0;
             display: none;
             animation: fadeIn 0.3s ease-out;
         }
@@ -159,21 +153,21 @@
 
         .card h3 {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 1.75rem;
+            font-size: 1.25rem; /* Giảm từ 1.75rem */
             color: var(--accent);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             text-align: center;
         }
 
         .input, select.input {
             background: #1E1E1E;
             border: 1px solid var(--border-color);
-            border-radius: 0.5rem;
-            padding: 0.75rem;
+            border-radius: 0.4rem;
+            padding: 0.5rem;
             color: var(--text);
             width: 100%;
             font-family: 'Roboto', sans-serif;
-            font-size: 0.875rem;
+            font-size: 0.8rem; /* Giảm từ 0.875rem */
         }
 
         .input:focus, select.input:focus {
@@ -185,14 +179,15 @@
         .btn {
             background: var(--primary);
             color: var(--text);
-            padding: 0.75rem 1.5rem;
+            padding: 0.5rem 1rem;
             border: none;
-            border-radius: 0.5rem;
+            border-radius: 0.4rem;
             cursor: pointer;
             font-family: 'JetBrains Mono', monospace;
             font-weight: 500;
             transition: var(--transition);
-            margin-right: 0.5rem;
+            margin-right: 0.4rem;
+            font-size: 0.8rem; /* Giảm kích thước chữ */
         }
 
         .btn:disabled {
@@ -208,7 +203,7 @@
         }
 
         .rank-list {
-            max-height: 400px;
+            max-height: 300px;
             overflow-y: auto;
         }
 
@@ -216,8 +211,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.75rem;
-            font-size: 0.875rem;
+            padding: 0.5rem;
+            font-size: 0.75rem; /* Giảm từ 0.875rem */
             border-bottom: 1px solid var(--border-color);
         }
 
@@ -228,13 +223,14 @@
         .member-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 1rem;
+            margin-top: 0.8rem;
         }
 
         .member-table th, .member-table td {
-            padding: 0.75rem;
+            padding: 0.5rem;
             text-align: left;
             border-bottom: 1px solid var(--border-color);
+            font-size: 0.8rem; /* Giảm từ 0.875rem */
         }
 
         .member-table th {
@@ -250,26 +246,27 @@
         .member-card {
             background: #1E1E1E;
             border: 1px solid var(--border-color);
-            border-radius: 0.5rem;
-            padding: 1rem;
-            margin-bottom: 1rem;
+            border-radius: 0.4rem;
+            padding: 0.8rem;
+            margin-bottom: 0.8rem;
         }
 
         .member-card p {
-            margin: 0.5rem 0;
+            margin: 0.3rem 0;
+            font-size: 0.75rem; /* Giảm từ 0.875rem */
         }
 
         .notes-form textarea, .doc-content textarea {
             background: #1E1E1E;
             border: 1px solid var(--border-color);
-            border-radius: 0.5rem;
-            padding: 0.75rem;
+            border-radius: 0.4rem;
+            padding: 0.5rem;
             color: var(--text);
             width: 100%;
             font-family: 'Roboto', sans-serif;
-            font-size: 0.875rem;
+            font-size: 0.8rem; /* Giảm từ 0.875rem */
             resize: vertical;
-            height: 150px;
+            height: 120px; /* Giảm từ 150px */
         }
 
         .notes-form textarea:focus, .doc-content textarea:focus {
@@ -281,13 +278,13 @@
         .notes-form .input-group {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
 
         .notes-form .input-group i {
             cursor: pointer;
             color: var(--primary);
-            font-size: 1.25rem;
+            font-size: 1rem; /* Giảm từ 1.25rem */
         }
 
         .notes-form .input-group i:hover {
@@ -300,12 +297,12 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background: rgba(26, 26, 26, 0.95);
-            padding: 1.5rem;
-            border-radius: 0.5rem;
+            padding: 1rem;
+            border-radius: 0.4rem;
             box-shadow: var(--shadow-md);
             max-width: 90%;
-            width: 320px;
-            font-size: 0.875rem;
+            width: 280px;
+            font-size: 0.75rem; /* Giảm từ 0.875rem */
             z-index: 1001;
             text-align: center;
             display: none;
@@ -326,24 +323,24 @@
         .doc-content {
             background: #1E1E1E;
             border: 1px solid var(--border-color);
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            margin-top: 1.5rem;
+            border-radius: 0.4rem;
+            padding: 1rem;
+            margin-top: 1rem;
         }
 
         .button-group {
             display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
+            gap: 0.4rem;
+            margin-bottom: 0.8rem;
         }
 
         .back-to-top {
             position: fixed;
-            bottom: 80px;
-            right: 20px;
+            bottom: 70px;
+            right: 15px;
             background: var(--primary);
             color: var(--text);
-            padding: 0.75rem;
+            padding: 0.5rem;
             border-radius: 50%;
             cursor: pointer;
             display: none;
@@ -358,63 +355,72 @@
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
         }
 
         .stat-card {
             background: #1E1E1E;
             border: 1px solid var(--border-color);
-            border-radius: 0.5rem;
-            padding: 1rem;
+            border-radius: 0.4rem;
+            padding: 0.8rem;
             text-align: center;
         }
 
         .stat-card h4 {
             font-family: 'JetBrains Mono', monospace;
             color: var(--accent);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
+            font-size: 0.9rem; /* Giảm từ 1rem */
         }
 
         .stat-card p {
-            font-size: 1.5rem;
+            font-size: 1.2rem; /* Giảm từ 1.5rem */
             font-weight: 500;
         }
 
         .chart-container {
-            max-width: 600px;
-            margin: 2rem auto;
+            max-width: 500px; /* Giảm từ 600px */
+            margin: 1.5rem auto;
         }
 
         .error-message {
             color: var(--error);
             text-align: center;
-            padding: 1rem;
+            padding: 0.8rem;
             border: 1px solid var(--error);
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
+            border-radius: 0.4rem;
+            margin-bottom: 0.8rem;
+            font-size: 0.75rem; /* Giảm từ 0.875rem */
         }
 
         @media (max-width: 1024px) {
+            body {
+                font-size: 0.7rem; /* Giảm font size trên di động */
+            }
             .header h2 {
-                font-size: 1.5rem;
+                font-size: 1.25rem; /* Giảm từ 1.5rem */
             }
             .navbar {
-                height: 50px;
-                padding: 0.5rem;
+                height: 40px; /* Giảm từ 50px */
+                padding: 0.4rem;
             }
             .navbar a {
-                font-size: 0.75rem;
+                font-size: 0.65rem; /* Giảm từ 0.75rem */
             }
             .navbar a i {
-                font-size: 1rem;
+                font-size: 0.9rem; /* Giảm từ 1rem */
             }
             .card {
-                padding: 1.5rem;
+                padding: 1rem;
+            }
+            .card h3 {
+                font-size: 1rem; /* Giảm từ 1.25rem */
             }
             .notes-form textarea, .doc-content textarea {
-                height: 100px;
+                height: 80px; /* Giảm từ 100px */
+                font-size: 0.7rem; /* Giảm từ 0.8rem */
             }
             .member-table {
                 display: none;
@@ -422,11 +428,23 @@
             .member-cards {
                 display: block;
             }
+            .member-card p {
+                font-size: 0.65rem; /* Giảm từ 0.75rem */
+            }
             .button-group {
                 flex-wrap: wrap;
             }
             .chart-container {
                 max-width: 100%;
+            }
+            .rank-list li {
+                font-size: 0.65rem; /* Giảm từ 0.75rem */
+            }
+            .stat-card h4 {
+                font-size: 0.8rem; /* Giảm từ 0.9rem */
+            }
+            .stat-card p {
+                font-size: 1rem; /* Giảm từ 1.2rem */
             }
         }
 
@@ -441,7 +459,7 @@
     <div class="popup-overlay" id="successOverlay">
         <div class="popup" id="successPopup">
             <p id="successMessage"></p>
-            <button class="btn mt-4" onclick="closeSuccessPopup()">Thoát</button>
+            <button class="btn mt-3" onclick="closeSuccessPopup()">Thoát</button>
         </div>
     </div>
 
@@ -475,6 +493,8 @@
             </div>
             <h3>Top 10 Thành Viên Điểm Cao Nhất</h3>
             <ul class="rank-list" id="topMembers"></ul>
+            <h3>Top 3 Từng Ban</h3>
+            <ul class="rank-list" id="top3ByGroup"></ul>
             <h3>Thành Viên Mới Nhất</h3>
             <ul class="rank-list" id="newestMembers"></ul>
             <h3>Thống Kê Hạng Thành Viên</h3>
@@ -483,7 +503,7 @@
 
         <div id="management" class="card">
             <h3>Quản Lý Thành Viên</h3>
-            <div class="mb-4">
+            <div class="mb-3">
                 <label class="block mb-1 text-text">Chọn Ban:</label>
                 <select id="groupFilter" class="input" onchange="filterMembers()">
                     <option value="all">Tất cả</option>
@@ -493,7 +513,7 @@
                     <option value="bantruc">Ban Trực</option>
                 </select>
             </div>
-            <div class="mb-4">
+            <div class="mb-3">
                 <label class="block mb-1 text-text">Tìm kiếm theo tên:</label>
                 <input type="text" id="searchInput" class="input" placeholder="Nhập tên thành viên..." oninput="filterMembers()">
             </div>
@@ -502,7 +522,7 @@
                     <tr>
                         <th>Họ và Tên Thánh</th>
                         <th>Ban</th>
-                        <th>Hạng Thành viên</th>
+                        <th>Vai trò</th>
                         <th>Điểm</th>
                         <th>Hạng</th>
                     </tr>
@@ -520,31 +540,31 @@
         <div id="notes" class="card">
             <h3>Ghi Chú</h3>
             <form id="noteForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST" class="notes-form">
-                <div class="mb-4 input-group">
+                <div class="mb-3 input-group">
                     <label class="block mb-1 text-text">Ngày Tháng Năm:</label>
                     <input type="text" name="date" id="noteDate" class="input" readonly required>
                     <i class="fas fa-sync-alt" onclick="updateDateTime()"></i>
                 </div>
-                <div class="mb-4 input-group">
+                <div class="mb-3 input-group">
                     <label class="block mb-1 text-text">Giờ Phút Giây:</label>
                     <input type="text" name="time" id="noteTime" class="input" readonly required>
                     <i class="fas fa-sync-alt" onclick="updateDateTime()"></i>
                 </div>
-                <div class="mb-4">
+                <div class="mb-3">
                     <label class="block mb-1 text-text">Tiêu Đề (tối đa 30 ký tự):</label>
                     <input type="text" name="title" id="noteTitle" class="input" maxlength="30" required>
                 </div>
-                <div class="mb-4">
+                <div class="mb-3">
                     <label class="block mb-1 text-text">Nội Dung (tối đa 300 ký tự):</label>
                     <textarea id="noteContent" name="content" class="input" maxlength="300" placeholder="Viết nội dung ghi chú tại đây..."></textarea>
                 </div>
-                <div class="mb-4">
+                <div class="mb-3">
                     <label class="block mb-1 text-text">Trưởng Nộp:</label>
                     <input type="text" name="submitter" id="noteSubmitter" class="input" readonly required>
                 </div>
-                <div class="mb-4">
+                <div class="mb-3">
                     <label class="flex items-center">
-                        <input type="checkbox" name="verify" id="noteVerify" required>
+                        <input type="text" name="verify" id="noteVerify" required>
                         <span class="ml-2">Xác minh thông tin trên chính xác</span>
                     </label>
                 </div>
@@ -611,6 +631,7 @@
 
                 populateStats();
                 populateTopMembers();
+                populateTop3ByGroup();
                 populateNewestMembers();
                 populateRankStats();
                 renderPointsChart();
@@ -628,6 +649,7 @@
                 allMembers = fallbackMembers;
                 populateStats();
                 populateTopMembers();
+                populateTop3ByGroup();
                 populateNewestMembers();
                 populateRankStats();
                 renderPointsChart();
@@ -647,9 +669,6 @@
         // Populate stats
         function populateStats() {
             const totalMembers = allMembers.length;
-            const averagePoints = allMembers.length > 0 
-                ? (allMembers.reduce((sum, member) => sum + (Number(member.memberpoint) || 0), 0) / allMembers.length).toFixed(1)
-                : 0;
             const groupCounts = allMembers.reduce((acc, member) => {
                 acc[member.group] = (acc[member.group] || 0) + 1;
                 return acc;
@@ -659,7 +678,6 @@
                 .join(', ');
 
             document.getElementById('totalMembers').textContent = totalMembers;
-            document.getElementById('averagePoints').textContent = averagePoints;
             document.getElementById('groupStats').textContent = groupStats || 'Không có dữ liệu';
         }
 
@@ -693,16 +711,16 @@
                             beginAtZero: true,
                             title: { display: true, text: 'Điểm', color: '#ebebeb' },
                             grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                            ticks: { color: '#ebebeb' }
+                            ticks: { color: '#ebebeb', font: { size: 10 } } /* Giảm font chữ trục */
                         },
                         x: {
                             title: { display: true, text: 'Thành viên', color: '#ebebeb' },
                             grid: { display: false },
-                            ticks: { color: '#ebebeb' }
+                            ticks: { color: '#ebebeb', font: { size: 10 } } /* Giảm font chữ trục */
                         }
                     },
                     plugins: {
-                        legend: { labels: { color: '#ebebeb' } }
+                        legend: { labels: { color: '#ebebeb', font: { size: 10 } } } /* Giảm font chữ legend */
                     }
                 }
             });
@@ -720,6 +738,31 @@
                     <span>${Number(member.memberpoint) || 0} điểm</span>
                 </li>
             `).join('');
+        }
+
+        // Populate top 3 by group
+        function populateTop3ByGroup() {
+            const top3ByGroupList = document.getElementById('top3ByGroup');
+            const groups = ['Ban Vệ Sinh - Y Tế', 'Ban Truyền Thông', 'Ban Sinh Hoạt', 'Ban Trực'];
+            let html = '';
+            
+            groups.forEach(group => {
+                const topMembers = allMembers
+                    .filter(member => member.group === group)
+                    .sort((a, b) => (Number(b.memberpoint) || 0) - (Number(a.memberpoint) || 0))
+                    .slice(0, 3);
+                if (topMembers.length > 0) {
+                    html += `<li><strong>${group}</strong></li>`;
+                    html += topMembers.map((member, index) => `
+                        <li style="padding-left: 1rem;">
+                            <span><i class="fas fa-medal" style="color: ${index === 0 ? 'gold' : index === 1 ? 'silver' : '#cd7f32'};"></i> ${member.fullName}</span>
+                            <span>${Number(member.memberpoint) || 0} điểm</span>
+                        </li>
+                    `).join('');
+                }
+            });
+
+            top3ByGroupList.innerHTML = html || '<li>Không có dữ liệu top 3.</li>';
         }
 
         // Populate newest members
@@ -877,7 +920,7 @@
             if (isSubmitting) return;
             const title = document.getElementById('noteTitle').value.trim();
             const content = document.getElementById('noteContent').value.trim();
-            const verify = document.getElementById('noteVerify').checked;
+            const verify = document.getElementById('noteVerify').value.trim();
             const successMessage = document.getElementById('successMessage');
 
             if (!title) {
@@ -908,7 +951,7 @@
             document.getElementById('noteForm').submit();
             document.getElementById('noteTitle').value = '';
             document.getElementById('noteContent').value = '';
-            document.getElementById('noteVerify').checked = false;
+            document.getElementById('noteVerify').value = '';
             localStorage.removeItem('noteDraft');
             updateDateTime();
         });
