@@ -273,19 +273,26 @@
             }, 3000);
         };
 
+        function removeVietnameseTones(str) {
+            return str
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/đ/g, 'd')
+                .replace(/Đ/g, 'D');
+        }
+
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const username = document.getElementById('username').value.trim().toLowerCase();
             const password = document.getElementById('password').value;
             const currentYear = new Date().getFullYear().toString();
+            const normalizedUsername = removeVietnameseTones(username);
 
-            // Kiểm tra đầu vào
             if (!username || !password) {
                 showNotification('Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!', 'error');
                 return;
             }
 
-            // Kiểm tra người dùng tĩnh
             const users = {
                 'horeb': 'horeb.html',
                 'tabor': 'tabor.html',
@@ -294,17 +301,17 @@
             };
 
             if (users[username] && password === currentYear) {
+                console.log('Logging in static user:', username);
                 sessionStorage.setItem('loggedInUser', username);
                 window.location.href = users[username];
                 return;
             }
 
-            // Kiểm tra người dùng từ các tệp JSON
             try {
                 const [mediaResponse, activeResponse, enviromentResponse] = await Promise.all([
                     fetch('StudyCode/data/media.json'),
                     fetch('StudyCode/data/active.json'),
-                    fetch('StudyCode/data/enviroment.json')
+                    fetch('StudyCode/data/environment.json')
                 ]);
 
                 if (!mediaResponse.ok || !activeResponse.ok || !enviromentResponse.ok) {
@@ -315,25 +322,24 @@
                 const activeData = await activeResponse.json();
                 const enviromentData = await enviromentResponse.json();
 
-                // Tìm người dùng trong các tệp JSON
                 let member = null;
                 let redirectUrl = '';
 
                 if (mediaData.members && Array.isArray(mediaData.members)) {
-                    member = mediaData.members.find(m => m.fullName && m.fullName.toLowerCase() === username);
+                    member = mediaData.members.find(m => m.fullName && removeVietnameseTones(m.fullName.toLowerCase()) === normalizedUsername);
                     if (member) redirectUrl = 'StudyCode/media.html';
                 }
                 if (!member && activeData.members && Array.isArray(activeData.members)) {
-                    member = activeData.members.find(m => m.fullName && m.fullName.toLowerCase() === username);
-                    if (member) redirectUrl = 'StudyCode/active.html';
+                    member = activeData.members.find(m => m.fullName && removeVietnameseTones(m.fullName.toLowerCase()) === normalizedUsername);
+                    if (member) redirectUrl = 'active.html'; // Sửa đường dẫn nếu active.html ở thư mục gốc
                 }
                 if (!member && enviromentData.members && Array.isArray(enviromentData.members)) {
-                    member = enviromentData.members.find(m => m.fullName && m.fullName.toLowerCase() === username);
-                    if (member) redirectUrl = 'StudyCode/enviroment.html';
+                    member = enviromentData.members.find(m => m.fullName && removeVietnameseTones(m.fullName.toLowerCase()) === normalizedUsername);
+                    if (member) redirectUrl = 'StudyCode/environment.html';
                 }
 
-                // Kiểm tra mật khẩu và chuyển hướng
                 if (member && password === currentYear) {
+                    console.log('Logging in JSON user:', member.fullName);
                     sessionStorage.setItem('loggedInUser', member.fullName);
                     window.location.href = redirectUrl;
                 } else {
