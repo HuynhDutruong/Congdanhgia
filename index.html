@@ -311,16 +311,18 @@
                 const [mediaResponse, activeResponse, enviromentResponse] = await Promise.all([
                     fetch('StudyCode/data/media.json'),
                     fetch('StudyCode/data/active.json'),
-                    fetch('StudyCode/data/enviroment.json')
+                    fetch('StudyCode/data/enviroment.json'),
+                    fetch('StudyCode/data/bantruc.json')
                 ]);
 
-                if (!mediaResponse.ok || !activeResponse.ok || !enviromentResponse.ok) {
+                if (!mediaResponse.ok || !activeResponse.ok || !enviromentResponse.ok || !bantrucResponse.ok)  {
                     throw new Error('Không thể tải danh sách thành viên.');
                 }
 
                 const mediaData = await mediaResponse.json();
                 const activeData = await activeResponse.json();
                 const enviromentData = await enviromentResponse.json();
+                const bantrucData = await bantrucResponse.json();
 
                 let member = null;
                 let redirectUrl = '';
@@ -328,6 +330,10 @@
                 if (mediaData.members && Array.isArray(mediaData.members)) {
                     member = mediaData.members.find(m => m.fullName && removeVietnameseTones(m.fullName.toLowerCase()) === normalizedUsername);
                     if (member) redirectUrl = 'StudyCode/media.html';
+                }
+                if (mediaData.members && Array.isArray(bantrucData.members)) {
+                    member = bantrucData.members.find(m => m.fullName && removeVietnameseTones(m.fullName.toLowerCase()) === normalizedUsername);
+                    if (member) redirectUrl = 'StudyCode/BANTRUC.html';
                 }
                 if (!member && activeData.members && Array.isArray(activeData.members)) {
                     member = activeData.members.find(m => m.fullName && removeVietnameseTones(m.fullName.toLowerCase()) === normalizedUsername);
