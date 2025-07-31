@@ -309,7 +309,7 @@
 
             try {
                 const [mediaResponse, activeResponse, enviromentResponse, bantrucResponse] = await Promise.all([
-                    fetchWithErrorHandling('StudyCode/data/media.json'),
+                    fetchWithErrorHandling('StudyCode/data/media.json),
                     fetchWithErrorHandling('StudyCode/data/active.json'),
                     fetchWithErrorHandling('StudyCode/data/enviroment.json'),
                     fetchWithErrorHandling('StudyCode/data/bantruc.json')
