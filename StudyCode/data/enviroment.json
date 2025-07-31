@@ -25,9 +25,9 @@
     {
       "fullName": "Phêrô Nguyễn Huỳnh Hiền Minh",
       "class": "Ban Vệ Sinh - Y Tế",
-      "memberpoint": 0,
+      "memberpoint": 4,
       "monthlyPoints": [
-        {"month": "2025-07", "points": 0},
+        {"month": "2025-07", "points": 4},
         {"month": "2025-06", "points": 0}
       ]
     },
@@ -45,9 +45,9 @@
     {
       "fullName": "Matthêu Trần Gia Bảo",
       "class": "Ban Vệ Sinh - Y Tế",
-      "memberpoint": 0,
+      "memberpoint": 3,
       "monthlyPoints": [
-        {"month": "2025-07", "points": 0},
+        {"month": "2025-07", "points": 3},
         {"month": "2025-06", "points": 0}
       ]
     },
@@ -65,9 +65,9 @@
     {
       "fullName": "Phêrô Phạm Phi Hổ",
       "class": "Ban Vệ Sinh - Y Tế",
-      "memberpoint": 0,
+      "memberpoint": 1,
       "monthlyPoints": [
-        {"month": "2025-07", "points": 0},
+        {"month": "2025-07", "points": 1},
         {"month": "2025-06", "points": 0}
       ]
     }
