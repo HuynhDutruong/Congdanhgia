@@ -297,7 +297,7 @@
                 'horeb': 'horeb.html',
                 'admin': 'admin.html',
                 'scode': 'StudyCode/scode.html',
-                'admin123': 'StudyCode/admin.html'
+                'admin123': 'StudyCode/admin.html' // Sửa trùng lặp 'admin'
             };
 
             if (users[username] && password === currentYear) {
@@ -315,9 +315,10 @@
                     fetch('StudyCode/data/bantruc.json')
                 ]);
 
-                if (!mediaResponse.ok || !activeResponse.ok || !enviromentResponse.ok || !bantrucResponse.ok)  {
-                    throw new Error('Không thể tải danh sách thành viên.');
-                }
+                if (!mediaResponse.ok) throw new Error(`Không thể tải media.json: ${mediaResponse.statusText}`);
+                if (!activeResponse.ok) throw new Error(`Không thể tải active.json: ${activeResponse.statusText}`);
+                if (!enviromentResponse.ok) throw new Error(`Không thể tải enviroment.json: ${enviromentResponse.statusText}`);
+                if (!bantrucResponse.ok) throw new Error(`Không thể tải bantruc.json: ${bantrucResponse.statusText}`);
 
                 const mediaData = await mediaResponse.json();
                 const activeData = await activeResponse.json();
@@ -331,13 +332,13 @@
                     member = mediaData.members.find(m => m.fullName && removeVietnameseTones(m.fullName.toLowerCase()) === normalizedUsername);
                     if (member) redirectUrl = 'StudyCode/media.html';
                 }
-                if (mediaData.members && Array.isArray(bantrucData.members)) {
+                if (!member && bantrucData.members && Array.isArray(bantrucData.members)) {
                     member = bantrucData.members.find(m => m.fullName && removeVietnameseTones(m.fullName.toLowerCase()) === normalizedUsername);
                     if (member) redirectUrl = 'StudyCode/BANTRUC.html';
                 }
                 if (!member && activeData.members && Array.isArray(activeData.members)) {
                     member = activeData.members.find(m => m.fullName && removeVietnameseTones(m.fullName.toLowerCase()) === normalizedUsername);
-                    if (member) redirectUrl = 'StudyCode/active.html'; 
+                    if (member) redirectUrl = 'StudyCode/active.html';
                 }
                 if (!member && enviromentData.members && Array.isArray(enviromentData.members)) {
                     member = enviromentData.members.find(m => m.fullName && removeVietnameseTones(m.fullName.toLowerCase()) === normalizedUsername);
@@ -352,8 +353,8 @@
                     showNotification('Tên đăng nhập hoặc mật khẩu không đúng!', 'error');
                 }
             } catch (error) {
-                showNotification('Lỗi khi kiểm tra đăng nhập. Vui lòng thử lại.', 'error');
-                console.error('Error:', error);
+                console.error('Login error:', error.message);
+                showNotification(`Lỗi khi kiểm tra đăng nhập: ${error.message}`, 'error');
             }
         });
     </script>
