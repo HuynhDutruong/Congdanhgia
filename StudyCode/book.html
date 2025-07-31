@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giáo trình HTML-1: Phát triển giao diện web cơ bản</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        pre {
+            background-color: #f4f4f5;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+        }
+        .exercise-solution {
+            display: none;
+            background-color: #e5e7eb;
+            padding: 1rem;
+            border-left: 4px solid #3b82f6;
+            margin-top: 0.5rem;
+        }
+        .toggle-solution:hover {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-blue-600 text-white p-4 sticky top-0 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Giáo trình HTML-1</h1>
+            <ul class="flex space-x-4">
+                <li><a href="#intro" class="hover:underline">Giới thiệu</a></li>
+                <li><a href="#ch1" class="hover:underline">Buổi 1</a></li>
+                <li><a href="#ch2" class="hover:underline">Buổi 2</a></li>
+                <li><a href="#ch3" class="hover:underline">Buổi 3</a></li>
+                <li><a href="#ch4" class="hover:underline">Buổi 4</a></li>
+                <li><a href="#ch5" class="hover:underline">Buổi 5</a></li>
+                <li><a href="#ch6" class="hover:underline">Buổi 6</a></li>
+                <li><a href="#ch7" class="hover:underline">Buổi 7</a></li>
+                <li><a href="#ch8" class="hover:underline">Buổi 8</a></li>
+                <li><a href="#project" class="hover:underline">Dự án</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto p-6 bg-white shadow-lg mt-4 rounded-lg">
+        <!-- Introduction -->
+        <section id="intro" class="mb-12">
+            <h1 class="text-4xl font-bold text-blue-600 mb-4">Giáo trình HTML-1: Phát triển giao diện web cơ bản</h1>
+            <h2 class="text-2xl font-semibold mb-2">Lời nói đầu</h2>
+            <p class="text-lg mb-4">Chào mừng bạn đến với **giáo trình HTML-1**, tài liệu được thiết kế dành riêng cho khóa học **HTML-1: Phát triển giao diện web cơ bản**. Khóa học kéo dài 16 giờ qua 8 buổi, cung cấp kiến thức nền tảng về phát triển giao diện web sử dụng HTML, CSS, JavaScript, TailwindCSS và JSON. Bạn sẽ học từ những khái niệm cơ bản đến việc xây dựng một dự án thực tế: một giao diện web cho cổng thông tin hoặc trang cá nhân.</p>
+            <p class="text-lg mb-4">Giáo trình này được tổ chức thành 8 chương, mỗi chương tương ứng với một buổi học, bao gồm lý thuyết chi tiết, bài tập thực hành phong phú và bài tập về nhà. Ngoài ra, bạn sẽ tìm thấy hướng dẫn chi tiết về dự án cuối khóa và cách viết báo cáo chuyên nghiệp. Hãy thực hành đều đặn và sáng tạo để đạt kết quả tốt nhất!</p>
+
+            <h2 class="text-2xl font-semibold mb-2">Thông tin khóa học</h2>
+            <ul class="list-disc pl-6 mb-4">
+                <li><strong>Thời lượng</strong>: 16 giờ (8 buổi, mỗi buổi 2 giờ).</li>
+                <li><strong>Mục tiêu</strong>: Trang bị kỹ năng thiết kế giao diện web cơ bản và làm quen với quy trình phát triển phần mềm.</li>
+                <li><strong>Dự án cuối khóa</strong>: Thiết kế giao diện web cho cổng thông tin hoặc trang cá nhân.</li>
+                <li><strong>Công nghệ</strong>: HTML, CSS, JavaScript, TailwindCSS, JSON.</li>
+                <li><strong>Công cụ</strong>: Visual Studio Code, GitHub.</li>
+            </ul>
+
+            <h3 class="text-xl font-semibold mb-2">Yêu cầu khóa học</h3>
+            <ul class="list-disc pl-6 mb-4">
+                <li><strong>Điểm danh</strong>: Không vắng quá 20% (3,2 giờ hoặc 2 buổi).</li>
+                <li><strong>Bài tập</strong>: Hoàn thành ít nhất 80% bài tập về nhà.</li>
+                <li><strong>Điểm tổng kết</strong>: Đạt trên 40%, với cơ cấu:
+                    <ul class="list-circle pl-6">
+                        <li>Điểm danh: 20%</li>
+                        <li>Bài tập: 30%</li>
+                        <li>Đánh giá cuối khóa: 50%</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3 class="text-xl font-semibold mb-2">Điều kiện tiên quyết</h3>
+            <ul class="list-disc pl-6 mb-4">
+                <li>Đọc và ôn tập sơ lược về HTML cơ bản.</li>
+                <li>Tải Visual Studio Code (<a href="https://code.visualstudio.com/" class="text-blue-500 hover:underline">tại đây</a>).</li>
+                <li>Chuẩn bị học trực tuyến: internet ổn định, sẵn sàng chia sẻ màn hình.</li>
+            </ul>
+        </section>
+
+        <!-- Chapter 1 -->
+        <section id="ch1" class="mb-12">
+            <h2 class="text-3xl font-bold text-blue-600 mb-4">Buổi 1: Giới thiệu HTML và thiết lập môi trường làm việc</h2>
+            <h3 class="text-2xl font-semibold mb-2">1.1 Giới thiệu</h3>
+            <p class="text-lg mb-4">Buổi học đầu tiên giới thiệu vai trò của HTML trong phát triển web và hướng dẫn thiết lập môi trường làm việc. Bạn sẽ làm quen với Visual Studio Code (VS Code) và GitHub, hai công cụ thiết yếu để viết và quản lý mã nguồn.</p>
+
+            <h3 class="text-2xl font-semibold mb-2">1.2 Lý thuyết</h3>
+            <h4 class="text-xl font-semibold mb-2">1.2.1 HTML là gì?</h4>
+            <p class="text-lg mb-4">HTML (HyperText Markup Language) là ngôn ngữ đánh dấu dùng để tạo cấu trúc cho trang web. HTML sử dụng các thẻ (tags) để định nghĩa các phần tử như tiêu đề, đoạn văn, hình ảnh, liên kết.</p>
+
+            <h4 class="text-xl font-semibold mb-2">1.2.2 Cấu trúc tài liệu HTML</h4>
+            <p class="text-lg mb-2">Một tài liệu HTML cơ bản có cấu trúc như sau:</p>
+            <pre class="mb-4">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Trang đầu tiên&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Chào mừng đến với HTML&lt;/h1&gt;
+    &lt;p&gt;Đây là một đoạn văn bản.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </pre>
+            <p class="text-lg mb-4">
+                - <code>&lt;!DOCTYPE html&gt;</code>: Khai báo đây là tài liệu HTML5.<br>
+                - <code>&lt;html lang="vi"&gt;</code>: Thẻ gốc, chỉ định ngôn ngữ là tiếng Việt.<br>
+                - <code>&lt;head&gt;</code>: Chứa siêu dữ liệu (metadata) như tiêu đề.<br>
+                - <code>&lt;body&gt;</code>: Chứa nội dung hiển thị trên trang.
+            </p>
+
+            <h4 class="text-xl font-semibold mb-2">1.2.3 Các thẻ HTML cơ bản</h4>
+            <ul class="list-disc pl-6 mb-4">
+                <li><code>&lt;h1&gt;</code> đến <code>&lt;h6&gt;</code>: Tiêu đề từ lớn đến nhỏ.</li>
+                <li><code>&lt;p&gt;</code>: Đoạn văn.</li>
+                <li><code>&lt;a href="URL"&gt;</code>: Liên kết.</li>
+                <li><code>&lt;img src="đường_dẫn" alt="mô_tả"&gt;</code>: Hình ảnh.</li>
+                <li><code>&lt;div&gt;</code>: Phân chia khối nội dung.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">1.2.4 Thiết lập Visual Studio Code</h4>
+            <p class="text-lg mb-4">VS Code là trình soạn thảo mã nguồn mạnh mẽ. Để bắt đầu:</p>
+            <ol class="list-decimal pl-6 mb-4">
+                <li>Tải VS Code tại <a href="https://code.visualstudio.com/" class="text-blue-500 hover:underline">đây</a>.</li>
+                <li>Cài đặt tiện ích:
+                    <ul class="list-circle pl-6">
+                        <li><strong>Live Server</strong>: Xem trước trang web trong thời gian thực.</li>
+                        <li><strong>Prettier</strong>: Tự động định dạng mã nguồn.</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h4 class="text-xl font-semibold mb-2">1.2.5 GitHub cơ bản</h4>
+            <p class="text-lg mb-4">GitHub là nền tảng quản lý mã nguồn. Các bước cơ bản:</p>
+            <ol class="list-decimal pl-6 mb-4">
+                <li>Tạo tài khoản tại <a href="https://github.com/" class="text-blue-500 hover:underline">github.com</a>.</li>
+                <li>Tạo kho lưu trữ (repository).</li>
+                <li>Sử dụng lệnh Git để đẩy mã nguồn:
+                    <pre class="my-2">
+git init
+git add .
+git commit -m "Lần đẩy đầu tiên"
+git push origin main
+                    </pre>
+                </li>
+            </ol>
+
+            <h3 class="text-2xl font-semibold mb-2">1.3 Thực hành</h3>
+            <p class="text-lg mb-4">Thực hiện các bài tập sau trong lớp:</p>
+            <div class="bg-gray-200 p-4 rounded-lg mb-4">
+                <h4 class="text-lg font-semibold">Bài 1: Trang HTML cơ bản</h4>
+                <p>Tạo một trang HTML với:</p>
+                <ul class="list-disc pl-6">
+                    <li>Tiêu đề cấp 1: "Chào mừng đến với trang web của tôi".</li>
+                    <li>Một đoạn văn giới thiệu ngắn.</li>
+                    <li>Một hình ảnh (sử dụng URL từ internet).</li>
+                </ul>
+                <p class="mt-2 text-blue-500 toggle-solution" onclick="toggleSolution('sol1')">Xem gợi ý</p>
+                <div id="sol1" class="exercise-solution">
+                    <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Trang đầu tiên&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Chào mừng đến với trang web của tôi&lt;/h1&gt;
+    &lt;p&gt;Xin chào, đây là trang web đầu tiên của tôi!&lt;/p&gt;
+    &lt;img src="https://via.placeholder.com/150" alt="Hình mẫu"&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="bg-gray-200 p-4 rounded-lg mb-4">
+                <h4 class="text-lg font-semibold">Bài 2: Đẩy mã nguồn lên GitHub</h4>
+                <p>Lưu trang HTML vừa tạo vào file <code>index.html</code>, tạo kho lưu trữ trên GitHub và đẩy mã nguồn lên.</p>
+                <p class="mt-2 text-blue-500 toggle-solution" onclick="toggleSolution('sol2')">Xem gợi ý</p>
+                <div id="sol2" class="exercise-solution">
+                    <p>Các bước:</p>
+                    <ol class="list-decimal pl-6">
+                        <li>Tạo kho lưu trữ trên GitHub.</li>
+                        <li>Mở terminal trong thư mục dự án.</li>
+                        <li>Chạy:
+                            <pre>
+git init
+git add index.html
+git commit -m "Thêm trang HTML cơ bản"
+git remote add origin [URL_kho_lưu_trữ]
+git push origin main
+                            </pre>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-semibold mb-2">1.4 Bài tập về nhà</h3>
+            <ul class="list-disc pl-6 mb-4">
+                <li>Tạo một trang HTML giới thiệu bản thân với:
+                    <ul class="list-circle pl-6">
+                        <li>Tên, tuổi, sở thích.</li>
+                        <li>Một hình ảnh đại diện.</li>
+                        <li>Liên kết đến một trang web yêu thích.</li>
+                    </ul>
+                </li>
+                <li>Đẩy mã nguồn lên GitHub và gửi liên kết kho lưu trữ cho giảng viên.</li>
+            </ul>
+        </section>
+
+        <!-- Chapter 2 -->
+        <section id="ch2" class="mb-12">
+            <h2 class="text-3xl font-bold text-blue-600 mb-4">Buổi 2: CSS cơ bản và bố cục trang</h2>
+            <h3 class="text-2xl font-semibold mb-2">2.1 Giới thiệu</h3>
+            <p class="text-lg mb-4">Buổi học này giới thiệu CSS, ngôn ngữ định dạng giao diện, giúp trang web trở nên hấp dẫn. Bạn sẽ học cách tích hợp CSS vào HTML và tạo bố cục cơ bản.</p>
+
+            <h3 class="text-2xl font-semibold mb-2">2.2 Lý thuyết</h3>
+            <h4 class="text-xl font-semibold mb-2">2.2.1 CSS là gì?</h4>
+            <p class="text-lg mb-4">CSS (Cascading Style Sheets) dùng để định dạng giao diện, kiểm soát màu sắc, kích thước, bố cục của các phần tử HTML.</p>
+
+            <h4 class="text-xl font-semibold mb-2">2.2.2 Cách tích hợp CSS</h4>
+            <ul class="list-disc pl-6 mb-4">
+                <li><strong>Inline</strong>: Trong thuộc tính <code>style</code> của thẻ HTML.
+                    <pre class="my-2">&lt;p style="color: blue;"&gt;Văn bản&lt;/p&gt;</pre>
+                </li>
+                <li><strong>Internal</strong>: Trong thẻ <code>&lt;style&gt;</code> ở <code>&lt;head&gt;</code>.
+                    <pre class="my-2">
+&lt;style&gt;
+    p { color: blue; }
+&lt;/style&gt;
+                    </pre>
+                </li>
+                <li><strong>External</strong>: Liên kết file <code>.css</code> bằng <code>&lt;link&gt;</code>.
+                    <pre class="my-2">&lt;link rel="stylesheet" href="style.css"&gt;</pre>
+                </li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">2.2.3 Cú pháp CSS</h4>
+            <pre class="mb-4">
+selector {
+    property: value;
+}
+            </pre>
+            <p class="text-lg mb-4">Ví dụ:</p>
+            <pre class="mb-4">
+p {
+    color: blue;
+    font-size: 16px;
+}
+            </pre>
+
+            <h4 class="text-xl font-semibold mb-2">2.2.4 Các thuộc tính CSS phổ biến</h4>
+            <ul class="list-disc pl-6 mb-4">
+                <li><code>color</code>: Màu chữ.</li>
+                <li><code>background-color</code>: Màu nền.</li>
+                <li><code>font-size</code>, <code>font-family</code>: Kích thước và kiểu chữ.</li>
+                <li><code>margin</code>, <code>padding</code>: Khoảng cách ngoài và trong.</li>
+                <li><code>border</code>: Viền.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">2.2.5 Box Model</h4>
+            <p class="text-lg mb-4">Mỗi phần tử HTML là một hộp gồm:</p>
+            <ul class="list-disc pl-6 mb-4">
+                <li><strong>Content</strong>: Nội dung (văn bản, hình ảnh).</li>
+                <li><strong>Padding</strong>: Khoảng cách trong.</li>
+                <li><strong>Border</strong>: Viền bao quanh.</li>
+                <li><strong>Margin</strong>: Khoảng cách ngoài.</li>
+            </ul>
+            <p class="text-lg mb-4">Ví dụ:</p>
+            <pre class="mb-4">
+div {
+    width: 200px;
+    padding: 10px;
+    border: 2px solid black;
+    margin: 20px;
+}
+            </pre>
+
+            <h4 class="text-xl font-semibold mb-2">2.2.6 Bố cục cơ bản</h4>
+            <ul class="list-disc pl-6 mb-4">
+                <li><code>display: block</code>: Chiếm toàn bộ chiều ngang (ví dụ: <code>&lt;div&gt;</code>).</li>
+                <li><code>display: inline</code>: Chỉ chiếm chiều ngang cần thiết (ví dụ: <code>&lt;span&gt;</code>).</li>
+                <li><code>display: inline-block</code>: Kết hợp cả hai.</li>
+                <li><code>float: left/right</code>: Sắp xếp phần tử sang trái/phải.</li>
+            </ul>
+
+            <h3 class="text-2xl font-semibold mb-2">2.3 Thực hành</h3>
+            <div class="bg-gray-200 p-4 rounded-lg mb-4">
+                <h4 class="text-lg font-semibold">Bài 1: Định dạng văn bản</h4>
+                <p>Tạo một trang HTML với 3 đoạn văn, định dạng bằng CSS external:</p>
+                <ul class="list-disc pl-6">
+                    <li>Đoạn 1: Chữ màu xanh, kích thước 18px.</li>
+                    <li>Đoạn 2: Nền vàng, viền đỏ.</li>
+                    <li>Đoạn 3: Căn giữa, chữ nghiêng.</li>
+                </ul>
+                <p class="mt-2 text-blue-500 toggle-solution" onclick="toggleSolution('sol3')">Xem gợi ý</p>
+                <div id="sol3" class="exercise-solution">
+                    <p>File <code>index.html</code>:</p>
+                    <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Định dạng CSS&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;p class="para1"&gt;Đoạn văn 1&lt;/p&gt;
+    &lt;p class="para2"&gt;Đoạn văn 2&lt;/p&gt;
+    &lt;p class="para3"&gt;Đoạn văn 3&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                    </pre>
+                    <p>File <code>style.css</code>:</p>
+                    <pre>
+.para1 {
+    color: blue;
+    font-size: 18px;
+}
+.para2 {
+    background-color: yellow;
+    border: 2px solid red;
+}
+.para3 {
+    text-align: center;
+    font-style: italic;
+}
+                    </pre>
+                </div>
+            </div>
+
+            <div class="bg-gray-200 p-4 rounded-lg mb-4">
+                <h4 class="text-lg font-semibold">Bài 2: Bố cục hai cột</h4>
+                <p>Tạo một trang HTML với bố cục hai cột (trái: menu, phải: nội dung) sử dụng <code>float</code>.</p>
+                <p class="mt-2 text-blue-500 toggle-solution" onclick="toggleSolution('sol4')">Xem gợi ý</p>
+                <div id="sol4" class="exercise-solution">
+                    <p>File <code>index.html</code>:</p>
+                    <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Bố cục hai cột&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="menu"&gt;Menu&lt;/div&gt;
+    &lt;div class="content"&gt;Nội dung chính&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                    </pre>
+                    <p>File <code>style.css</code>:</p>
+                    <pre>
+.menu {
+    float: left;
+    width: 30%;
+    background-color: #e5e7eb;
+    padding: 10px;
+}
+.content {
+    float: right;
+    width: 60%;
+    padding: 10px;
+}
+                    </pre>
+                </div>
+            </div>
+
+            <div class="bg-gray-200 p-4 rounded-lg mb-4">
+                <h4 class="text-lg font-semibold">Bài 3: Tùy chỉnh hình ảnh</h4>
+                <p>Thêm một hình ảnh vào trang HTML, định dạng với viền tròn và bóng đổ.</p>
+                <p class="mt-2 text-blue-500 toggle-solution" onclick="toggleSolution('sol5')">Xem gợi ý</p>
+                <div id="sol5" class="exercise-solution">
+                    <p>File <code>style.css</code>:</p>
+                    <pre>
+img {
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+                    </pre>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-semibold mb-2">2.4 Bài tập về nhà</h3>
+            <ul class="list-disc pl-6 mb-4">
+                <li>Cập nhật trang giới thiệu bản thân từ buổi 1, thêm CSS external với:
+                    <ul class="list-circle pl-6">
+                        <li>Màu nền cho trang.</li>
+                        <li>Viền và bóng đổ cho hình ảnh.</li>
+                        <li>Căn chỉnh nội dung (tiêu đề giữa, đoạn văn thụt đầu dòng).</li>
+                    </ul>
+                </li>
+                <li>Đẩy mã nguồn lên GitHub.</li>
+            </ul>
+        </section>
+
+        <!-- Chapter 3 -->
+        <section id="ch3" class="mb-12">
+            <h2 class="text-3xl font-bold text-blue-600 mb-4">Buổi 3: TailwindCSS và giao diện responsive</h2>
+            <h3 class="text-2xl font-semibold mb-2">3.1 Giới thiệu</h3>
+            <p class="text-lg mb-4">Buổi học này giới thiệu TailwindCSS, một framework CSS giúp tăng tốc thiết kế giao diện. Bạn sẽ học cách tạo giao diện responsive, phù hợp với nhiều thiết bị.</p>
+
+            <h3 class="text-2xl font-semibold mb-2">3.2 Lý thuyết</h3>
+            <h4 class="text-xl font-semibold mb-2">3.2.1 TailwindCSS là gì?</h4>
+            <p class="text-lg mb-4">TailwindCSS là framework CSS dựa trên các lớp tiện ích (utility classes), cho phép định dạng giao diện trực tiếp trong HTML mà không cần viết nhiều CSS.</p>
+
+            <h4 class="text-xl font-semibold mb-2">3.2.2 Cài đặt TailwindCSS</h4>
+            <p class="text-lg mb-4">Sử dụng CDN để tích hợp nhanh:</p>
+            <pre class="mb-4">
+&lt;link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"&gt;
+            </pre>
+
+            <h4 class="text-xl font-semibold mb-2">3.2.3 Các lớp tiện ích phổ biến</h4>
+            <ul class="list-disc pl-6 mb-4">
+                <li><code>bg-</code>: Màu nền (ví dụ: <code>bg-blue-500</code>).</li>
+                <li><code>text-</code>: Màu chữ, kích thước (ví dụ: <code>text-white text-lg</code>).</li>
+                <li><code>p-</code>, <code>m-</code>: Padding, margin (ví dụ: <code>p-4 m-2</code>).</li>
+                <li><code>flex</code>, <code>grid</code>: Bố cục linh hoạt.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">3.2.4 Thiết kế responsive</h4>
+            <p class="text-lg mb-4">TailwindCSS hỗ trợ breakpoint cho các kích thước màn hình:</p>
+            <ul class="list-disc pl-6 mb-4">
+                <li><code>sm:</code>: ≥576px</li>
+                <li><code>md:</code>: ≥768px</li>
+                <li><code>lg:</code>: ≥1024px</li>
+            </ul>
+            <p class="text-lg mb-4">Ví dụ: <code>class="text-sm md:text-lg"</code> (chữ nhỏ trên mobile, lớn trên tablet).</p>
+
+            <h3 class="text-2xl font-semibold mb-2">3.3 Thực hành</h3>
+            <div class="bg-gray-200 p-4 rounded-lg mb-4">
+                <h4 class="text-lg font-semibold">Bài 1: Menu điều hướng</h4>
+                <p>Tạo một menu điều hướng ngang sử dụng TailwindCSS, responsive (ngang trên desktop, dọc trên mobile).</p>
+                <p class="mt-2 text-blue-500 toggle-solution" onclick="toggleSolution('sol6')">Xem gợi ý</p>
+                <div id="sol6" class="exercise-solution">
+                    <pre>
+&lt;nav class="bg-blue-600 text-white p-4"&gt;
+    &lt;ul class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4"&gt;
+        &lt;li&gt;&lt;a href="#" class="hover:underline"&gt;Trang chủ&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#" class="hover:underline"&gt;Giới thiệu&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#" class="hover:underline"&gt;Liên hệ&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="bg-gray-200 p-4 rounded-lg mb-4">
+                <h4 class="text-lg font-semibold">Bài 2: Thẻ bài (Card)</h4>
+                <p>Tạo một thẻ bài hiển thị hình ảnh, tiêu đề và mô tả, sử dụng TailwindCSS.</p>
+                <p class="mt-2 text-blue-500 toggle-solution" onclick="toggleSolution('sol7')">Xem gợi ý</p>
+                <div id="sol7" class="exercise-solution">
+                    <pre>
+&lt;div class="max-w-sm bg-white shadow-lg rounded-lg p-4"&gt;
+    &lt;img src="https://via.placeholder.com/300" alt="Hình ảnh" class="w-full rounded-t-lg"&gt;
+    &lt;h3 class="text-xl font-bold mt-2"&gt;Tiêu đề&lt;/h3&gt;
+    &lt;p class="text-gray-600"&gt;Mô tả ngắn về nội dung thẻ bài.&lt;/p&gt;
+&lt;/div&gt;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="bg-gray-200 p-4 rounded-lg mb-4">
+                <h4 class="text-lg font-semibold">Bài 3: Bố cục lưới</h4>
+                <p>Tạo một bố cục lưới với 3 thẻ bài trên desktop, 1 thẻ bài trên mobile.</p>
+                <p class="mt-2 text-blue-500 toggle-solution" onclick="toggleSolution('sol8')">Xem gợi ý</p>
+                <div id="sol8" class="exercise-solution">
+                    <pre>
+&lt;div class="grid grid-cols-1 md:grid-cols-3 gap-4"&gt;
+    &lt;div class="bg-white shadow-lg p-4"&gt;Thẻ 1&lt;/div&gt;
+    &lt;div class="bg-white shadow-lg p-4"&gt;Thẻ 2&lt;/div&gt;
+    &lt;div class="bg-white shadow-lg p-4"&gt;Thẻ 3&lt;/div&gt;
+&lt;/div&gt;
+                    </pre>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-semibold mb-2">3.4 Bài tập về nhà</h3>
+            <ul class="list-disc pl-6 mb-4">
+                <li>Áp dụng TailwindCSS vào trang giới thiệu bản thân:
+                    <ul class="list-circle pl-6">
+                        <li>Menu điều hướng responsive.</li>
+                        <li>Bố cục lưới cho các sở thích hoặc kỹ năng.</li>
+                        <li>Thẻ bài cho thông tin cá nhân.</li>
+                    </ul>
+                </li>
+                <li>Đảm bảo giao diện hiển thị tốt trên mobile và desktop.</li>
+                <li>Đẩy mã nguồn lên GitHub.</li>
+            </ul>
+        </section>
+
+        <!-- Chapter 4 -->
+        <section id="ch4" class="mb-12">
+            <h2 class="text-3xl font-bold text-blue-600 mb-4">Buổi 4: JavaScript cơ bản và tương tác người dùng</h2>
+            <h3 class="text-2xl font-semibold mb-2">4.1 Giới thiệu</h3>
+            <p class="text-lg mb-4">Buổi học này giới thiệu JavaScript, ngôn ngữ lập trình giúp trang web tương tác. Bạn sẽ học cách thao tác với DOM và xử lý sự kiện.</p>
+
+            <h3 class="text-2xl font-semibold mb-2">4.2 Lý thuyết</h3>
+            <h4 class="text-xl font-semibold mb-2">4.2.1 JavaScript là gì?</h4>
+            <p class="text-lg mb-4">JavaScript là ngôn ngữ lập trình chạy trên trình duyệt, dùng để thêm tính năng động như nút bấm, biểu mẫu, hiệu ứng.</p>
+
+            <h4 class="text-xl font-semibold mb-2">4.2.2 Tích hợp JavaScript</h4>
+            <ul class="list-disc pl-6 mb-4">
+                <li>Trong thẻ <code>&lt;script&gt;</code>:
+                    <pre class="my-2">
+&lt;script&gt;
+    console.log("Xin chào!");
+&lt;/script&gt;
+                    </pre>
+                </li>
+                <li>Liên kết file <code>.js</code>:
+                    <pre class="my-2">&lt;script src="script.js"&gt;&lt;/script&gt;</pre>
+                </li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">4.2.3 Cú pháp cơ bản</h4>
+            <ul class="list-disc pl-6 mb-4">
+                <li><strong>Biến</strong>:
+                    <pre class="my-2">
+let ten = "Nguyen";
+const tuoi = 20;
+                    </pre>
+                </li>
+                <li><strong>Hàm</strong>:
+                    <pre class="my-2">
+function chao() {
+    return "Xin chào!";
+}
+                    </pre>
+                </li>
+                <li><strong>Sự kiện</strong>: <code>onclick</code>, <code>onchange</code>, <code>onmouseover</code>.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">4.2.4 Thao tác với DOM</h4>
+            <ul class="list-disc pl-6 mb-4">
+                <li>Chọn phần tử:
+                    <pre class="my-2">
+document.getElementById("id");
+document.querySelector(".class");
+                    </pre>
+                </li>
+                <li>Thay đổi nội dung:
+                    <pre class="my-2">element.innerHTML = "Nội dung mới";</pre>
+                </li>
+                <li>Thay đổi kiểu dáng:
+                    <pre class="my-2">element.style.color = "blue";</pre>
+                </li>
+            </ul>
+
+            <h3 class="text-2xl font-semibold mb-2">4.3 Thực hành</h3>
+            <div class="bg-gray-200 p-4 rounded-lg mb-4">
+                <h4 class="text-lg font-semibold">Bài 1: Thay đổi màu nền</h4>
+                <p>Tạo một nút bấm thay đổi màu nền của trang khi nhấp.</p>
+                <p class="mt-2 text-blue-500 toggle-solution" onclick="toggleSolution('sol9')">Xem gợi ý</p>
+                <div id="sol9" class="exercise-solution">
+                    <p>File <code>index.html</code>:</p>
+                    <pre>
+&lt;button onclick="doiMau()"&gt;Đổi màu&lt;/button&gt;
+&lt;script&gt;
+function doiMau() {
+    document.body.style.backgroundColor = "lightblue";
+}
+&lt;/script&gt;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="bg-gray-200 p-4 rounded-lg mb-4">
+                <h4 class="text-lg font-semibold">Bài 2: Biểu mẫu đơn giản</h4>
+                <p>Tạo một ô input và nút bấm. Khi nhấp nút, hiển thị giá trị input trong một đoạn văn.</p>
+                <p class="mt-2 text-blue-500 toggle-solution" onclick="toggleSolution('sol10')">Xem gợi ý</p>
+                <div id="sol10" class="exercise-solution">
+                    <pre>
+&lt;input type="text" id="nhap"&gt;
+&lt;button onclick="hienThi()"&gt;Hiển thị&lt;/button&gt;
+&lt;p id="ketQua"&gt;&lt;/p&gt;
+&lt;script&gt;
+function hienThi() {
+    let giaTri = document.getElementById("nhap").value;
+    document.getElementById("ketQua").innerHTML = giaTri;
+}
+&lt;/script&gt;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="bg-gray-200 p-4 rounded-lg mb-4">
+                <h4 class="text-lg font-semibold">Bài 3: Hiệu ứng hover</h4>
+                <p>Tạo một div, thay đổi màu nền khi di chuột qua.</p>
+                <p class="mt-2 text-blue-500 toggle-solution" onclick="toggleSolution('sol11')">Xem gợi ý</p>
+                <div id="sol11" class="exercise-solution">
+                    <pre>
+&lt;div id="khoi" onmouseover="mauVao()" onmouseout="mauRa()"&gt;Di chuột vào đây&lt;/div&gt;
+&lt;script&gt;
+function mauVao() {
+    document.getElementById("khoi").style.backgroundColor = "yellow";
+}
+function mauRa() {
+    document.getElementById("khoi").style.backgroundColor = "white";
+}
+&lt;/script&gt;
+                    </pre>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-semibold mb-2">4.4 Bài tập về nhà</h3>
+            <ul class="list-disc pl-6 mb-4">
+                <li>Thêm các tính năng tương tác vào trang giới thiệu bản thân:
+                    <ul class="list-circle pl-6">
+                        <li>Nút bấm hiển thị/ẩn một phần nội dung.</li>
+                        <li>Biểu mẫu để người dùng nhập tên và hiển thị lời chào.</li>
+                    </ul>
+                </li>
+                <li>Đẩy mã nguồn lên GitHub.</li>
+            </ul>
+        </section>
+
+        <!-- Chapter 5 -->
+        <section id="ch5" class="mb-12">
+            <h2 class="text-3xl font-bold text-blue-600 mb-4">Buổi 5: JSON và quản lý dữ liệu</h2>
+            <h3 class="text-2xl font-semibold mb-2">5.1 Giới thiệu</h3>
+            <p class="text-lg mb-4">Buổi học này tập trung vào JSON, định dạng dữ liệu phổ biến trong web. Bạn sẽ học cách tích hợp dữ liệu JSON vào trang web.</p>
+
+            <h3 class="text-2xl font-semibold mb-2">5.2 Lý thuyết</h3>
+            <h4 class="text-xl font-semibold mb-2">5.2.1 JSON là gì?</h4>
+            <p class="text-lg mb-4">JSON (JavaScript Object Notation) là định dạng dữ liệu nhẹ, dùng để lưu trữ và trao đổi thông tin.</p>
+            <pre class="mb-4">
+{
+    "ten": "Nguyen Van A",
+    "tuoi": 20,
+    "kyNang": ["HTML", "CSS"]
+}
+            </pre>
+
+            <h4 class="text-xl font-semibold mb-2">5.2.2 Làm việc với JSON</h4>
+            <ul class="list-disc pl-6 mb-4">
+                <li>Đọc JSON: <code>JSON.parse</code></li>
+                <li>Tạo JSON: <code>JSON.stringify</code></li>
+                <li>Lấy dữ liệu từ file JSON bằng <code>fetch</code>.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">5.2.3 Tích hợp JSON</h4>
+            <p class="text-lg mb-4">Sử dụng JavaScript để hiển thị dữ liệu JSON trên giao diện.</p>
+
+            <h3 class="text-2xl font-semibold mb-2">5.3 Thực hành</h3>
+            <div class="bg-gray-200 p-4 rounded-lg mb-4">
+                <h4 class="text-lg font-semibold">Bài 1: Hiển thị JSON tĩnh</h4>
+                <p>Tạo một đối tượng JSON trong JavaScript và hiển thị dữ liệu lên trang.</p>
+                <p class="mt-2 text-blue-500 toggle-solution" onclick="toggleSolution('sol12')">Xem gợi ý</p>
+                <div id="sol12" class="exercise-solution">
+                    <pre>
+&lt;div id="ketQua"&gt;&lt;/div&gt;
+&lt;script&gt;
+const duLieu = {
+    ten: "Nguyen Van A",
+    tuoi: 20
+};
+document.getElementById("ketQua").innerHTML = `Tên: ${duLieu.ten}, Tuổi: ${duLieu.tuoi}`;
+&lt;/script&gt;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="bg-gray-200 p-4 rounded-lg mb-4">
+                <h4 class="text-lg font-semibold">Bài 2: Đọc file JSON</h4>
+                <p>Tạo file <code>data.json</code> và hiển thị dữ liệu lên trang bằng <code>fetch</code>.</p>
+                <p class="mt-2 text-blue-500 toggle-solution" onclick="toggleSolution('sol13')">Xem gợi ý</p>
+                <div id="sol13" class="exercise-solution">
+                    <p>File <code>data.json</code>:</p>
+                    <pre>
+{
+    "ten": "Nguyen Van A",
+    "kyNang": ["HTML", "CSS"]
+}
+                    </pre>
+                    <p>File <code>index.html</code>:</p>
+                    <pre>
+&lt;ul id="danhSach"&gt;&lt;/ul&gt;
+&lt;script&gt;
+fetch("data.json")
+    .then(response => response.json())
+    .then(data => {
+        let ds = document.getElementById("danhSach");
+        data.kyNang.forEach(kn => {
+            let li = document.createElement("li");
+            li.textContent = kn;
+            ds.appendChild(li);
+        });
+    });
+&lt;/script&gt;
+                    </pre>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-semibold mb-2">5.4 Bài tập về nhà</h3>
+            <ul class="list-disc pl-6 mb-4">
+                <li>Tích hợp JSON vào trang giới thiệu bản thân:
+                    <ul class="list-circle pl-6">
+                        <li>Tạo file JSON chứa danh sách kỹ năng hoặc sở thích.</li>
+                        <li>Hiển thị dữ liệu JSON dưới dạng danh sách hoặc thẻ bài.</li>
+                    </ul>
+                </li>
+                <li>Đẩy mã nguồn và file JSON lên GitHub.</li>
+            </ul>
+        </section>
+
+        <!-- Chapter 6 -->
+        <section id="ch6" class="mb-12">
+            <h2 class="text-3xl font-bold text-blue-600 mb-4">Buổi 6: Xây dựng bố cục hoàn chỉnh</h2>
+            <h3 class="text-2xl font-semibold mb-2">6.1 Giới thiệu</h3>
+            <p class="text-lg mb-4">Buổi học này kết hợp tất cả kiến thức để tạo một bố cục web hoàn chỉnh với header, body, footer.</p>
+
+            <h3 class="text-2xl font-semibold mb-2">6.2 Lý thuyết</h3>
+            <h4 class="text-xl font-semibold mb-2">6.2.1 Cấu trúc giao diện</h4>
+            <ul class="list-disc pl-6 mb-4">
+                <li><strong>Header</strong>: Menu điều hướng, logo.</li>
+                <li><strong>Body</strong>: Nội dung chính (bài viết, hình ảnh, biểu mẫu).</li>
+                <li><strong>Footer</strong>: Thông tin liên hệ, liên kết.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">6.2.2 Tối ưu hóa với TailwindCSS</h4>
+            <p class="text-lg mb-4">Sử dụng <code>flex</code> hoặc <code>grid</code> để tạo bố cục linh hoạt.</p>
+
+            <h3 class="text-2xl font-semibold mb-2">6.3 Thực hành</h3>
+            <div class="bg-gray-200 p-4 rounded-lg mb-4">
+                <h4 class="text-lg font-semibold">Bài 1: Bố cục hoàn chỉnh</h4>
+                <p>Tạo một trang web với header (menu), body (nội dung), footer (liên hệ) sử dụng TailwindCSS.</p>
+                <p class="mt-2 text-blue-500 toggle-solution" onclick="toggleSolution('sol14')">Xem gợi ý</p>
+                <div id="sol14" class="exercise-solution">
+                    <pre>
+&lt;header class="bg-blue-600 text-white p-4"&gt;
+    &lt;nav class="flex justify-between"&gt;
+        &lt;h1 class="text-2xl"&gt;Logo&lt;/h1&gt;
+        &lt;ul class="flex space-x-4"&gt;
+            &lt;li&gt;&lt;a href="#" class="hover:underline"&gt;Trang chủ&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#" class="hover:underline"&gt;Giới thiệu&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/nav&gt;
+&lt;/header&gt;
+&lt;main class="p-4"&gt;
+    &lt;h2 class="text-2xl"&gt;Nội dung chính&lt;/h2&gt;
+    &lt;p&gt;Đây là nội dung chính của trang web.&lt;/p&gt;
+&lt;/main&gt;
+&lt;footer class="bg-gray-800 text-white p-4 text-center"&gt;
+    &lt;p&gt;Liên hệ: email@example.com&lt;/p&gt;
+&lt;/footer&gt;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="bg-gray-200 p-4 rounded-lg mb-4">
+                <h4 class="text-lg font-semibold">Bài 2: Menu điều hướng động</h4>
+                <p>Thêm JavaScript để làm nổi bật mục menu đang được chọn.</p>
+                <p class="mt-2 text-blue-500 toggle-solution" onclick="toggleSolution('sol15')">Xem gợi ý</p>
+                <div id="sol15" class="exercise-solution">
+                    <pre>
+&lt;nav class="bg-blue-600 text-white p-4"&gt;
+    &lt;ul class="flex space-x-4"&gt;
+        &lt;li&gt;&lt;a href="#" class="menu-item"&gt;Trang chủ&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#" class="menu-item"&gt;Giới thiệu&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;
+&lt;script&gt;
+document.querySelectorAll(".menu-item").forEach(item => {
+    item.addEventListener("click", () => {
+        document.querySelectorAll(".menu-item").forEach(i => i.classList.remove("font-bold"));
+        item.classList.add("font-bold");
+    });
+});
+&lt;/script&gt;
+                    </pre>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-semibold mb-2">6.4 Bài tập về nhà</h3>
+            <ul class="list-disc pl-6 mb-4">
+                <li>Bắt đầu dự án cuối khóa: thiết kế giao diện cho cổng thông tin hoặc trang cá nhân với header, body, footer.</li>
+                <li>Đẩy mã nguồn lên GitHub.</li>
+            </ul>
+        </section>
+
+        <!-- Chapter 7 -->
+        <section id="ch7" class="mb-12">
+            <h2 class="text-3xl font-bold text-blue-600 mb-4">Buổi 7: Tối ưu hóa và kiểm thử dự án</h2>
+            <h3 class="text-2xl font-semibold mb-2">7.1 Giới thiệu</h3>
+            <p class="text-lg mb-4">Buổi học này tập trung vào kiểm thử, tối ưu hóa dự án và viết báo cáo.</p>
+
+            <h3 class="text-2xl font-semibold mb-2">7.2 Lý thuyết</h3>
+            <h4 class="text-xl font-semibold mb-2">7.2.1 Kiểm thử giao diện</h4>
+            <ul class="list-disc pl-6 mb-4">
+                <li>Kiểm tra trên trình duyệt: Chrome, Firefox, Safari.</li>
+                <li>Kiểm tra trên thiết bị: Mobile, tablet, desktop.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">7.2.2 Tối ưu hóa mã nguồn</h4>
+            <ul class="list-disc pl-6 mb-4">
+                <li>Loại bỏ mã thừa.</li>
+                <li>Nén CSS và JavaScript.</li>
+                <li>Tối ưu hình ảnh (dung lượng thấp).</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">7.2.3 Viết báo cáo</h4>
+            <ul class="list-disc pl-6 mb-4">
+                <li>Giới thiệu: Mục đích, lý do.</li>
+                <li>Công nghệ và UI: Giải thích lựa chọn.</li>
+                <li>Tính năng: Mô tả chi tiết.</li>
+                <li>Tiêu chí IT: Bookmarking, trình bày thông tin.</li>
+            </ul>
+
+            <h3 class="text-2xl font-semibold mb-2">7.3 Thực hành</h3>
+            <div class="bg-gray-200 p-4 rounded-lg mb-4">
+                <h4 class="text-lg font-semibold">Bài 1: Kiểm thử trình duyệt</h4>
+                <p>Kiểm tra dự án trên ít nhất 2 trình duyệt khác nhau.</p>
+            </div>
+            <div class="bg-gray-200 p-4 rounded-lg mb-4">
+                <h4 class="text-lg font-semibold">Bài 2: Viết báo cáo</h4>
+                <p>Viết phần giới thiệu và công nghệ cho báo cáo dự án.</p>
+            </div>
+
+            <h3 class="text-2xl font-semibold mb-2">7.4 Bài tập về nhà</h3>
+            <ul class="list-disc pl-6 mb-4">
+                <li>Hoàn thiện giao diện dự án và kiểm tra trên nhiều thiết bị.</li>
+                <li>Viết bản nháp báo cáo dự án, bao gồm liên kết GitHub.</li>
+            </ul>
+        </section>
+
+        <!-- Chapter 8 -->
+        <section id="ch8" class="mb-12">
+            <h2 class="text-3xl font-bold text-blue-600 mb-4">Buổi 8: Nộp dự án và trình bày</h2>
+            <h3 class="text-2xl font-semibold mb-2">8.1 Giới thiệu</h3>
+            <p class="text-lg mb-4">Buổi cuối cùng để nộp dự án, trình bày và nhận phản hồi.</p>
+
+            <h3 class="text-2xl font-semibold mb-2">8.2 Lý thuyết</h3>
+            <h4 class="text-xl font-semibold mb-2">8.2.1 Nộp dự án</h4>
+            <p class="text-lg mb-4">Nộp mã nguồn qua GitHub và báo cáo dưới dạng PDF/Word.</p>
+
+            <h4 class="text-xl font-semibold mb-2">8.2.2 Trình bày</h4>
+            <p class="text-lg mb-4">Thời lượng 5-7 phút, bao gồm demo và giải thích tính năng.</p>
+
+            <h3 class="text-2xl font-semibold mb-2">8.3 Thực hành</h3>
+            <div class="bg-gray-200 p-4 rounded-lg mb-4">
+                <h4 class="text-lg font-semibold">Bài 1: Thực hành trình bày</h4>
+                <p>Trình bày dự án trước lớp.</p>
+            </div>
+
+            <h3 class="text-2xl font-semibold mb-2">8.4 Bài tập về nhà</h3>
+            <p class="text-lg mb-4">Hoàn thiện và nộp dự án đúng hạn.</p>
+        </section>
+
+        <!-- Final Project -->
+        <section id="project" class="mb-12">
+            <h2 class="text-3xl font-bold text-blue-600 mb-4">Dự án cuối khóa</h2>
+            <h3 class="text-2xl font-semibold mb-2">Mô tả</h3>
+            <p class="text-lg mb-4">Thiết kế giao diện web cho cổng thông tin hoặc trang cá nhân, sử dụng HTML, CSS, JavaScript, TailwindCSS, JSON.</p>
+
+            <h3 class="text-2xl font-semibold mb-2">Tiêu chí chấm điểm</h3>
+            <ul class="list-disc pl-6 mb-4">
+                <li><strong>Cấu trúc</strong> (15%): Header, body, footer.</li>
+                <li><strong>Hướng đối tượng</strong> (25%): Mã nguồn mô-đun, tái sử dụng.</li>
+                <li><strong>Giao diện</strong> (15%): Đẹp, thân thiện.</li>
+                <li><strong>GitHub</strong> (15%): Đẩy mã nguồn và chạy được.</li>
+                <li><strong>Báo cáo</strong> (30%):
+                    <ul class="list-circle pl-6">
+                        <li>Giới thiệu (5%)</li>
+                        <li>Công nghệ và UI (10%)</li>
+                        <li>Tính năng (10%)</li>
+                        <li>Tiêu chí IT (5%)</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3 class="text-2xl font-semibold mb-2">Yêu cầu báo cáo</h3>
+            <ul class="list-disc pl-6 mb-4">
+                <li>Liên kết GitHub dưới mục lục.</li>
+                <li>Không sử dụng AI quá 20%.</li>
+            </ul>
+        </section>
+    </div>
+
+    <!-- JavaScript for toggling solutions -->
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            solution.style.display = solution.style.display === "block" ? "none" : "block";
+        }
+    </script>
+</body>
+</html>
