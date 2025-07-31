@@ -309,10 +309,10 @@
 
             try {
                 const [mediaResponse, activeResponse, enviromentResponse, bantrucResponse] = await Promise.all([
-                    fetch('StudyCode/data/media.json'),
-                    fetch('StudyCode/data/active.json'),
-                    fetch('StudyCode/data/enviroment.json'),
-                    fetch('StudyCode/data/bantruc.json')
+                    fetchWithErrorHandling('StudyCode/data/media.json'),
+                    fetchWithErrorHandling('StudyCode/data/active.json'),
+                    fetchWithErrorHandling('StudyCode/data/enviroment.json'),
+                    fetchWithErrorHandling('StudyCode/data/bantruc.json')
                 ]);
 
                 if (!mediaResponse.ok || !activeResponse.ok || !enviromentResponse.ok || !bantrucResponse.ok)  {
