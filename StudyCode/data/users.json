@@ -8,7 +8,7 @@
             "memberpoint": 10,
             "LearningScore": 0,
             "subjects": [
-                { "name": "HTML-1", "duration": "32", "completion": 0, "score": 0 }
+                { "name": "HTML-1", "duration": "16", "completion": 0, "score": 0 }
             ]
         }
     ]
