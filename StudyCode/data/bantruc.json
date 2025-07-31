@@ -3,9 +3,9 @@
     {
       "fullName": "Têrêsa Trần Ngọc Tú Trân",
       "class": "Ban Trực",
-      "memberpoint": 3,
+      "memberpoint": 4,
       "monthlyPoints": [
-        {"month": "2025-07", "points": 3},
+        {"month": "2025-07", "points": 4},
         {"month": "2025-06", "points": 0}
       ]
     },
@@ -14,9 +14,9 @@
     {
       "fullName": "Giuse Tăng Vĩ Dân",
       "class": "Ban Trực",
-      "memberpoint": 3,
+      "memberpoint": 4,
       "monthlyPoints": [
-        {"month": "2025-07", "points": 3},
+        {"month": "2025-07", "points": 4},
         {"month": "2025-06", "points": 0}
       ]
     },
@@ -25,9 +25,9 @@
     {
       "fullName": "Giuse Đào Minh Tú",
       "class": "Ban Trực",
-      "memberpoint": 0,
+      "memberpoint": 4,
       "monthlyPoints": [
-        {"month": "2025-07", "points": 0},
+        {"month": "2025-07", "points": 4},
         {"month": "2025-06", "points": 0}
       ]
     },
