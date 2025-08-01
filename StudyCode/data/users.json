@@ -1,7 +1,40 @@
 {
     "members": [
         {
-            "fullName": "Mai Hồng Phúc",
+            "fullName": "Giuse Mai Hồng Phúc",
+            "spending": 0,
+            "sessions": 0,
+            "activities": 0,
+            "memberpoint": 10,
+            "LearningScore": 0,
+            "subjects": [
+                { "name": "HTML-1", "duration": "16", "completion": 0, "score": 0 }
+            ]
+        },
+        {
+            "fullName": "Giuse Lê Hoàng Thiên Lộc",
+            "spending": 0,
+            "sessions": 0,
+            "activities": 0,
+            "memberpoint": 10,
+            "LearningScore": 0,
+            "subjects": [
+                { "name": "HTML-1", "duration": "16", "completion": 0, "score": 0 }
+            ]
+        },
+        {
+            "fullName": "Phêrô Nguyễn Hoàng Trọng Nhân",
+            "spending": 0,
+            "sessions": 0,
+            "activities": 0,
+            "memberpoint": 10,
+            "LearningScore": 0,
+            "subjects": [
+                { "name": "HTML-1", "duration": "16", "completion": 0, "score": 0 }
+            ]
+        },
+        {
+            "fullName": "Phaolo Trần Hoàng Phúc",
             "spending": 0,
             "sessions": 0,
             "activities": 0,
