@@ -1,5 +1,12 @@
 [
     {
+        "session": "Work-shop",
+        "date": "2025-08-11",
+        "startTime": "15:00",
+        "endTime": "15:45",
+        "subject": "AI Sharing"
+    }
+    {
         "session": "Buoi 1",
         "date": "2025-08-12",
         "startTime": "18:00",
