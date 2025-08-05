@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Cổng Quản lí Scode - Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho">
+    <meta name="keywords" content="Xứ Đoàn, Giáo Xứ Chánh Tòa Mỹ Tho, giáo viên, điểm danh, quản lý học viên, lập trình, Scode">
+    <title>Cổng Quản lí Scode - Xứ Đoàn Các Thánh Tử Đạo Việt Nam</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #cc3048;
+            --primary-dark: #b7142a;
+            --accent: #FFD700;
+            --dark-bg: #1A1A1A;
+            --text: #E0E0E0;
+            --error: #EF4444;
+        }
+
+        body {
+            background: linear-gradient(135deg, #2D2D2D 0%, #1A1A1A 100%);
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            color: var(--text);
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body.ios {
+            font-family: -apple-system, 'SF Pro', 'Roboto', sans-serif;
+        }
+
+        .header {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--text);
+            padding: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            text-align: center;
+        }
+        .header h2 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+        .header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .navbar {
+            background: var(--dark-bg);
+            padding: 0.5rem;
+            display: flex;
+            justify-content: space-around;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+        .navbar a {
+            color: var(--text);
+            padding: 0.4rem;
+            font-size: 0.75rem;
+            text-align: center;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+        .navbar a i {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+        .navbar a:hover {
+            background: var(--primary);
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+        .navbar a.active {
+            background: var(--primary);
+            color: var(--accent);
+        }
+
+        .container {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            overflow-y: auto;
+            height: calc(100vh - 60px - 60px);
+        }
+
+        .card {
+            margin-bottom: 20px;
+            margin-top: 18px;
+            background: #252526;
+            border: 1px solid #3C3C3C;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+            display: none;
+            height: 100%;
+            overflow-y: auto;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+        .card.active {
+            display: block;
+            animation: flipIn 0.6s ease forwards;
+        }
+        @keyframes flipIn {
+            from { opacity: 0; transform: rotateY(90deg); }
+            to { opacity: 1; transform: rotateY(0); }
+        }
+        .card h3 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .attendance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+        .attendance-table th, .attendance-table td {
+            border: 1px solid #3C3C3C;
+            padding: 0.75rem;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+        .attendance-table th {
+            background: var(--primary);
+            color: var(--text);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .attendance-table td input[type="checkbox"] {
+            accent-color: var(--primary);
+        }
+
+        .btn {
+            background: var(--primary);
+            color: var(--text);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        .btn:hover {
+            background: var(--primary-dark);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .input, select.input {
+            background: #1E1E1E;
+            border: 1px solid #3C3C3C;
+            border-radius: 8px;
+            padding: 0.75rem;
+            color: var(--text);
+            width: 100%;
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(26, 26, 26, 0.95);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            max-width: 90%;
+            width: 300px;
+            font-size: 0.9rem;
+            z-index: 1001;
+            text-align: center;
+            display: none;
+        }
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            display: none;
+        }
+
+        .progress-bar {
+            background: #1E1E1E;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 20px;
+        }
+        .progress-fill {
+            background: var(--primary);
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+
+        @media (max-width: 1024px) {
+            :root {
+                --primary: #e63950;
+                --accent: #FFD54F;
+            }
+            body {
+                overflow-y: hidden;
+            }
+            .header {
+                padding: 0.5rem;
+            }
+            .header h2 {
+                font-size: 1rem;
+            }
+            .header p {
+                font-size: 0.7rem;
+            }
+            .navbar {
+                padding: 0.3rem;
+            }
+            .navbar a {
+                padding: 0.3rem;
+                font-size: 0.75rem;
+            }
+            .navbar a i {
+                font-size: 1rem;
+            }
+            .container {
+                margin: 0 auto;
+                padding: 0.5rem;
+                height: calc(100vh - 50px - 50px);
+            }
+            .card {
+                margin-bottom: 17px;
+                margin-top: 15px;
+                padding: 1rem;
+                height: 100%;
+                overflow-y: auto;
+            }
+            .card h3 {
+                font-size: 1.3rem;
+            }
+            .attendance-table th, .attendance-table td {
+                font-size: 0.85rem;
+                padding: 0.5rem;
+            }
+            .btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .navbar a:hover {
+                background: linear-gradient(45deg, var(--primary), var(--accent));
+            }
+            .container {
+                height: calc(100vh - 80px - 60px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="popup-overlay" id="successOverlay">
+        <div class="popup" id="successPopup">
+            <p id="successMessage">Điểm danh đã được gửi thành công!</p>
+            <button class="btn mt-4" onclick="closeSuccessPopup()">Thoát</button>
+        </div>
+    </div>
+
+    <div class="header">
+        <h2>CỔNG QUẢN LÍ SCODE</h2>
+        <p>Xứ Đoàn Các Thánh Tử Đạo Việt Nam - Giáo Xứ Chánh Tòa Mỹ Tho</p>
+    </div>
+
+    <div class="navbar" id="navbar">
+        <a href="#home" class="active"><i class="fas fa-home"></i><span>Trang Chủ</span></a>
+        <a href="#attendance"><i class="fas fa-check-square"></i><span>Điểm Danh</span></a>
+        <a href="#progress"><i class="fas fa-chart-bar"></i><span>Tiến Độ</span></a>
+        <a href="#resources"><i class="fas fa-book"></i><span>Tài Liệu</span></a>
+    </div>
+
+    <div class="container">
+        <div id="home" class="card active">
+            <h3>Chào Mừng Giáo Viên</h3>
+            <p class="text-center mb-4">Quản lý điểm danh, theo dõi tiến độ học viên và cập nhật tài liệu dễ dàng với Scode.</p>
+            <div class="flex justify-center gap-4">
+                <a href="#attendance" class="btn"><i class="fas fa-check-square mr-2"></i> Điểm Danh</a>
+                <a href="#progress" class="btn"><i class="fas fa-chart-bar mr-2"></i> Xem Tiến Độ</a>
+            </div>
+        </div>
+
+        <div id="attendance" class="card">
+            <h3>Điểm Danh Buổi Học</h3>
+            <form id="attendanceForm" action="https://formsubmit.co/notification2411.huynhdutruong@gmail.com" method="POST">
+                <div class="mb-4">
+                    <label class="block mb-1 text-text">Chọn Lớp:</label>
+                    <select id="attendanceSubject" class="input" required></select>
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1 text-text">Ngày:</label>
+                    <input type="date" id="attendanceDate" class="input" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1 text-text">Buổi:</label>
+                    <input type="text" id="attendanceSession" class="input" placeholder="Buổi 1, Buổi 2..." required>
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1 text-text">Danh Sách Học Viên:</label>
+                    <table class="attendance-table" id="attendanceTable">
+                        <thead>
+                            <tr>
+                                <th>Họ và Tên</th>
+                                <th>Điểm Danh</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendanceList"></tbody>
+                    </table>
+                </div>
+                <input type="hidden" name="submissionTime" id="attendanceSubmissionTime">
+                <input type="hidden" name="attendanceData" id="attendanceData">
+                <button type="submit" class="btn">Gửi Điểm Danh</button>
+            </form>
+        </div>
+
+        <div id="progress" class="card">
+            <h3>Tiến Độ Học Viên</h3>
+            <div class="mb-4">
+                <label class="block mb-1 text-text">Chọn Lớp:</label>
+                <select id="progressSubject" class="input"></select>
+            </div>
+            <div id="progressList"></div>
+        </div>
+
+        <div id="resources" class="card">
+            <h3>Tài Liệu</h3>
+            <div id="resourcesList">
+                <div class="mb-2">
+                    <a href="book.html" target="_blank" class="btn">Sách Hướng Dẫn Giảng Dạy</a>
+                    <p class="text-sm">Tài liệu chính thức cho giáo viên Xứ Đoàn.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const isMobile = window.innerWidth <= 1024;
+
+        // Load users data
+        let usersData = [];
+        async function loadUsersData() {
+            try {
+                const response = await fetch('data/users.json');
+                if (!response.ok) throw new Error('Failed to load users.json');
+                usersData = await response.json();
+                populateSubjectOptions();
+                populateProgress(usersData);
+            } catch (error) {
+                console.error('Error loading users:', error);
+                document.getElementById('progressList').innerHTML = '<p class="text-error">Không thể tải dữ liệu.</p>';
+                document.getElementById('attendanceList').innerHTML = '<tr><td colspan="2" class="text-error">Không thể tải danh sách học viên.</td></tr>';
+            }
+        }
+
+        // Load resources
+        async function loadResources() {
+            try {
+                const response = await fetch('data/resources.json');
+                if (!response.ok) throw new Error('Failed to load resources.json');
+                const resources = await response.json();
+                const resourcesList = document.getElementById('resourcesList');
+                resourcesList.innerHTML = resources.map(res => `
+                    <div class="mb-2">
+                        <a href="${res.url}" target="_blank" class="btn">${res.name}</a>
+                        <p class="text-sm">${res.description}</p>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading resources:', error);
+                document.getElementById('resourcesList').innerHTML = '<p class="text-error">Không thể tải tài liệu.</p>';
+            }
+        }
+
+        // Populate subject options
+        function populateSubjectOptions() {
+            const subjects = [...new Set(usersData.members.flatMap(member => member.subjects.map(s => s.name)))];
+            const attendanceSubject = document.getElementById('attendanceSubject');
+            const progressSubject = document.getElementById('progressSubject');
+            attendanceSubject.innerHTML = '<option value="">Chọn lớp</option>';
+            progressSubject.innerHTML = '<option value="">Chọn lớp</option>';
+            subjects.forEach(subject => {
+                const option = document.createElement('option');
+                option.value = subject;
+                option.textContent = subject;
+                attendanceSubject.appendChild(option.cloneNode(true));
+                progressSubject.appendChild(option);
+            });
+        }
+
+        // Populate attendance list
+        function populateAttendanceList(subject) {
+            const attendanceList = document.getElementById('attendanceList');
+            attendanceList.innerHTML = '';
+            const members = usersData.members.filter(member => member.subjects.some(s => s.name === subject));
+            if (members.length === 0) {
+                attendanceList.innerHTML = '<tr><td colspan="2" class="text-error">Không có học viên trong lớp này.</td></tr>';
+                return;
+            }
+            members.forEach(member => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${member.fullName}</td>
+                    <td><input type="checkbox" name="attendance_${member.fullName}" value="${member.fullName}"></td>
+                `;
+                attendanceList.appendChild(tr);
+            });
+        }
+
+        // Populate progress list
+        function populateProgress(users) {
+            const progressList = document.getElementById('progressList');
+            const subject = document.getElementById('progressSubject').value;
+            progressList.innerHTML = '';
+            const filteredMembers = subject ? users.members.filter(member => member.subjects.some(s => s.name === subject)) : users.members;
+            if (filteredMembers.length === 0) {
+                progressList.innerHTML = '<p class="text-error">Không có học viên trong lớp này.</p>';
+                return;
+            }
+            filteredMembers.forEach(member => {
+                const learningScore = Math.min(member.LearningScore || 0, 100);
+                const div = document.createElement('div');
+                div.className = 'member-card bg-[#1E1E1E] border border-[#3C3C3C] rounded-lg p-4 mb-4';
+                div.innerHTML = `
+                    <h4 class="font-jetbrains text-accent text-lg mb-3">${member.fullName}</h4>
+                    ${member.subjects.map(subject => `
+                        <div class="progress-item mb-3">
+                            <p>${subject.name}</p>
+                            <p>Thời lượng: ${subject.duration}h | Điểm học tập: ${learningScore}%</p>
+                            <div class="progress-bar"><div class="progress-fill" style="width: ${learningScore}%"></div></div>
+                        </div>
+                    `).join('')}
+                    <p><strong>Điểm thành viên:</strong> ${member.memberpoint || 0}</p>
+                `;
+                progressList.appendChild(div);
+            });
+        }
+
+        // Handle attendance form submission
+        document.getElementById('attendanceForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const subject = document.getElementById('attendanceSubject').value;
+            const date = document.getElementById('attendanceDate').value;
+            const session = document.getElementById('attendanceSession').value;
+            const checkboxes = document.querySelectorAll('#attendanceList input[type="checkbox"]:checked');
+            const attendance = Array.from(checkboxes).map(cb => cb.value);
+            const attendanceData = {
+                subject,
+                date,
+                session,
+                attendance
+            };
+            document.getElementById('attendanceData').value = JSON.stringify(attendanceData);
+            document.getElementById('attendanceSubmissionTime').value = new Date().toLocaleString('vi-VN');
+            document.getElementById('successMessage').textContent = 'Điểm danh đã được gửi thành công!';
+            document.getElementById('successOverlay').style.display = 'block';
+            document.getElementById('successPopup').style.display = 'block';
+            document.getElementById('attendanceForm').submit();
+        });
+
+        // Close success popup
+        function closeSuccessPopup() {
+            document.getElementById('successOverlay').style.display = 'none';
+            document.getElementById('successPopup').style.display = 'none';
+            document.getElementById('attendanceForm').reset();
+            document.getElementById('attendanceList').innerHTML = '';
+        }
+
+        // Update attendance list on subject change
+        document.getElementById('attendanceSubject').addEventListener('change', (e) => {
+            populateAttendanceList(e.target.value);
+        });
+
+        // Update progress list on subject change
+        document.getElementById('progressSubject').addEventListener('change', () => {
+            populateProgress(usersData);
+        });
+
+        // Section navigation
+        const sections = ['home', 'attendance', 'progress', 'resources'];
+        function showSection(sectionId) {
+            sections.forEach(id => {
+                const section = document.getElementById(id);
+                if (section) section.classList.remove('active');
+            });
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) targetSection.classList.add('active');
+            document.querySelectorAll('.navbar a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === sectionId) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Navbar toggle
+        document.querySelectorAll('.navbar a').forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                const href = link.getAttribute('href').substring(1);
+                showSection(href);
+            });
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadUsersData();
+            loadResources();
+            showSection('home');
+            document.getElementById('attendanceDate').value = new Date().toISOString().split('T')[0];
+        });
+    </script>
+</body>
+</html>
